@@ -1,4 +1,4 @@
-package com.example.todoet_prototype;
+package com.example.todoetprototype;
 
 import android.os.Bundle;
 import android.widget.Button;
@@ -8,8 +8,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.todoet_prototype.planner.Planner;
-import com.example.todoet_prototype.planner.PlannerItem;
+import com.example.todoetprototype.planner.Planner;
+import com.example.todoetprototype.planner.PlannerItem;
 
 public class PlannerActivity extends AppCompatActivity {
 

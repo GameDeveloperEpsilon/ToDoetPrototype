@@ -1,4 +1,4 @@
-package com.example.todoet_prototype;
+package com.example.todoetprototype;
 
 import androidx.appcompat.app.AppCompatActivity;
 

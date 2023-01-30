@@ -1,4 +1,4 @@
-package com.example.todoet_prototype.planner;
+package com.example.todoetprototype.planner;
 
 import android.widget.Button;
 

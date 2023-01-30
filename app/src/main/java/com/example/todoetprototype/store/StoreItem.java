@@ -1,4 +1,4 @@
-package com.example.todoet_prototype.store;
+package com.example.todoetprototype.store;
 
 public class StoreItem {
 }
