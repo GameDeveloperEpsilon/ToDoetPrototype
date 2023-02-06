@@ -39,6 +39,7 @@ public class PlannerActivity extends AppCompatActivity {
         items.add("Second Item");
         setupListViewListener();
     }
+    // extra note
 
     // Attaches a long click listener to the listview
     private void setupListViewListener() {
