@@ -32,7 +32,7 @@ public class PlannerActivity extends AppCompatActivity {
         // ADD HERE
         lvItems = (ListView) findViewById(R.id.lvItems);
         items = new ArrayList<String>();
-        itemsAdapter = new ArrayAdapter<String>(this,
+        itemsAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, items);
         lvItems.setAdapter(itemsAdapter);
         items.add("First Item");
@@ -44,18 +44,13 @@ public class PlannerActivity extends AppCompatActivity {
     // Attaches a long click listener to the listview
     private void setupListViewListener() {
         lvItems.setOnItemLongClickListener(
-                new AdapterView.OnItemLongClickListener() {
-                    @Override
-                    public boolean onItemLongClick(AdapterView<?> adapter,
-                                                   View item, int pos, long id) {
-                        // Remove the item within array at position
-                        items.remove(pos);
-                        // Refresh the adapter
-                        itemsAdapter.notifyDataSetChanged();
-                        // Return true consumes the long click event (marks it handled)
-                        return true;
-                    }
-
+                (adapter, item, pos, id) -> {
+                    // Remove the item within array at position
+                    items.remove(pos);
+                    // Refresh the adapter
+                    itemsAdapter.notifyDataSetChanged();
+                    // Return true consumes the long click event (marks it handled)
+                    return true;
                 });
     }
 
