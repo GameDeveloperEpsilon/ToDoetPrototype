@@ -13,6 +13,9 @@
         android:theme="@style/Theme.TodoetPrototype"
         tools:targetApi="31">
         <activity
+            android:name=".TaskCreationActivity"
+            android:exported="false" />
+        <activity
             android:name=".Nexus"
             android:exported="true">
             <intent-filter>
@@ -25,10 +28,10 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".PetActivity"></activity>
-        <activity android:name=".InventoryActivity"></activity>
-        <activity android:name=".PlannerActivity"></activity>
-        <activity android:name=".StoreActivity"></activity>
+        <activity android:name=".PetActivity" />
+        <activity android:name=".InventoryActivity" />
+        <activity android:name=".PlannerActivity" />
+        <activity android:name=".StoreActivity" />
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.example.todoetprototype;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,6 +18,8 @@ import com.example.todoetprototype.planner.Planner;
 import com.example.todoetprototype.planner.PlannerItem;
 
 import java.util.ArrayList;
+
+import kotlinx.coroutines.scheduling.Task;
 
 public class PlannerActivity extends AppCompatActivity {
 
@@ -56,6 +59,8 @@ public class PlannerActivity extends AppCompatActivity {
 
     public void onAddItem(View v) {
         EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
+        Intent changeActivities = new Intent(this, TaskCreationActivity.class);
+        startActivity(changeActivities);
         String itemText = etNewItem.getText().toString();
         itemsAdapter.add(itemText);
         etNewItem.setText("");
