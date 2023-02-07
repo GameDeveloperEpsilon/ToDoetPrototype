@@ -27,4 +27,47 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etNewItem"
+        android:layout_width="245dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="40dp"
+        android:hint="Enter a new item"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskCreationLabel" />
+
+    <RadioGroup
+        android:id="@+id/taskDifficultyRadioGroup"
+        android:layout_width="126dp"
+        android:layout_height="207dp"
+        app:layout_constraintBottom_toTopOf="@+id/finishTaskCreation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etNewItem"
+        app:layout_constraintVertical_bias="0.445">
+
+        <RadioButton
+            android:id="@+id/easyRadioBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Easy" />
+
+        <RadioButton
+            android:id="@+id/moderateRadioBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Moderate" />
+
+        <RadioButton
+            android:id="@+id/difficultRadioBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Difficult" />
+    </RadioGroup>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
