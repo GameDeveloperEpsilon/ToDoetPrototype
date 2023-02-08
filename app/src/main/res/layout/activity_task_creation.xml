@@ -30,8 +30,8 @@
 
     <EditText
         android:id="@+id/etNewItem"
-        android:layout_width="245dp"
-        android:layout_height="wrap_content"
+        android:layout_width="246dp"
+        android:layout_height="56dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="40dp"
@@ -55,7 +55,8 @@
             android:id="@+id/easyRadioBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Easy" />
+            android:text="Easy"
+            android:checked="true"/>
 
         <RadioButton
             android:id="@+id/moderateRadioBtn"

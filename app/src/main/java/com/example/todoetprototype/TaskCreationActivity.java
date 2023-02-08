@@ -10,7 +10,15 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import java.lang.ref.WeakReference;
+
 public class TaskCreationActivity extends AppCompatActivity {
+
+    private static WeakReference<PlannerActivity> mContext;
+
+    public static void updateActivity(PlannerActivity context) {
+        mContext = new WeakReference<>(context);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +39,12 @@ public class TaskCreationActivity extends AppCompatActivity {
             RadioButton selectedDifficultyBtn = findViewById(difficultyID);
             String taskDifficulty = (String) selectedDifficultyBtn.getText();
 
-            // Finish and switch activities
+            // Finish and return to Planner Activity
+            mContext.get().addPlannerItem(taskName, taskDifficulty);
             Toast.makeText(this, "Task Created: " + taskName + ", " + taskDifficulty, Toast.LENGTH_SHORT).show();
-            Intent changeActivities = new Intent(this, PlannerActivity.class);
-            startActivity(changeActivities);
+            //Intent changeActivities = new Intent(this, PlannerActivity.class);
+            //startActivity(changeActivities);
+            this.finish();
         });
     }
 }

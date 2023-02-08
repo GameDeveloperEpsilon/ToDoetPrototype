@@ -3,23 +3,12 @@ package com.example.todoetprototype;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.todoetprototype.planner.Planner;
-import com.example.todoetprototype.planner.PlannerItem;
-
 import java.util.ArrayList;
-
-import kotlinx.coroutines.scheduling.Task;
 
 public class PlannerActivity extends AppCompatActivity {
 
@@ -30,11 +19,12 @@ public class PlannerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TaskCreationActivity.updateActivity(this);
         setContentView(R.layout.activity_planner);
 
         // ADD HERE
-        lvItems = (ListView) findViewById(R.id.lvItems);
-        items = new ArrayList<String>();
+        lvItems = findViewById(R.id.lvItems);
+        items = new ArrayList<>();
         itemsAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, items);
         lvItems.setAdapter(itemsAdapter);
@@ -57,13 +47,19 @@ public class PlannerActivity extends AppCompatActivity {
                 });
     }
 
+    public void addPlannerItem(String name, String difficulty) {
+        itemsAdapter.add(name);
+    }
+
     public void onAddItem(View v) {
-        EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
+        //EditText etNewItem = findViewById(R.id.etNewItem);
+        //String itemText = etNewItem.getText().toString();
+        //itemsAdapter.add(itemText);
+        //etNewItem.setText("");
+
         Intent changeActivities = new Intent(this, TaskCreationActivity.class);
         startActivity(changeActivities);
-        String itemText = etNewItem.getText().toString();
-        itemsAdapter.add(itemText);
-        etNewItem.setText("");
+        //this.finish();
     }
 
 
