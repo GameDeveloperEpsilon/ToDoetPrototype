@@ -39,6 +39,7 @@ public class TaskCreationActivity extends AppCompatActivity {
             RadioButton selectedDifficultyBtn = findViewById(difficultyID);
             String taskDifficulty = (String) selectedDifficultyBtn.getText();
 
+
             // Finish and return to Planner Activity
             mContext.get().addPlannerItem(taskName, taskDifficulty);
             Toast.makeText(this, "Task Created: " + taskName + ", " + taskDifficulty, Toast.LENGTH_SHORT).show();
