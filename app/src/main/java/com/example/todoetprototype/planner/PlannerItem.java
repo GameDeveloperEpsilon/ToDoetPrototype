@@ -1,27 +1,19 @@
 package com.example.todoetprototype.planner;
 
-import android.widget.Button;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 public class PlannerItem {
 
     public final String name;
-    private final Button button;
+    public final String difficulty;
 
-    public PlannerItem(AppCompatActivity context, String itemName) {
+    public PlannerItem(String itemName, String difficulty) {
         name = itemName;
+        this.difficulty = difficulty;
 
-        // Make new button for task
-        button = new Button(context);
-        button.setText(name);
-        button.setOnClickListener(view ->
-                Toast.makeText(context, name + " Completed!", Toast.LENGTH_SHORT).show());
     }
 
-    public Button getButton() {
-        return button;
+    @Override
+    public String toString() {
+        return name + " : " + difficulty;
     }
 
 }

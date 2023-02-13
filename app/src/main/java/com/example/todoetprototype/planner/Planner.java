@@ -1,7 +1,5 @@
 package com.example.todoetprototype.planner;
 
-import android.widget.Button;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.LinkedList;
@@ -21,7 +19,7 @@ public class Planner {
     }
 
     public PlannerItem makePlannerItem() {
-        PlannerItem newItem = new PlannerItem(context, "Test Task " + ++counter);
+        PlannerItem newItem = new PlannerItem("Test Task " + ++counter, "Easy");
         addPlannerItem(newItem);
 
         return newItem;

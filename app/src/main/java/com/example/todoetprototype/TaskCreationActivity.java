@@ -1,14 +1,13 @@
 package com.example.todoetprototype;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.lang.ref.WeakReference;
 
@@ -25,9 +24,9 @@ public class TaskCreationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_creation);
 
-        // Navigate to the Store page
-        Button storePageBtn = findViewById(R.id.finishTaskCreation);
-        storePageBtn.setOnClickListener(view -> {
+        // Set up add task button
+        Button addTaskBtn = findViewById(R.id.finishTaskCreation);
+        addTaskBtn.setOnClickListener(view -> {
 
             // Get task name
             EditText taskNameTextEdit = findViewById(R.id.etNewItem);
@@ -43,8 +42,6 @@ public class TaskCreationActivity extends AppCompatActivity {
             // Finish and return to Planner Activity
             mContext.get().addPlannerItem(taskName, taskDifficulty);
             Toast.makeText(this, "Task Created: " + taskName + ", " + taskDifficulty, Toast.LENGTH_SHORT).show();
-            //Intent changeActivities = new Intent(this, PlannerActivity.class);
-            //startActivity(changeActivities);
             this.finish();
         });
     }

@@ -1,10 +1,5 @@
 package com.example.todoetprototype;
 
-import java.io.ObjectInputStream;
-import java.io.Serializable;
-
-import android.content.Intent;
-
 import java.io.Serializable;
 import java.util.Random;
 

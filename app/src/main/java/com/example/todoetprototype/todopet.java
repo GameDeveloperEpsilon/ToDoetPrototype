@@ -1,8 +1,6 @@
 package com.example.todoetprototype;
-import java.io.Serializable;
-import java.util.List;
-import java.util.Random;
 
+import java.io.Serializable;
 
 public class todopet implements Serializable {
     private static final long serialVersionUID = 1L;
