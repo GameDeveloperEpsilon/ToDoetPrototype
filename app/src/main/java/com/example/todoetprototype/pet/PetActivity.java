@@ -1,9 +1,11 @@
-package com.example.todoetprototype;
+package com.example.todoetprototype.pet;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.todoetprototype.R;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package com.example.todoetprototype;
+package com.example.todoetprototype.pet;
 
 import java.io.Serializable;
 

@@ -1,4 +1,6 @@
-package com.example.todoetprototype;
+package com.example.todoetprototype.pet;
+
+import com.example.todoetprototype.R;
 
 import java.io.Serializable;
 import java.util.Random;

@@ -1,4 +1,4 @@
-package com.example.todoetprototype;
+package com.example.todoetprototype.planner;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,13 +11,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.todoetprototype.planner.PlannerItem;
+import com.example.todoetprototype.R;
 
 import java.util.ArrayList;
 
 public class PlannerActivity extends AppCompatActivity {
 
-    private ArrayList<PlannerItem> items;
+    private ArrayList<PlannerItem> items = new ArrayList<>();
     private ArrayAdapter<PlannerItem> itemsAdapter;
     private ListView lvItems;
 
@@ -29,7 +29,6 @@ public class PlannerActivity extends AppCompatActivity {
 
         // ADD HERE
         lvItems = findViewById(R.id.lvItems);
-        items = new ArrayList<>();
         itemsAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, items);
         lvItems.setAdapter(itemsAdapter);
@@ -63,6 +62,7 @@ public class PlannerActivity extends AppCompatActivity {
 
     // Attaches a long click listener to the listview
     private void setupListViewListener() {
+
         lvItems.setOnItemLongClickListener(
                 (adapter, item, pos, id) -> {
                     // Remove the item within array at position
@@ -79,15 +79,9 @@ public class PlannerActivity extends AppCompatActivity {
     }
 
     public void onAddItem(View v) {
-        //EditText etNewItem = findViewById(R.id.etNewItem);
-        //String itemText = etNewItem.getText().toString();
-        //itemsAdapter.add(itemText);
-        //etNewItem.setText("");
 
         Intent changeActivities = new Intent(this, TaskCreationActivity.class);
         startActivity(changeActivities);
-        //this.finish();
     }
-
 
 }

@@ -1,14 +1,16 @@
-package com.example.todoetprototype;
+package com.example.todoetprototype.inventory;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class StoreActivity extends AppCompatActivity {
+import com.example.todoetprototype.R;
+
+public class InventoryActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_store);
+        setContentView(R.layout.activity_inventory);
     }
 }
