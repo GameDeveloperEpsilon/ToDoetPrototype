@@ -42,7 +42,6 @@ public class PetActivity extends AppCompatActivity implements Serializable {
         }
 
 
-
        // ImageView imageaxo = (ImageView) findViewById(R.id.imageaxo);
        // imageaxo.setImageResource(R.drawable.axoeggtest);
 
@@ -54,6 +53,3 @@ public class PetActivity extends AppCompatActivity implements Serializable {
         return new Petspecies.species[0];
     }
 }
-
-
-

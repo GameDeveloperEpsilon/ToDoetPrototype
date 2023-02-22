@@ -8,8 +8,7 @@ import java.util.Random;
 public class Petspecies implements Serializable {
 
 
-        public static enum species {
-
+        public enum species {
 
             UNHATCH_SIORDON(1, "Siordon", 2, -1, R.drawable.axoeggtest),
             BABY_SIORDON(2, "Siordon", 3, 1, R.drawable.axostageonetest),
@@ -68,21 +67,20 @@ public class Petspecies implements Serializable {
     // possible animal values from enum Animal. Randomizes the pet species
     // This array will be of size 7.
 
-        species [] generateRandomEgg(int n){
+        static species [] generateRandomEgg(int numOfSpecies){
 
             species[] petOptions = species.values();
 
-            Random random = new Random();
+            Random random = new Random(System.currentTimeMillis());
 
-            species[] Speciesp = new species[n];
+            species[] Speciesp = new species[numOfSpecies];
 
-            for (int i = 0; i < n; i++){
+            for (int i = 0; i < numOfSpecies; i++){
                 int index = random.nextInt(petOptions.length);
                 Speciesp[i] = petOptions[index];
             }
             return Speciesp;
         }
-
 
     }
 
