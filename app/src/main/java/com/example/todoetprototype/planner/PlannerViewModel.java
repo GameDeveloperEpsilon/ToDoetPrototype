@@ -4,12 +4,14 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.LinkedList;
 
-public class Planner extends ViewModel {
+public class PlannerViewModel extends ViewModel {
 
     private static int counter = 0;
+
+    private PlannerModel model;
     private final LinkedList<PlannerItem> plannerItems;
 
-    public Planner() {
+    public PlannerViewModel() {
 
         plannerItems = new LinkedList<>();
     }
