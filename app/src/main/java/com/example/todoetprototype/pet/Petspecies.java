@@ -8,7 +8,7 @@ import java.util.Random;
 public class Petspecies implements Serializable {
 
 
-        public enum species {
+        public static enum species {
 
 
             UNHATCH_SIORDON(1, "Siordon", 2, -1, R.drawable.axoeggtest),
