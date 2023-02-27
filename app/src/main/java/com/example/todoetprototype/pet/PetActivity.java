@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.todoetprototype.R;
 
@@ -32,13 +31,13 @@ public class PetActivity extends AppCompatActivity implements Serializable {
 
         TextView txtname = findViewById(R.id.textView2);
         //ImageView img = findViewById(R.id.imageaxo);
-        ImageView imageaxo = (ImageView) findViewById(R.id.imageaxo);
+         ImageView imageaxo = (ImageView) findViewById(R.id.imageaxo);
 
         // randomized the petspecies
 
         Petspecies.species[] Speciesp = generateRandomEgg(3);
         for (Petspecies.species Species : Speciesp){
-            Toast.makeText(this, " " + Species.getSpeciesName(), Toast.LENGTH_SHORT).show();
+            System.out.println(Species);
         }
 
 
