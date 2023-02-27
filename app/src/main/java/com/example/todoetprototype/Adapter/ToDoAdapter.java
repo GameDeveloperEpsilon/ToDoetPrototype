@@ -2,7 +2,6 @@ package com.example.todoetprototype.Adapter;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,7 @@ import android.widget.CompoundButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todoetprototype.AddNewTask;
-import com.example.todoetprototype.MainActivity;
+import com.example.todoetprototype.PlannerActivity;
 import com.example.todoetprototype.Model.ToDoModel;
 import com.example.todoetprototype.R;
 import com.example.todoetprototype.Utils.DatabaseHandler;
@@ -22,10 +21,10 @@ import java.util.List;
 public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
 
     private List<ToDoModel> todoList;
-    private MainActivity activity;
+    private PlannerActivity activity;
     private DatabaseHandler db;
 
-    public ToDoAdapter(DatabaseHandler db, MainActivity activity){
+    public ToDoAdapter(DatabaseHandler db, PlannerActivity activity){
         this.db = db;
         this.activity = activity;
     }

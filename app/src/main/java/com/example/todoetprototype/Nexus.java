@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import com.example.todoetprototype.inventory.InventoryActivity;
 import com.example.todoetprototype.pet.PetActivity;
-import com.example.todoetprototype.planner.PlannerActivity;
 import com.example.todoetprototype.store.StoreActivity;
 
 public class Nexus extends AppCompatActivity {

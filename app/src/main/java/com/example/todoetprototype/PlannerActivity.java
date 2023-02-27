@@ -15,11 +15,10 @@ import com.example.todoetprototype.Utils.DatabaseHandler;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements DialogCloseListener {
+public class PlannerActivity extends AppCompatActivity implements DialogCloseListener {
 
     //Extra note I needed to change the build from 32 to 33 in the build.gradle for the app to run
 
@@ -48,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
         // RecyclerView improves performance and your app's responsiveness, and it reduces power consumption.
         taskRecyclerView = findViewById(R.id.tasksRecyclerView);
         taskRecyclerView.setLayoutManager(new LinearLayoutManager(this)); // define linear layout manager
-        tasksAdapter = new ToDoAdapter(db,MainActivity.this);
+        tasksAdapter = new ToDoAdapter(db, PlannerActivity.this);
         taskRecyclerView.setAdapter(tasksAdapter);
 
         //floating action button. For the button in the corner of the screen to create a new task
