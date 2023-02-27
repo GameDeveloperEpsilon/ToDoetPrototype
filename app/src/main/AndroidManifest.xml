@@ -13,7 +13,7 @@
         android:theme="@style/Theme.TodoetPrototype"
         tools:targetApi="31">
         <activity
-            android:name=".planner.TaskCreationActivity"
+            android:name="AddNewTask"
             android:exported="false" />
         <activity
             android:name=".Nexus"
@@ -30,7 +30,7 @@
         </activity>
         <activity android:name=".pet.PetActivity" />
         <activity android:name=".inventory.InventoryActivity" />
-        <activity android:name=".planner.PlannerActivity" />
+        <activity android:name=".PlannerActivity" />
         <activity android:name=".store.StoreActivity" />
     </application>
 
