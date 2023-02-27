@@ -12,4 +12,10 @@
     <string name="someName">\"Hi\"</string>
     <string name="taskName">default</string>
     <string name="taskDifficulty">Easy</string>
+
+
+    <string name="save">Save</string>
+    <string name="new_task">New Task</string>
+    <string name="tasks">Tasks</string>
+
 </resources>
