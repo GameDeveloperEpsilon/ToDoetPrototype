@@ -3,8 +3,8 @@ package com.example.todoetprototype.pet;
 import java.io.Serializable;
 
 public class todopet implements Serializable {
-    private static final long serialVersionUID = 1L;
 
+    private static final long serialVersionUID = 1L;
 
     //out of 50
 
@@ -16,13 +16,11 @@ public class todopet implements Serializable {
     private int affection;
     private int passedTime;
     private int age;
-    private int radompet = 4;
-
+    private int randomPet = 4;
 
     public todopet(String name, boolean hygiene, boolean death, int happiness, int hunger, int affection, int passedTime, int age) {
 
         // out of 100
-
 
         this.name = name;
         this.hygiene = hygiene;
@@ -31,8 +29,6 @@ public class todopet implements Serializable {
         this.hunger = 100;
         this.affection = 20;
         this.age = age;
-
-
 
         int hours = passedTime / 60;
 
@@ -43,9 +39,7 @@ public class todopet implements Serializable {
     // @return A basic creature object
 
 
-// GETTER AND SETTER
-
-
+    // GETTER AND SETTER
 
     public String getName() {
         return name;
@@ -110,7 +104,6 @@ public class todopet implements Serializable {
     public void setAge(int age) {
         this.age = age;
     }
-
 
 }
 

@@ -1,4 +1,5 @@
 package com.example.todoetprototype.pet;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -13,8 +14,7 @@ public class PetActivity extends AppCompatActivity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private ImageView imageView;
-    private Petspecies petspecies;
-
+    private PetSpecies petspecies;
 
 //    private ImageButton statusButton;
 //    private ImageButton playButton;
@@ -35,8 +35,8 @@ public class PetActivity extends AppCompatActivity implements Serializable {
 
         // randomized the petspecies
 
-        Petspecies.species[] Speciesp = generateRandomEgg(3);
-        for (Petspecies.species Species : Speciesp){
+        PetSpecies.species[] Speciesp = generateRandomEgg(3);
+        for (PetSpecies.species Species : Speciesp){
             System.out.println(Species);
         }
 
@@ -48,7 +48,7 @@ public class PetActivity extends AppCompatActivity implements Serializable {
 
     }
 
-    private Petspecies.species[] generateRandomEgg(int i) {
-        return new Petspecies.species[0];
+    private PetSpecies.species[] generateRandomEgg(int i) {
+        return PetSpecies.species.values();
     }
 }
