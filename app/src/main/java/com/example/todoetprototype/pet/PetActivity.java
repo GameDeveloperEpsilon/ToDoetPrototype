@@ -2,9 +2,14 @@ package com.example.todoetprototype.pet;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.graphics.drawable.Icon;
+import android.os.Build;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.todoetprototype.R;
 
@@ -30,8 +35,6 @@ public class PetActivity extends AppCompatActivity implements Serializable {
         setContentView(R.layout.activity_pet);
 
         TextView txtname = findViewById(R.id.textView2);
-        //ImageView img = findViewById(R.id.imageaxo);
-         ImageView imageaxo = (ImageView) findViewById(R.id.imageaxo);
 
         // randomized the petspecies
 
@@ -39,12 +42,30 @@ public class PetActivity extends AppCompatActivity implements Serializable {
         for (PetSpecies.species Species : Speciesp){
             System.out.println(Species);
         }
+        //ImageView img = findViewById(R.id.imageaxo);
+        ImageView imageaxo = (ImageView) findViewById(R.id.imageaxo);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            imageaxo.setImageIcon(Icon.createWithResource(this, R.drawable.axoeggtest));
+            //imageaxo.setImageIcon(Icon.createWithResource(this, R.drawable.axostageonetest));
+        }
 
+        // Set On Click Listeners
+        Button feedBtn = findViewById(R.id.feedBtn);
+        Button cleanBtn = findViewById(R.id.cleanBtn);
+        Button petBtn = findViewById(R.id.petBtn);
 
-       // ImageView imageaxo = (ImageView) findViewById(R.id.imageaxo);
-       // imageaxo.setImageResource(R.drawable.axoeggtest);
-
-
+        feedBtn.setOnClickListener((l) -> {
+            Context c = getApplicationContext();
+            Toast.makeText(c, "Feeding Pet", Toast.LENGTH_SHORT).show();
+        });
+        cleanBtn.setOnClickListener((l) -> {
+            Context c = getApplicationContext();
+            Toast.makeText(c, "Cleaning Pet", Toast.LENGTH_SHORT).show();
+        });
+        petBtn.setOnClickListener((l) -> {
+            Context c = getApplicationContext();
+            Toast.makeText(c, "Petting Pet", Toast.LENGTH_SHORT).show();
+        });
 
     }
 
