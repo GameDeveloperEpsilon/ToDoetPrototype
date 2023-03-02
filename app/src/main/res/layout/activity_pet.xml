@@ -10,7 +10,7 @@
 
 
     <ImageView
-        android:id="@+id/imageaxo"
+        android:id="@+id/imageView"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:paddingTop="60dp"
@@ -32,7 +32,7 @@
         app:layout_constraintEnd_toStartOf="@id/petBtn"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toEndOf="@id/cleanBtn"
-        app:layout_constraintTop_toBottomOf="@+id/imageaxo" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <Button
         android:id="@+id/cleanBtn"
@@ -45,7 +45,7 @@
         app:layout_constraintEnd_toStartOf="@id/feedBtn"
         app:layout_constraintHorizontal_bias="0.229"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageaxo"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:layout_constraintVertical_bias="0.492" />
 
     <Button
@@ -59,15 +59,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.728"
         app:layout_constraintStart_toEndOf="@id/feedBtn"
-        app:layout_constraintTop_toBottomOf="@+id/imageaxo"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:layout_constraintVertical_bias="0.492" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/imageaxo"
+        android:text="Pet Activity"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

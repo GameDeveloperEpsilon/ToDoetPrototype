@@ -7,8 +7,17 @@ import java.util.Random;
 
 public class PetSpecies implements Serializable {
 
+    PetStages currentStage;
+    PetStages egg;
+    PetStages baby;
 
-    public enum species {
+    public PetSpecies() {
+        egg = PetStages.UNHATCH_SIORDON;
+        baby = PetStages.BABY_SIORDON;
+        currentStage = egg;
+    }
+
+    public enum PetStages {
 
         UNHATCH_SIORDON(1, "Siordon", 2, -1, R.drawable.axoeggtest),
         BABY_SIORDON(2, "Siordon", 3, 1, R.drawable.axostageonetest),
@@ -34,7 +43,7 @@ public class PetSpecies implements Serializable {
         private final String speciesName;
         private final int evolve_to;
 
-        species(int uniqueID, String speciesName, int evolve_to, int evolve_from, int drawable) {
+        PetStages(int uniqueID, String speciesName, int evolve_to, int evolve_from, int drawable) {
 
             this.drawable = drawable;
             this.uniqueID = uniqueID;
@@ -63,19 +72,19 @@ public class PetSpecies implements Serializable {
     // possible animal values from enum Animal. Randomizes the pet species
     // This array will be of size 7.
 
-    static species[] generateRandomEgg(int numOfSpecies){
+    static PetStages[] generateRandomEgg(int numOfSpecies){
 
-        species[] petOptions = species.values();
+        PetStages[] petOptions = PetStages.values();
 
         Random random = new Random(System.currentTimeMillis());
 
-        species[] Speciesp = new species[numOfSpecies];
+        PetStages[] petStages = new PetStages[numOfSpecies];
 
         for (int i = 0; i < numOfSpecies; i++){
             int index = random.nextInt(petOptions.length);
-            Speciesp[i] = petOptions[index];
+            petStages[i] = petOptions[index];
         }
-        return Speciesp;
+        return petStages;
     }
 
 }
