@@ -8,13 +8,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.todoetprototype.Adapter.ToDoAdapter;
-import com.example.todoetprototype.Model.ToDoModel;
+import com.example.todoetprototype.inventory.Model.ToDoModel;
 import com.example.todoetprototype.Utils.DatabaseHandler;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,6 +37,13 @@ public class PlannerActivity extends AppCompatActivity implements DialogCloseLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_planner);
         getSupportActionBar().hide(); // will not show top most navigation bar
+
+
+        // set current date
+        Calendar calendar = Calendar.getInstance();
+        String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
+        TextView textViewDate = findViewById(R.id.text_date);
+        textViewDate.setText(currentDate);
 
         // initi the database
         db = new DatabaseHandler(this);
