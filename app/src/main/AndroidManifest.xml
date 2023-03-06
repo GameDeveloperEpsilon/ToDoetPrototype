@@ -12,11 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TodoetPrototype"
         tools:targetApi="31">
-        <activity
-            android:name="AddNewTask"
-            android:exported="false" />
-        <activity
-            android:name=".Nexus"
+               <activity
+            android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,6 +29,9 @@
         <activity android:name=".inventory.InventoryActivity" />
         <activity android:name=".PlannerActivity" />
         <activity android:name=".store.StoreActivity" />
+        <activity android:name=".Nexus" />
+        <activity android:name="AddNewTask"
+            android:exported="false" />
     </application>
 
 </manifest>
