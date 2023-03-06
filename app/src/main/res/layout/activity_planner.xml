@@ -30,8 +30,8 @@
         android:text="@string/tasks" />
 
 
-    <ImageView
-        android:id="@+id/calendar"
+    <ImageButton
+        android:id="@+id/calendar_icon"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="350dp"
