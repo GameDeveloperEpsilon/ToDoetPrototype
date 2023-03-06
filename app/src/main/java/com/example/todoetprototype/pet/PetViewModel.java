@@ -11,7 +11,7 @@ import java.util.Objects;
 
 public class PetViewModel extends ViewModel {
 
-    private MutableLiveData<PetSpecies> petData = new MutableLiveData<>();
+    private MutableLiveData<TodopetModel> petData = new MutableLiveData<>();
     //private CityDataProvider cities = new CityDataProvider();
 
     private int currentIndex = 0;
@@ -19,11 +19,11 @@ public class PetViewModel extends ViewModel {
 
     public void init() {
         //cities.buildCities();
-        petData.setValue(new PetSpecies());
+        petData.setValue(new TodopetModel("Tom", false, false, 7, 7, 8, 7, 3));
         myLoop();
     }
 
-    public LiveData<PetSpecies> getPetData() {
+    public LiveData<TodopetModel> getPetData() {
         return petData;
     }
 
@@ -40,13 +40,13 @@ public class PetViewModel extends ViewModel {
 
     private void updatePet() {
 
-        PetSpecies pet = getPetData().getValue();
+        TodopetModel pet = getPetData().getValue();
 
         if (pet == null) {
             System.err.println("Pet is null");
             return;
         }
-        pet.currentStage = pet.baby;
+        pet.getSpecies().currentStage = pet.getSpecies().baby;
         petData.setValue(pet);
     }
 }

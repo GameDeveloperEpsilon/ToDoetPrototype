@@ -8,6 +8,7 @@ public class TodopetModel implements Serializable {
 
     //out of 50
 
+    private PetSpecies species;
     private String name;
     private boolean hygiene;
     private boolean death;
@@ -103,6 +104,10 @@ public class TodopetModel implements Serializable {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public PetSpecies getSpecies() {
+        return species;
     }
 
 }
