@@ -1,4 +1,6 @@
 package com.example.todoetprototype.store;
 
-public class StoreViewModel {
+import androidx.lifecycle.ViewModel;
+
+public class StoreViewModel extends ViewModel {
 }
