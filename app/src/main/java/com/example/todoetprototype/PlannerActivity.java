@@ -1,6 +1,7 @@
 package com.example.todoetprototype;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.example.todoetprototype.Adapter.ToDoAdapter;
 import com.example.todoetprototype.inventory.Model.ToDoModel;
 import com.example.todoetprototype.Utils.DatabaseHandler;
+import com.example.todoetprototype.inventory.UserViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DateFormat;
@@ -45,7 +47,7 @@ public class PlannerActivity extends AppCompatActivity implements DialogCloseLis
         TextView textViewDate = findViewById(R.id.text_date);
         textViewDate.setText(currentDate);
 
-        // initi the database
+        // initialize the database
         db = new DatabaseHandler(this);
         db.openDatabase();
 
@@ -57,7 +59,8 @@ public class PlannerActivity extends AppCompatActivity implements DialogCloseLis
         // RecyclerView improves performance and your app's responsiveness, and it reduces power consumption.
         taskRecyclerView = findViewById(R.id.tasksRecyclerView);
         taskRecyclerView.setLayoutManager(new LinearLayoutManager(this)); // define linear layout manager
-        tasksAdapter = new ToDoAdapter(db, PlannerActivity.this);
+        UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        tasksAdapter = new ToDoAdapter(db, PlannerActivity.this, userViewModel);
         taskRecyclerView.setAdapter(tasksAdapter);
 
         //floating action button. For the button in the corner of the screen to create a new task

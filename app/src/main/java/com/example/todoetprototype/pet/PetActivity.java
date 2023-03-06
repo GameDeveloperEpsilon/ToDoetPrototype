@@ -2,15 +2,11 @@ package com.example.todoetprototype.pet;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
-import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,7 +22,7 @@ public class PetActivity extends AppCompatActivity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private ActivityPetBinding binding;
-    private PetViewModel mMainActivityViewModel;
+    private PetViewModel petViewModel;
 
     // private ImageButton statusButton;
     // private ImageButton playButton;
@@ -71,11 +67,9 @@ public class PetActivity extends AppCompatActivity implements Serializable {
             Toast.makeText(c, "Petting Pet", Toast.LENGTH_SHORT).show();
         });
 
-        //myLoop();
+        petViewModel = new ViewModelProvider(this).get(PetViewModel.class);
 
-        mMainActivityViewModel = new ViewModelProvider(this).get(PetViewModel.class);
-
-        mMainActivityViewModel.getPetData().observe(this, pet -> {
+        petViewModel.getPetData().observe(this, pet -> {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 binding.imageView.setImageDrawable(
@@ -85,7 +79,7 @@ public class PetActivity extends AppCompatActivity implements Serializable {
             }
         });
 
-        mMainActivityViewModel.init();
+        petViewModel.init();
     }
 
     private PetSpecies.PetStages[] generateRandomEgg(int i) {

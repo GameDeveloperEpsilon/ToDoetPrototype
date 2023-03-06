@@ -15,6 +15,8 @@ import com.example.todoetprototype.PlannerActivity;
 import com.example.todoetprototype.inventory.Model.ToDoModel;
 import com.example.todoetprototype.R;
 import com.example.todoetprototype.Utils.DatabaseHandler;
+import com.example.todoetprototype.inventory.UserModel;
+import com.example.todoetprototype.inventory.UserViewModel;
 
 import java.util.List;
 
@@ -23,10 +25,12 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
     private List<ToDoModel> todoList;
     private PlannerActivity activity;
     private DatabaseHandler db;
+    private UserViewModel userViewModel;
 
-    public ToDoAdapter(DatabaseHandler db, PlannerActivity activity){
+    public ToDoAdapter(DatabaseHandler db, PlannerActivity activity, UserViewModel userViewModel){
         this.db = db;
         this.activity = activity;
+        this.userViewModel = userViewModel;
     }
 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
@@ -47,6 +51,11 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     db.updateStatus(item.getId(),1);
+                    UserModel userModel = userViewModel.getUserData().getValue();
+                    if (userModel != null)
+                        userViewModel.updateUser(userModel.getCoins() + 1);
+                    else
+                        System.err.println("ToDoAdapter.onCheckedChanged : userModel is null!");
                 }
                 else{
                     db.updateStatus(item.getId(),0);
