@@ -2,7 +2,7 @@ package com.example.todoetprototype.pet;
 
 import java.io.Serializable;
 
-public class todopet implements Serializable {
+public class TodopetModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -18,7 +18,7 @@ public class todopet implements Serializable {
     private int age;
     private int randomPet = 4;
 
-    public todopet(String name, boolean hygiene, boolean death, int happiness, int hunger, int affection, int passedTime, int age) {
+    public TodopetModel(String name, boolean hygiene, boolean death, int happiness, int hunger, int affection, int passedTime, int age) {
 
         // out of 100
 
