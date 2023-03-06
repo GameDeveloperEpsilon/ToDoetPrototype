@@ -7,14 +7,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.todoetprototype.Adapter.ToDoAdapter;
 import com.example.todoetprototype.inventory.Model.ToDoModel;
 import com.example.todoetprototype.Utils.DatabaseHandler;
+import com.example.todoetprototype.inventory.UserModel;
 import com.example.todoetprototype.inventory.UserViewModel;
+import com.example.todoetprototype.pet.PetActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DateFormat;
@@ -33,6 +39,10 @@ public class PlannerActivity extends AppCompatActivity implements DialogCloseLis
     private DatabaseHandler db;
     private FloatingActionButton fab;
 
+
+
+
+
     // method for disabling the navigation bar
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +51,24 @@ public class PlannerActivity extends AppCompatActivity implements DialogCloseLis
         getSupportActionBar().hide(); // will not show top most navigation bar
 
 
+
+        // Navigate to the calendar activity
+        ImageButton clnbtn = (ImageButton) findViewById(R.id.calendar_icon);
+        clnbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myInt = new Intent(getApplicationContext(), calendarActivity.class);
+            }
+        });
+
+
         // set current date
         Calendar calendar = Calendar.getInstance();
         String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
         TextView textViewDate = findViewById(R.id.text_date);
         textViewDate.setText(currentDate);
 
-        // initialize the database
+        // initi the database
         db = new DatabaseHandler(this);
         db.openDatabase();
 
@@ -59,8 +80,8 @@ public class PlannerActivity extends AppCompatActivity implements DialogCloseLis
         // RecyclerView improves performance and your app's responsiveness, and it reduces power consumption.
         taskRecyclerView = findViewById(R.id.tasksRecyclerView);
         taskRecyclerView.setLayoutManager(new LinearLayoutManager(this)); // define linear layout manager
-        UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-        tasksAdapter = new ToDoAdapter(db, PlannerActivity.this, userViewModel);
+        UserViewModel userViewModel = new ViewModelProvider(this) .get(UserViewModel.class);
+        tasksAdapter = new ToDoAdapter(db, PlannerActivity.this,userViewModel);
         taskRecyclerView.setAdapter(tasksAdapter);
 
         //floating action button. For the button in the corner of the screen to create a new task
@@ -70,6 +91,7 @@ public class PlannerActivity extends AppCompatActivity implements DialogCloseLis
         taskList = db.getAllTasks();
         Collections.reverse(taskList); // reverse elements in an array
         tasksAdapter.setTask(taskList); // add task to recycler view
+
 
 
         //This is a utility class to add swipe to dismiss and drag &drop support to RecyclerView.

@@ -19,5 +19,7 @@
     <string name="tasks">Tasks</string>
     <string name="newTaskDate">Task Date</string>
     <string name="store">Store</string>
+    <string name="forward">Forward</string>
+    <string name="back">Back</string>
 
 </resources>
