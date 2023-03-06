@@ -73,7 +73,7 @@ public class PetActivity extends AppCompatActivity implements Serializable {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 binding.imageView.setImageDrawable(
-                        ResourcesCompat.getDrawable(getResources(), pet.currentStage.getDrawable(), null)
+                        ResourcesCompat.getDrawable(getResources(), pet.getSpecies().currentStage.getDrawable(), null)
                 );
                 //binding.textView2.setText("Updated");
             }

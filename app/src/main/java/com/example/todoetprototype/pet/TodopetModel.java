@@ -23,6 +23,7 @@ public class TodopetModel implements Serializable {
 
         // out of 100
 
+        this.species = new PetSpecies();
         this.name = name;
         this.hygiene = hygiene;
         this.death = death;
