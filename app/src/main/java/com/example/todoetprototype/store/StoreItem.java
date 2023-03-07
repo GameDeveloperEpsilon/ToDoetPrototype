@@ -18,6 +18,7 @@ public class StoreItem extends AppCompatActivity {
     }
 
     //Getters and Setters
+    //
 
     public int getItemID() {
         return itemID;
