@@ -10,10 +10,16 @@ public class PetSpecies implements Serializable {
     PetStages currentStage;
     PetStages egg;
     PetStages baby;
+    PetStages adolescent;
+    PetStages adult;
+    PetStages ancient;
 
     public PetSpecies() {
         egg = PetStages.UNHATCH_SIORDON;
         baby = PetStages.BABY_SIORDON;
+        adolescent = PetStages.ADOLESCENT_SIORDON;
+        adult = PetStages.ADULT_SIORDON;
+        ancient = PetStages.ANCIENT_SIORDON;
         currentStage = egg;
     }
 

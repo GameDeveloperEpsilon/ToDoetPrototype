@@ -57,19 +57,41 @@ public class PetActivity extends AppCompatActivity implements Serializable {
         feedBtn.setOnClickListener((l) -> {
             Context c = getApplicationContext();
             Toast.makeText(c, "Feeding Pet", Toast.LENGTH_SHORT).show();
+            TodopetModel.getInstance().fed = true;
         });
         cleanBtn.setOnClickListener((l) -> {
             Context c = getApplicationContext();
             Toast.makeText(c, "Cleaning Pet", Toast.LENGTH_SHORT).show();
+            TodopetModel.getInstance().cleaned = true;
         });
         petBtn.setOnClickListener((l) -> {
             Context c = getApplicationContext();
             Toast.makeText(c, "Petting Pet", Toast.LENGTH_SHORT).show();
+            TodopetModel.getInstance().petted = true;
         });
 
         petViewModel = new ViewModelProvider(this).get(PetViewModel.class);
 
         petViewModel.getPetData().observe(this, pet -> {
+
+            if (pet.isHygiene()) {
+                Toast.makeText(this, "Your pet is clean!", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(this, "Your pet is dirty!", Toast.LENGTH_SHORT).show();
+            }
+
+            if (pet.getHunger() < 5) {
+                Toast.makeText(this, "Your pet is hungry!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Hunger: " + pet.getHunger(), Toast.LENGTH_SHORT).show();
+            }
+
+            if (pet.getHappiness() < 5) {
+                Toast.makeText(this, "Your pet is unhappy!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Happiness: " + pet.getHappiness(), Toast.LENGTH_SHORT).show();
+            }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 binding.imageView.setImageDrawable(

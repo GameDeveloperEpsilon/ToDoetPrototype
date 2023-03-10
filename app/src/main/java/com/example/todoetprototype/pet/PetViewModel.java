@@ -12,14 +12,13 @@ import java.util.Objects;
 public class PetViewModel extends ViewModel {
 
     private MutableLiveData<TodopetModel> petData = new MutableLiveData<>();
-    //private CityDataProvider cities = new CityDataProvider();
 
     private int currentIndex = 0;
-    private long delay = 5000L;
+    private long delay = 20000L;
 
     public void init() {
-        //cities.buildCities();
-        petData.setValue(new TodopetModel("Tom", false, false, 7, 7, 8, 7, 3));
+
+        petData.setValue(TodopetModel.getInstance());
         myLoop();
     }
 
@@ -46,7 +45,43 @@ public class PetViewModel extends ViewModel {
             System.err.println("Pet is null");
             return;
         }
-        pet.getSpecies().currentStage = pet.getSpecies().baby;
+
+        // If pet was not cleaned, make un-hygienic.
+        if (pet.cleaned) {
+            pet.setHygiene(true);
+            pet.cleaned = false;
+        } else {
+            pet.setHygiene(false);
+        }
+
+        if (pet.fed) {
+            pet.setHunger(10);
+            pet.fed = false;
+        } else {
+            pet.setHunger(pet.getHunger() - 1);
+        }
+
+        if (pet.petted) {
+            pet.setHappiness(10);
+            pet.petted = false;
+        } else {
+            pet.setHappiness(pet.getHappiness() - 1);
+        }
+
+        // Update pet appearance based on stage
+        if (pet.getSpecies().currentStage == pet.getSpecies().egg) {
+            pet.getSpecies().currentStage = pet.getSpecies().baby;
+        }
+        else if (pet.getSpecies().currentStage == pet.getSpecies().baby) {
+            pet.getSpecies().currentStage = pet.getSpecies().adolescent;
+        }
+        else if (pet.getSpecies().currentStage == pet.getSpecies().adolescent) {
+            pet.getSpecies().currentStage = pet.getSpecies().adult;
+        }
+        else if (pet.getSpecies().currentStage == pet.getSpecies().adult) {
+            pet.getSpecies().currentStage = pet.getSpecies().ancient;
+        }
+
         petData.setValue(pet);
     }
 }
