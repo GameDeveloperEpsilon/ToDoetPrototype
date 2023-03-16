@@ -36,7 +36,6 @@ public class AddNewTask extends BottomSheetDialogFragment {
     private Button newTaskSaveButton;
     private TextView mDisplayDate;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
-
     private DatabaseHandler db;
 
     public static AddNewTask newInstance(){
@@ -56,34 +55,34 @@ public class AddNewTask extends BottomSheetDialogFragment {
                              @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.new_task, container, false);
-        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        Objects.requireNonNull(getDialog()).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         return view;
     }
 
-    //It is known that Intents are used in Android to pass to the data from one activity to another. But there is one another way, that can be used to pass the data from
-    // one activity to another in a better way and less code space ie by using Bundles in Android.
-    //Activities have the ability, under special circumstances, to restore themselves to a previous state using the data stored in this bundle.
+    // It is known that Intents are used in Android to pass to the data from one activity to another.
+    // But there is one another way, that can be used to pass the data from one activity to another
+    // in a better way and less code space ie by using Bundles in Android.
+    // Activities have the ability, under special circumstances, to restore themselves to a previous
+    // state using the data stored in this bundle.
     // If there is no available instance data, the savedInstanceState will be null.
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        newTaskText = Objects.requireNonNull(getView()).findViewById(R.id.newTaskText);
-        newTaskSaveButton = getView().findViewById(R.id.newTaskButton);
-        mDisplayDate = (TextView) view.findViewById(R.id.newTaskDate);
+        newTaskText = requireView().findViewById(R.id.newTaskText);
+        newTaskSaveButton = requireView().findViewById(R.id.newTaskButton);
+        mDisplayDate = view.findViewById(R.id.newTaskDate);
 
-        mDisplayDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar cal = Calendar.getInstance();
-                int year = cal.get(Calendar.YEAR);
-                int month = cal.get(Calendar.MONTH);
-                int day = cal.get(Calendar.DAY_OF_MONTH);
+        mDisplayDate.setOnClickListener(dateDisplayView -> {
+            Calendar cal = Calendar.getInstance();
+            int year = cal.get(Calendar.YEAR);
+            int month = cal.get(Calendar.MONTH);
+            int day = cal.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog dialog = new DatePickerDialog(getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth,mDateSetListener,year,month,day);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
-            }
+            DatePickerDialog dialog = new DatePickerDialog(getContext(),
+                    android.R.style.Theme_Holo_Light_Dialog_MinWidth,mDateSetListener,year,month,day);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
         });
 
         mDateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -95,7 +94,6 @@ public class AddNewTask extends BottomSheetDialogFragment {
 
                 String date = month + "/" + dayOfMonth + "/" + year;
                 mDisplayDate.setText(date);
-
             }
         };
 
@@ -109,9 +107,11 @@ public class AddNewTask extends BottomSheetDialogFragment {
             newTaskText.setText(task);
             assert task != null;
             if(task.length()>0)
-                newTaskSaveButton.setTextColor(ContextCompat.getColor(Objects.requireNonNull(getContext()), com.google.android.material.R.color.design_default_color_primary_dark));
+                newTaskSaveButton.setTextColor(ContextCompat.getColor(requireContext(),
+                        com.google.android.material.R.color.design_default_color_primary_dark));
         }
-        //// initi the database
+
+        // Initialize the database
         db = new DatabaseHandler(getActivity());
         db.openDatabase();
 
@@ -128,7 +128,8 @@ public class AddNewTask extends BottomSheetDialogFragment {
                 }
                 else{
                     newTaskSaveButton.setEnabled(true);
-                    newTaskSaveButton.setTextColor(ContextCompat.getColor(Objects.requireNonNull(getContext()), com.google.android.material.R.color.design_default_color_primary_dark));
+                    newTaskSaveButton.setTextColor(ContextCompat.getColor(requireContext(),
+                            com.google.android.material.R.color.design_default_color_primary_dark));
                 }
             }
 
@@ -138,26 +139,26 @@ public class AddNewTask extends BottomSheetDialogFragment {
         });
 
         final boolean finalIsUpdate = isUpdate;
-        newTaskSaveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String text = newTaskText.getText().toString();
-                if(finalIsUpdate){
-                    db.updateTask(bundle.getInt("id"), text);
-                }
-                else {
-                    ToDoModel task = new ToDoModel();
-                    task.setTask(text);
-                    task.setStatus(0);
-                    db.insertTask(task);
-                }
-                dismiss();
+        newTaskSaveButton.setOnClickListener(saveTaskView -> {
+            String text = newTaskText.getText().toString();
+            String date = mDisplayDate.getText().toString();
+            if(finalIsUpdate){
+                db.updateTask(bundle.getInt("id"), text);
+                db.updateDate(bundle.getInt("id"), date);
             }
+            else {
+                ToDoModel task = new ToDoModel();
+                task.setTask(text);
+                task.setStatus(0);
+                task.setDate(date);
+                db.insertTask(task);
+            }
+            dismiss();
         });
     }
 
     @Override
-    public void onDismiss(@NonNull DialogInterface dialog){
+    public void onDismiss(@NonNull DialogInterface dialog) {
         Activity activity = getActivity();
         if(activity instanceof DialogCloseListener)
             ((DialogCloseListener)activity).handleDialogClose(dialog);

@@ -15,27 +15,32 @@ import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
-    private static final int VERSION = 1;
+    private static final int CURRENT_VERSION = 2;
     private static final String NAME = "toDoListDatabase";
     private static final String TODO_TABLE = "todo";
     private static final String ID = "id";
     private static final String TASK = "task";
     private static final String STATUS = "status";
-    private static final String CREATE_TODO_TABLE = "CREATE TABLE " + TODO_TABLE + "(" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + TASK + " TEXT, " + STATUS + " INTEGER)";
+    private static final String DATE = "date";
+    private static final String CREATE_TODO_TABLE =
+            "CREATE TABLE " + TODO_TABLE + "(" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + TASK + " TEXT, " + STATUS + " INTEGER, " + DATE + " TEXT)";
 
     private SQLiteDatabase db;
 
     public DatabaseHandler(Context context) {
-        super(context, NAME, null, VERSION);
+        super(context, NAME, null, CURRENT_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TODO_TABLE);
+
+        System.err.println("DB version : " + db.getVersion());
+        //db.execSQL("ALTER TABLE " + TODO_TABLE + " ADD " + DATE + " datatype; ");
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TODO_TABLE);
         // Create tables again
@@ -46,15 +51,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db = this.getWritableDatabase();
     }
 
-    public void insertTask(ToDoModel task){
+    public void insertTask(ToDoModel task) {
         ContentValues cv = new ContentValues();
         cv.put(TASK, task.getTask());
         cv.put(STATUS, 0);
+        cv.put(DATE, task.getDate());
         db.insert(TODO_TABLE, null, cv);
     }
 
     @SuppressLint("Range")
-    public List<ToDoModel> getAllTasks(){
+    public List<ToDoModel> getAllTasks() {
         List<ToDoModel> taskList = new ArrayList<>();
         Cursor cur = null;
         db.beginTransaction();
@@ -67,6 +73,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         task.setId(cur.getInt(cur.getColumnIndex(ID)));
                         task.setTask(cur.getString(cur.getColumnIndex(TASK)));
                         task.setStatus(cur.getInt(cur.getColumnIndex(STATUS)));
+                        task.setDate(cur.getString(cur.getColumnIndex(DATE)));
                         taskList.add(task);
                     }
                     while(cur.moveToNext());
@@ -81,7 +88,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return taskList;
     }
 
-    public void updateStatus(int id, int status){
+    public void updateStatus(int id, int status) {
         ContentValues cv = new ContentValues();
         cv.put(STATUS, status);
         db.update(TODO_TABLE, cv, ID + "= ?", new String[] {String.valueOf(id)});
@@ -93,7 +100,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.update(TODO_TABLE, cv, ID + "= ?", new String[] {String.valueOf(id)});
     }
 
-    public void deleteTask(int id){
+    public void updateDate(int id, String date) {
+        ContentValues cv = new ContentValues();
+        cv.put(DATE, date);
+        db.update(TODO_TABLE, cv, ID + "= ?", new String[] {String.valueOf(id)});
+    }
+
+
+    public void deleteTask(int id) {
         db.delete(TODO_TABLE, ID + "= ?", new String[] {String.valueOf(id)});
     }
 }

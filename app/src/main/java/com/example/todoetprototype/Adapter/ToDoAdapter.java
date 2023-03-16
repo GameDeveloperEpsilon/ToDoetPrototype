@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,10 +28,10 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
     private DatabaseHandler db;
     private UserViewModel userViewModel;
 
-    public ToDoAdapter(DatabaseHandler db, PlannerActivity activity, UserViewModel userViewModel){
+    public ToDoAdapter(DatabaseHandler db, PlannerActivity activity){
         this.db = db;
         this.activity = activity;
-        this.userViewModel = userViewModel;
+        this.userViewModel = activity.getUserViewModel();
     }
 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
@@ -46,38 +47,34 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         ToDoModel item = todoList.get(position); // in the todolist you get the item
         holder.task.setText(item.getTask()); // set the task from the item position
         holder.task.setChecked(toBoolean(item.getStatus())); // checks the status of the item if it is checked or not
-        holder.task.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    db.updateStatus(item.getId(),1);
-                    UserModel userModel = userViewModel.getUserData().getValue();
-                    if (userModel != null)
-                        userViewModel.updateUser(userModel.getCoins() + 1);
-                    else
-                        System.err.println("ToDoAdapter.onCheckedChanged : userModel is null!");
-                }
-                else{
-                    db.updateStatus(item.getId(),0);
-                }
-
+        holder.task.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked){
+                db.updateStatus(item.getId(),1);
+                UserModel userModel = userViewModel.getUserData().getValue();
+                if (userModel != null)
+                    userViewModel.updateUser(userModel.getCoins() + 1);
+                else
+                    System.err.println("ToDoAdapter.onCheckedChanged : userModel is null!");
+            }
+            else{
+                db.updateStatus(item.getId(),0);
             }
         });
-
+        holder.dueDate.setText(item.getDate());  // Set the due date of the task.
     }
 
-    //sets the getItem count, this will let it know how many items it needs to print
+    // Sets the getItem count, this will let it know how many items it needs to print
 
     public int getItemCount(){
         return todoList.size();
     }
 
-    // sense the checkmark is boolean type, need to convert to boolean
+    // Since the checkmark is boolean type, need to convert to boolean
     private boolean toBoolean(int n){
         return n!=0;
     }
 
-    //for dummy data
+    // For dummy data
 
     public void setTask(List<ToDoModel> todoList){
         this.todoList = todoList;
@@ -88,8 +85,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         return activity;
     }
 
-    // delete item from activity
-
+    // Delete item from activity
     public void deleteItem(int position) {
         ToDoModel item = todoList.get(position);
         db.deleteTask(item.getId()); // id of item being deleted
@@ -97,7 +93,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         notifyItemRemoved(position); // notifies that the item will be removed and will automatically update view
     }
 
-    //update edited items
+    // Update edited items
     public void editItem(int position){
         ToDoModel item = todoList.get(position);
         Bundle bundle = new Bundle();
@@ -108,13 +104,15 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         fragment.show(activity.getSupportFragmentManager(), AddNewTask.TAG);
     }
 
-    // for the checkbox in the mainactivity
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    // This class represents the task_layout layout. This is how a task appears to the user.
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         CheckBox task;
+        TextView dueDate;
 
         ViewHolder(View view){
             super(view);
             task = view.findViewById(R.id.todoCheckBox);
+            dueDate = view.findViewById(R.id.dueDate);
         }
     }
 }
