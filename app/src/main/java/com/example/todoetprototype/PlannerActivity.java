@@ -14,8 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todoetprototype.Adapter.ToDoAdapter;
+import com.example.todoetprototype.Model.ToDoModel;
 import com.example.todoetprototype.Utils.DatabaseHandler;
-import com.example.todoetprototype.inventory.Model.ToDoModel;
+
 import com.example.todoetprototype.inventory.UserViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

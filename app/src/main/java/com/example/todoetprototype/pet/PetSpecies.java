@@ -26,8 +26,8 @@ public class PetSpecies implements Serializable {
     public enum PetStages {
 
         UNHATCH_SIORDON(1, "Siordon", 2, -1, R.drawable.axoeggtest),
-        BABY_SIORDON(2, "Siordon", 3, 1, R.drawable.axostageonetest),
-        ADOLESCENT_SIORDON(3, "Siordon", 4, 2, R.drawable.axostageonetest),
+        BABY_SIORDON(2, "Siordon", 3, 1, R.drawable.baby_siordon_image),
+        ADOLESCENT_SIORDON(3, "Siordon", 4, 2, R.drawable.adolescent_siordon_image),
         ADULT_SIORDON(4, "Siordon", 5, 3, R.drawable.axostageonetest),
         ANCIENT_SIORDON(5, "Siordon", -1, 4, R.drawable.axostageonetest),
 
