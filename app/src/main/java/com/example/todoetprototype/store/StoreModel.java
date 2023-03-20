@@ -61,6 +61,33 @@ public class StoreModel extends AppCompatActivity {
     public void setItemcategory(String itemcategory) {
         this.itemcategory = itemcategory;
     }
+
+
+    // store items
+
+
+    public enum StoreItem {
+        FOOD(1, 4, "todofood", "Delicious food for pets", "FOOD"),
+        POTION(2, 3, "NA","NA","POTION"),
+        MEDICINE(3, 3, "NA","NA","MEDICINE");
+
+        private final int itemID;
+        private final int itemprice;
+        private final String itemname;
+        private final String itemdescription;
+        private final String itemcategory;
+
+        StoreItem(int itemID, int itemprice, String itemname, String itemdescription, String itemcategory) {
+
+            this.itemID = itemID;
+            this.itemprice = itemprice;
+            this.itemname = itemname;
+            this.itemdescription = itemdescription;
+            this.itemcategory = itemcategory;
+        }
+    }
+
+
 }
 
 

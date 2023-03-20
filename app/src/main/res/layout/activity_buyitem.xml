@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/boughtitemtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item Name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/boughtitemimage"
+        app:layout_constraintBottom_toTopOf="@+id/coinamount"
+        tools:layout_editor_absoluteY="116dp" />
+
+    <ImageView
+        android:id="@+id/boughtitemimage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/boughtitemtext"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/berryimage" />
+
+    <Button
+        android:id="@+id/buyitembtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Buy Item"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/boughtitemtext"
+        app:layout_constraintVertical_bias="0.077" />
+
+    <TextView
+        android:id="@+id/coinamount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="20 coin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/boughtitemtext"
+        app:layout_constraintBottom_toTopOf="@id/buyitembtn"
+        tools:layout_editor_absoluteY="158dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
