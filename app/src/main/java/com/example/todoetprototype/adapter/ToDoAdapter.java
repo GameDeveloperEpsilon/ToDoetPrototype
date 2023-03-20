@@ -1,4 +1,4 @@
-package com.example.todoetprototype.Adapter;
+package com.example.todoetprototype.adapter;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -6,16 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todoetprototype.AddNewTask;
-import com.example.todoetprototype.PlannerActivity;
-import com.example.todoetprototype.Model.ToDoModel;
+import com.example.todoetprototype.planner.AddNewTask;
+import com.example.todoetprototype.planner.PlannerActivity;
+import com.example.todoetprototype.model.ToDoModel;
 import com.example.todoetprototype.R;
-import com.example.todoetprototype.Utils.DatabaseHandler;
+import com.example.todoetprototype.utils.DatabaseHandler;
 import com.example.todoetprototype.inventory.UserModel;
 import com.example.todoetprototype.inventory.UserViewModel;
 

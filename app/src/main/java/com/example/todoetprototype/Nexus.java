@@ -9,7 +9,9 @@ import android.widget.Toast;
 
 import com.example.todoetprototype.inventory.InventoryActivity;
 import com.example.todoetprototype.pet.PetActivity;
+import com.example.todoetprototype.planner.PlannerActivity;
 import com.example.todoetprototype.store.StoreActivity;
+import com.example.todoetprototype.store.StoreItem;
 
 public class Nexus extends AppCompatActivity {
 
@@ -19,7 +21,7 @@ public class Nexus extends AppCompatActivity {
         setContentView(R.layout.activity_nexus);
 
         // Navigate to the pet page
-                Button petPageBtn = findViewById(R.id.petPageBtn);
+        Button petPageBtn = findViewById(R.id.petPageBtn);
         petPageBtn.setOnClickListener(view -> {
             Toast.makeText(this, "Changing To Pet Activity", Toast.LENGTH_SHORT).show();
             Intent changeActivities = new Intent(this, PetActivity.class);

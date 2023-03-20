@@ -1,4 +1,4 @@
-package com.example.todoetprototype;
+package com.example.todoetprototype.planner;
 
 import androidx.appcompat.app.AppCompatActivity;
 

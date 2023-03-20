@@ -1,4 +1,4 @@
-package com.example.todoetprototype;
+package com.example.todoetprototype.planner;
 
 
 import android.app.AlertDialog;
@@ -14,7 +14,8 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todoetprototype.Adapter.ToDoAdapter;
+import com.example.todoetprototype.adapter.ToDoAdapter;
+import com.example.todoetprototype.R;
 
 // delete with swiping left and right
 

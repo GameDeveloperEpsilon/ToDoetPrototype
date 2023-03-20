@@ -1,4 +1,4 @@
-package com.example.todoetprototype;
+package com.example.todoetprototype.planner;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -22,8 +22,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
-import com.example.todoetprototype.Model.ToDoModel;
-import com.example.todoetprototype.Utils.DatabaseHandler;
+import com.example.todoetprototype.DialogCloseListener;
+import com.example.todoetprototype.model.ToDoModel;
+import com.example.todoetprototype.R;
+import com.example.todoetprototype.utils.DatabaseHandler;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.Calendar;

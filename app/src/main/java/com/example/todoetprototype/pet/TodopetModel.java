@@ -17,7 +17,7 @@ public class TodopetModel implements Serializable {
     //out of 50
 
     private PetSpecies species;
-    private String name;
+    private String petName;
     private boolean hygiene;  public boolean cleaned;
     private boolean death;
     private int happiness;  public boolean petted;
@@ -27,12 +27,12 @@ public class TodopetModel implements Serializable {
     private int age;
     private int randomPet = 4;
 
-    private TodopetModel(String name, boolean hygiene, boolean death, int happiness, int hunger, int affection, int passedTime, int age) {
+    private TodopetModel(String petName, boolean hygiene, boolean death, int happiness, int hunger, int affection, int passedTime, int age) {
 
         // out of 100
 
         this.species = new PetSpecies();
-        this.name = name;
+        this.petName = petName;
         this.hygiene = hygiene;
         this.death = death;
         this.happiness = happiness;
@@ -51,12 +51,12 @@ public class TodopetModel implements Serializable {
 
     // GETTER AND SETTER
 
-    public String getName() {
-        return name;
+    public String getPetName() {
+        return petName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPetName(String petName) {
+        this.petName = petName;
     }
 
     public boolean isHygiene() {

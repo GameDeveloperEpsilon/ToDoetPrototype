@@ -1,4 +1,4 @@
-package com.example.todoetprototype.Model;
+package com.example.todoetprototype.model;
 
 public class ToDoModel {
     private int id, status; // Id name of the task to execute query

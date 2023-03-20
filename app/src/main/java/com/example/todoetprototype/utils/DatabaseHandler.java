@@ -1,4 +1,4 @@
-package com.example.todoetprototype.Utils;
+package com.example.todoetprototype.utils;
 
 
 import android.annotation.SuppressLint;
@@ -8,7 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.todoetprototype.Model.ToDoModel;
+import com.example.todoetprototype.model.ToDoModel;
 
 import java.util.ArrayList;
 import java.util.List;

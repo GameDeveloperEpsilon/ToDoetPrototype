@@ -49,10 +49,10 @@ public class PetSpecies implements Serializable {
         private final String speciesName;
         private final int evolve_to;
 
-        PetStages(int uniqueID, String speciesName, int evolve_to, int evolve_from, int drawable) {
+        PetStages(int petID, String speciesName, int evolve_to, int evolve_from, int drawable) {
 
             this.drawable = drawable;
-            this.uniqueID = uniqueID;
+            this.uniqueID = petID;
             this.speciesName = speciesName;
             this.evolve_to = evolve_to;
         }

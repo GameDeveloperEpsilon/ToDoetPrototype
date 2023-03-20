@@ -1,4 +1,4 @@
-package com.example.todoetprototype;
+package com.example.todoetprototype.planner;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,9 +13,11 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todoetprototype.Adapter.ToDoAdapter;
-import com.example.todoetprototype.Model.ToDoModel;
-import com.example.todoetprototype.Utils.DatabaseHandler;
+import com.example.todoetprototype.adapter.ToDoAdapter;
+import com.example.todoetprototype.DialogCloseListener;
+import com.example.todoetprototype.model.ToDoModel;
+import com.example.todoetprototype.R;
+import com.example.todoetprototype.utils.DatabaseHandler;
 
 import com.example.todoetprototype.inventory.UserViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
