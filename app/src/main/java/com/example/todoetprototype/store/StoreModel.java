@@ -5,18 +5,18 @@ import androidx.appcompat.app.AppCompatActivity;
 public class StoreModel extends AppCompatActivity {
 
     private int itemID;
-    private int itemprice;
-    private String itemname;
-    private String itemdescription;
-    private String itemcategory;
+    private int itemPrice;
+    private String itemName;
+    private String itemDescription;
+    private String itemCategory;
 
 
-    public StoreModel(int itemID, int itemprice, String itemname, String itemdescription, String itemcategory) {
+    public StoreModel(int itemID, int itemPrice, String itemName, String itemDescription, String itemCategory) {
         this.itemID = itemID;
-        this.itemprice = itemprice;
-        this.itemname = itemname;
-        this.itemdescription = itemdescription;
-        this.itemcategory = itemcategory;;
+        this.itemPrice = itemPrice;
+        this.itemName = itemName;
+        this.itemDescription = itemDescription;
+        this.itemCategory = itemCategory;;
     }
 
     //Getters and Setters
@@ -30,36 +30,36 @@ public class StoreModel extends AppCompatActivity {
         this.itemID = itemID;
     }
 
-    public int getItemprice() {
-        return itemprice;
+    public int getItemPrice() {
+        return itemPrice;
     }
 
-    public void setItemprice(int itemprice) {
-        this.itemprice = itemprice;
+    public void setItemPrice(int itemPrice) {
+        this.itemPrice = itemPrice;
     }
 
-    public String getItemname() {
-        return itemname;
+    public String getItemName() {
+        return itemName;
     }
 
-    public void setItemname(String itemname) {
-        this.itemname = itemname;
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
-    public String getItemdescription() {
-        return itemdescription;
+    public String getItemDescription() {
+        return itemDescription;
     }
 
-    public void setItemdescription(String itemdescription) {
-        this.itemdescription = itemdescription;
+    public void setItemDescription(String itemDescription) {
+        this.itemDescription = itemDescription;
     }
 
-    public String getItemcategory() {
-        return itemcategory;
+    public String getItemCategory() {
+        return itemCategory;
     }
 
-    public void setItemcategory(String itemcategory) {
-        this.itemcategory = itemcategory;
+    public void setItemCategory(String itemCategory) {
+        this.itemCategory = itemCategory;
     }
 
 

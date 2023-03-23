@@ -27,21 +27,22 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
     private DatabaseHandler db;
     private UserViewModel userViewModel;
 
-    public ToDoAdapter(DatabaseHandler db, PlannerActivity activity){
+    public ToDoAdapter(DatabaseHandler db, PlannerActivity activity) {
         this.db = db;
         this.activity = activity;
         this.userViewModel = activity.getUserViewModel();
     }
 
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.task_layout, parent, false);
         return new ViewHolder(itemView);
     }
 
     // standard implementation of recycler view adaptor
-
-    public void onBindViewHolder(ViewHolder holder, int position){
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
         db.openDatabase(); // open database
         ToDoModel item = todoList.get(position); // in the todolist you get the item
         holder.task.setText(item.getTask()); // set the task from the item position
@@ -63,19 +64,19 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
     }
 
     // Sets the getItem count, this will let it know how many items it needs to print
-
-    public int getItemCount(){
+    @Override
+    public int getItemCount() {
         return todoList.size();
     }
 
     // Since the checkmark is boolean type, need to convert to boolean
-    private boolean toBoolean(int n){
+    private boolean toBoolean(int n) {
         return n!=0;
     }
 
     // For dummy data
 
-    public void setTask(List<ToDoModel> todoList){
+    public void setTaskList(List<ToDoModel> todoList) {
         this.todoList = todoList;
         notifyDataSetChanged(); // so recycler view is updated
     }
@@ -93,7 +94,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
     }
 
     // Update edited items
-    public void editItem(int position){
+    public void editItem(int position) {
         ToDoModel item = todoList.get(position);
         Bundle bundle = new Bundle();
         bundle.putInt("id",item.getId());
@@ -108,7 +109,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         CheckBox task;
         TextView dueDate;
 
-        ViewHolder(View view){
+        ViewHolder(View view) {
             super(view);
             task = view.findViewById(R.id.todoCheckBox);
             dueDate = view.findViewById(R.id.dueDate);

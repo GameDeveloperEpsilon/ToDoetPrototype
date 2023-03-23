@@ -3,7 +3,6 @@ package com.example.todoetprototype.planner;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -76,7 +75,7 @@ public class PlannerActivity extends AppCompatActivity implements DialogCloseLis
         // RecyclerView improves performance and your app's responsiveness, and it reduces power consumption.
         taskRecyclerView = findViewById(R.id.tasksRecyclerView);
         taskRecyclerView.setLayoutManager(new LinearLayoutManager(this)); // define linear layout manager
-        tasksAdapter = new ToDoAdapter(db, PlannerActivity.this);
+        tasksAdapter = new ToDoAdapter(db, this);
         taskRecyclerView.setAdapter(tasksAdapter);
 
         // Floating action button. For the button in the corner of the screen to create a new task
@@ -85,7 +84,7 @@ public class PlannerActivity extends AppCompatActivity implements DialogCloseLis
         // Updates task list
         taskList = db.getAllTasks();
         Collections.reverse(taskList); // reverse elements in an array
-        tasksAdapter.setTask(taskList); // add task to recycler view
+        tasksAdapter.setTaskList(taskList); // add task to recycler view
 
 
 
@@ -95,12 +94,9 @@ public class PlannerActivity extends AppCompatActivity implements DialogCloseLis
         itemTouchHelper.attachToRecyclerView(taskRecyclerView);
 
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AddNewTask.newInstance().show(getSupportFragmentManager(), AddNewTask.TAG);
-            }
-        });
+        fab.setOnClickListener(
+                v -> AddNewTask.newInstance().show(getSupportFragmentManager(), AddNewTask.TAG)
+        );
 
     }
 
@@ -108,7 +104,7 @@ public class PlannerActivity extends AppCompatActivity implements DialogCloseLis
     public void handleDialogClose(DialogInterface dialog){
         taskList = db.getAllTasks();
         Collections.reverse(taskList);
-        tasksAdapter.setTask(taskList);
+        tasksAdapter.setTaskList(taskList);
         tasksAdapter.notifyDataSetChanged();
     }
 
