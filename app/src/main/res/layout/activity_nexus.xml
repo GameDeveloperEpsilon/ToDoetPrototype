@@ -4,46 +4,141 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#94b6fe"
     tools:context=".Nexus">
 
-    <Button
+    <ImageButton
         android:id="@+id/petPageBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
+        android:layout_marginTop="260dp"
+        android:background="@null"
+        android:src="@drawable/todoet_button_pet"
         android:text="Pet Page"
-        app:layout_constraintBottom_toTopOf="@+id/inventoryPageBtn"
+        app:layout_constraintBottom_toTopOf="@+id/textViewpet"
+        app:layout_constraintEnd_toStartOf="@+id/plannerPageBtn"
+        app:layout_constraintHorizontal_bias="0.325"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.502" />
+        app:layout_constraintVertical_bias="0.0" />
 
-    <Button
+    <ImageButton
         android:id="@+id/plannerPageBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="236dp"
+        android:layout_marginEnd="68dp"
+        android:background="@null"
+        android:src="@drawable/todoet_button_todo"
         android:text="Planner Page"
-        app:layout_constraintBottom_toTopOf="@+id/storePageBtn"
+        app:layout_constraintBottom_toTopOf="@+id/textViewplanner"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/petPageBtn"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.533" />
 
-    <Button
+
+    <ImageButton
         android:id="@+id/inventoryPageBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginBottom="500dp"
+        android:layout_marginBottom="12dp"
+        android:background="@null"
+        android:src="@drawable/todoet_button_inventory"
         android:text="Inventory"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/textViewinventory"
+        app:layout_constraintEnd_toStartOf="@+id/storePageBtn"
+        app:layout_constraintHorizontal_bias="0.32"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/storePageBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="64dp"
-        android:layout_marginBottom="500dp"
+        android:layout_marginEnd="68dp"
+        android:layout_marginBottom="196dp"
+        android:background="@null"
+        android:src="@drawable/todoet_button_shop"
         android:text="Store"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewpet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="68dp"
+        android:text="Pet"
+        android:textColor="#FFFFFF"
+        android:textSize="32dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/inventoryPageBtn"
+        app:layout_constraintEnd_toStartOf="@+id/textViewplanner"
+        app:layout_constraintHorizontal_bias="0.367"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewplanner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="68dp"
+        android:text="Todo List"
+        android:textColor="#FFFFFF"
+        android:textSize="32dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/storePageBtn"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewinventory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="144dp"
+        android:text="Inventory"
+        android:textColor="#FFFFFF"
+        android:textSize="32dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/textViewShop"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewShop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="140dp"
+        android:text="Shop"
+        android:textColor="#FFFFFF"
+        android:textSize="32dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="413dp"
+        android:layout_height="75dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewinventory"
+        app:layout_constraintVertical_bias="0.97"
+        app:menu="@menu/bottom_nav_menu" />
+
+    <ImageView
+        android:id="@+id/imageViewtodoet"
+        android:layout_width="413dp"
+        android:layout_height="259dp"
+        app:layout_constraintBottom_toTopOf="@+id/petPageBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/todoet_home_logo" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
