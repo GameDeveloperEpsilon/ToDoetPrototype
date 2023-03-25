@@ -44,6 +44,8 @@ public class StoreItemAdapter extends RecyclerView.Adapter<StoreItemAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         StoreModel item = storeItemList.get(position); // in the todolist you get the item
         holder.storeItemName.setText(item.getItemName()); // set the task from the item position
+        holder.storeItemDescription.setText(item.getItemDescription()); // set the description
+        holder.storeItemPrice.setText(String.valueOf(item.getItemPrice())); // set the price
     }
 
     @Override
@@ -59,11 +61,14 @@ public class StoreItemAdapter extends RecyclerView.Adapter<StoreItemAdapter.View
 
         // Item name
         TextView storeItemName;
-        // Item cost
+        TextView storeItemDescription;
+        TextView storeItemPrice;
 
         ViewHolder(View view){
             super(view);
             storeItemName = view.findViewById(R.id.storeItemName);
+            storeItemDescription = view.findViewById(R.id.storeItemDescription);
+            storeItemPrice = view.findViewById(R.id.storeItemPrice);
         }
     }
 }

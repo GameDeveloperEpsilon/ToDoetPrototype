@@ -42,9 +42,11 @@ public class StoreActivity extends AppCompatActivity {
         storeItemAdapter = new StoreItemAdapter(new DatabaseHandler(this), this);
         storeItemsView.setAdapter(storeItemAdapter);
 
-        // Test adding an item
+        // Test adding some items
         storeItemList = new ArrayList<>();
         storeItemList.add(new StoreModel(1, 5, "Test Item", "Some description", "Category A"));
+        storeItemList.add(new StoreModel(2, 10, "Toothbrush", "A brush for cleaning teeth", "Category B"));
         storeItemAdapter.setStoreItemList(storeItemList);
+
     }
 }
