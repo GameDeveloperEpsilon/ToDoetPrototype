@@ -75,25 +75,6 @@ public class PetActivity extends AppCompatActivity implements Serializable {
 
         petViewModel.getPetData().observe(this, pet -> {
 
-            if (pet.isHygiene() > 20) {
-                Toast.makeText(this, "Your pet is clean!", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                Toast.makeText(this, "Your pet is dirty!", Toast.LENGTH_SHORT).show();
-            }
-
-            if (pet.getHunger() > 20) {
-                Toast.makeText(this, "Hunger: " + pet.getHunger(), Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Your pet is hungry!", Toast.LENGTH_SHORT).show();
-            }
-
-//            if (pet.getHappiness() < 5) {
-//                Toast.makeText(this, "Your pet is unhappy!", Toast.LENGTH_SHORT).show();
-//            } else {
-//                Toast.makeText(this, "Happiness: " + pet.getHappiness(), Toast.LENGTH_SHORT).show();
-//            }
-
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 binding.imageView.setImageDrawable(
                         ResourcesCompat.getDrawable(getResources(), pet.currentStage.getDrawable(), null)
@@ -101,7 +82,7 @@ public class PetActivity extends AppCompatActivity implements Serializable {
                 //binding.textView2.setText("Updated");
             }
 
-            // Handle Data Progess Bars
+            // Handle Data Progress Bars
             ProgressBar hungerBar = findViewById(R.id.hungerbar);
             hungerBar.setProgress(PetModel.getInstance().hunger);
 
