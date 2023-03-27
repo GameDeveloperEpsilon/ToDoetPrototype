@@ -328,22 +328,4 @@ public class PetModel implements Serializable {
         return (this.getDaysOld() == 0);
     }
 
-    // possible animal values from enum Animal. Randomizes the pet species
-    // This array will be of size 7.
-
-    static PetStages[] generateRandomEgg(int numOfSpecies){
-
-        PetStages[] petOptions = PetStages.values();
-
-        Random random = new Random(System.currentTimeMillis());
-
-        PetStages[] petStages = new PetStages[numOfSpecies];
-
-        for (int i = 0; i < numOfSpecies; i++){
-            int index = random.nextInt(petOptions.length);
-            petStages[i] = petOptions[index];
-        }
-        return petStages;
-    }
-
 }
