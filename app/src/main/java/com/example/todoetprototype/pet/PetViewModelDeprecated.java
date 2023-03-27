@@ -7,12 +7,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import java.util.Date;
-import java.util.Objects;
+public class PetViewModelDeprecated extends ViewModel {
 
-public class PetViewModel extends ViewModel {
-
-    private MutableLiveData<TodopetModel> petData = new MutableLiveData<>();
+    private MutableLiveData<TodopetViewModel> petData = new MutableLiveData<>();
 
     private int currentIndex = 0;
     private long delay = 20000L;
@@ -20,11 +17,11 @@ public class PetViewModel extends ViewModel {
 
     public void init() {
 
-        petData.setValue(TodopetModel.getInstance());
+        petData.setValue(TodopetViewModel.getInstance());
         myLoop();
     }
 
-    public LiveData<TodopetModel> getPetData() {
+    public LiveData<TodopetViewModel> getPetData() {
         return petData;
     }
 
@@ -41,7 +38,7 @@ public class PetViewModel extends ViewModel {
 
     private void updatePet() {
 
-        TodopetModel pet = getPetData().getValue();
+        TodopetViewModel pet = getPetData().getValue();
 
         if (pet == null) {
             System.err.println("Pet is null");

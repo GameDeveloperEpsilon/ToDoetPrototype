@@ -1,11 +1,5 @@
 package com.example.todoetprototype.utils;
 
-import android.os.CountDownTimer;
-import android.os.SystemClock;
-
-import com.example.todoetprototype.pet.PetActivity;
-import com.example.todoetprototype.pet.TodopetModel;
-
 //public class SystemTimer extends CountDownTimer {
 
 //    private long LIFETIME = 0;

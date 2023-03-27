@@ -5,7 +5,7 @@ import com.example.todoetprototype.R;
 import java.io.Serializable;
 import java.util.Random;
 
-public class PetSpecies implements Serializable {
+public class PetModel implements Serializable {
 
     PetStages currentStage;
     PetStages egg;
@@ -14,7 +14,7 @@ public class PetSpecies implements Serializable {
     PetStages adult;
     PetStages ancient;
 
-    public PetSpecies() {
+    public PetModel() {
         egg = PetStages.UNHATCH_SIORDON;
         baby = PetStages.BABY_SIORDON;
         adolescent = PetStages.ADOLESCENT_SIORDON;

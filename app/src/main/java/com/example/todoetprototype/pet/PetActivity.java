@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.todoetprototype.R;
@@ -23,7 +22,7 @@ public class PetActivity extends AppCompatActivity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private ActivityPetBinding binding;
-    private PetViewModel petViewModel;
+    private PetViewModelDeprecated petViewModel;
 
     // private ImageButton statusButton;
     // private ImageButton playButton;
@@ -43,8 +42,8 @@ public class PetActivity extends AppCompatActivity implements Serializable {
 
         // randomized the petspecies
 
-        PetSpecies.PetStages[] petStages = generateRandomEgg(3);
-        for (PetSpecies.PetStages petStage : petStages){
+        PetModel.PetStages[] petStages = generateRandomEgg(3);
+        for (PetModel.PetStages petStage : petStages){
             System.out.println(petStage);
         }
 
@@ -58,20 +57,20 @@ public class PetActivity extends AppCompatActivity implements Serializable {
         feedBtn.setOnClickListener((l) -> {
             Context c = getApplicationContext();
             Toast.makeText(c, "Feeding Pet", Toast.LENGTH_SHORT).show();
-            TodopetModel.getInstance().fed = true;
+            TodopetViewModel.getInstance().fed = true;
         });
         cleanBtn.setOnClickListener((l) -> {
             Context c = getApplicationContext();
             Toast.makeText(c, "Cleaning Pet", Toast.LENGTH_SHORT).show();
-            TodopetModel.getInstance().cleaned = true;
+            TodopetViewModel.getInstance().cleaned = true;
         });
         petBtn.setOnClickListener((l) -> {
             Context c = getApplicationContext();
             Toast.makeText(c, "Petting Pet", Toast.LENGTH_SHORT).show();
-            TodopetModel.getInstance().petted = true;
+            TodopetViewModel.getInstance().petted = true;
         });
 
-        petViewModel = new ViewModelProvider(this).get(PetViewModel.class);
+        petViewModel = new ViewModelProvider(this).get(PetViewModelDeprecated.class);
 
         petViewModel.getPetData().observe(this, pet -> {
 
@@ -105,8 +104,8 @@ public class PetActivity extends AppCompatActivity implements Serializable {
         petViewModel.init();
     }
 
-    private PetSpecies.PetStages[] generateRandomEgg(int i) {
-        return PetSpecies.PetStages.values();
+    private PetModel.PetStages[] generateRandomEgg(int i) {
+        return PetModel.PetStages.values();
     }
 
     SharedPreferences sharedPref = this.getSharedPreferences("petsavedstate", Context.MODE_PRIVATE);

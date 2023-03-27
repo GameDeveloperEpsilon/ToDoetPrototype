@@ -1,26 +1,49 @@
 package com.example.todoetprototype.pet;
 
+import android.os.Handler;
+import android.os.Looper;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
+
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class TodopetModel implements Serializable {
+public class TodopetViewModel extends ViewModel implements Serializable {
+    private MutableLiveData<TodopetViewModel> petData = new MutableLiveData<>();
+
+    private int currentIndex = 0;
+    private long delay = 20000L;
+
+
+    public void init() {
+
+        petData.setValue(TodopetViewModel.getInstance());
+        myLoop();
+    }
+
+    public LiveData<TodopetViewModel> getPetData() {
+        return petData;
+    }
+
 
     private static final long serialVersionUID = 1L;
 
-    private static TodopetModel instance;
+    private static TodopetViewModel instance;
 
-    public static TodopetModel getInstance() {
+    public static TodopetViewModel getInstance() {
         if (instance == null)
-            instance = new TodopetModel(0, "Tom", true, false, 5, 6, 8, 7, 0, 0, 0, 0);
+            instance = new TodopetViewModel(0, "Tom", true, false, 5, 6, 8, 7, 0, 0, 0, 0);
         return instance;
     }
 
     //out of 50
 
     public int ID;
-    public PetSpecies species;
+    public PetModel species;
     public String petName;
     public boolean hygiene;
     public boolean cleaned;
@@ -42,11 +65,11 @@ public class TodopetModel implements Serializable {
     private int pet_death = -1;
 
 
-    private TodopetModel(int ID, String petName, boolean hygiene, boolean death, int happiness, int hunger, int affection, int passedTime, int age, int birthdate, long lastFedTimestamp, long lastPetTimestamp) {
+    private TodopetViewModel(int ID, String petName, boolean hygiene, boolean death, int happiness, int hunger, int affection, int passedTime, int age, int birthdate, long lastFedTimestamp, long lastPetTimestamp) {
         // out of 100
 
         this.ID = ID;
-        this.species = new PetSpecies();
+        this.species = new PetModel();
         this.petName = petName;
         this.hygiene = hygiene;
         this.death = death;
@@ -174,7 +197,7 @@ public class TodopetModel implements Serializable {
     }
 
 
-    public PetSpecies getSpecies() {
+    public PetModel getSpecies() {
         return species;
     }
 
@@ -292,7 +315,68 @@ public class TodopetModel implements Serializable {
             this.affection = 0;
         }
 
+    }
 
+
+
+    // clock
+
+    private void myLoop() {
+
+        Runnable jobToRun = () -> {
+            System.out.println("Tick");
+            updatePet();
+            myLoop();
+        };
+
+        new Handler(Looper.getMainLooper()).postDelayed(jobToRun, delay);
+    }
+
+    private void updatePet() {
+
+        TodopetViewModel pet = getPetData().getValue();
+
+        if (pet == null) {
+            System.err.println("Pet is null");
+            return;
+        }
+
+        // If pet was not cleaned, make un-hygienic.
+        if (pet.cleaned) {
+            pet.setHygiene(true);
+            pet.cleaned = false;
+        } else {
+            pet.setHygiene(false);
+        }
+
+
+
+
+
+//        if (pet.petted) {
+//            pet.setHappiness(10);
+//            pet.petted = false;
+//        } else {
+//            pet.setHappiness(pet.getHappiness() - 1);
+//        }
+
+
+
+        // Update pet appearance based on stage
+        if (pet.getSpecies().currentStage == pet.getSpecies().egg) {
+            pet.getSpecies().currentStage = pet.getSpecies().baby;
+        }
+        else if (pet.getSpecies().currentStage == pet.getSpecies().baby) {
+            pet.getSpecies().currentStage = pet.getSpecies().adolescent;
+        }
+        else if (pet.getSpecies().currentStage == pet.getSpecies().adolescent) {
+            pet.getSpecies().currentStage = pet.getSpecies().adult;
+        }
+        else if (pet.getSpecies().currentStage == pet.getSpecies().adult) {
+            pet.getSpecies().currentStage = pet.getSpecies().ancient;
+        }
+
+        petData.setValue(pet);
     }
 }
 
