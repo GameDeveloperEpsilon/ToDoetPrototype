@@ -16,7 +16,7 @@ public class TodopetViewModel extends ViewModel implements Serializable {
     private MutableLiveData<PetModel> petData = new MutableLiveData<>();
 
     private int currentIndex = 0;
-    private long delay = 20000L;
+    private long delay = 5000L;
 
 
     public void init() {

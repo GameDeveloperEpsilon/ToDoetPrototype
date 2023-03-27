@@ -1,4 +1,4 @@
-package com.example.todoetprototype.pet;
+package death;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;

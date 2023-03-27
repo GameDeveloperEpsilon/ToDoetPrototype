@@ -113,20 +113,20 @@ public class PetModel implements Serializable {
         }
 
         public int getEvolve_to() {
-                return evolve_to;
-            }
+            return evolve_to;
+        }
 
         public int getDrawable() {
-                return drawable;
-            }
+            return drawable;
+        }
 
         public int getUniqueID() {
             return uniqueID;
         }
 
         public String getSpeciesName() {
-                return speciesName;
-            }
+            return speciesName;
+        }
 
     }
 
