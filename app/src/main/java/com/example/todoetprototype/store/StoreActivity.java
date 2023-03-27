@@ -20,7 +20,7 @@ public class StoreActivity extends AppCompatActivity {
 
     private RecyclerView storeItemsView;
     private StoreItemAdapter storeItemAdapter;
-    private List<StoreModel> storeItemList;
+    private List<StoreItem> storeItemList;
 
 
     @Override
@@ -44,9 +44,7 @@ public class StoreActivity extends AppCompatActivity {
 
         // Test adding some items
         storeItemList = new ArrayList<>();
-        storeItemList.add(new StoreModel(1, 5, "Test Item", "Some description", "Category A"));
-        storeItemList.add(new StoreModel(2, 10, "Toothbrush", "A brush for cleaning teeth", "Category B"));
-        storeItemAdapter.setStoreItemList(storeItemList);
+        storeItemAdapter.setStoreItemList(StoreModel.getInstance().getCatalog());
 
     }
 }

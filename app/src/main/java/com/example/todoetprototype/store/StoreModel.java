@@ -2,92 +2,36 @@ package com.example.todoetprototype.store;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class StoreModel extends AppCompatActivity {
 
-    private int itemID;
-    private int itemPrice;
-    private String itemName;
-    private String itemDescription;
-    private String itemCategory;
+    public static StoreModel instance = null;
 
+    public static StoreModel getInstance() {
+        if (instance == null)
+            instance = new StoreModel();
+        return instance;
+    }
 
-    public StoreModel(int itemID, int itemPrice, String itemName, String itemDescription, String itemCategory) {
-        this.itemID = itemID;
-        this.itemPrice = itemPrice;
-        this.itemName = itemName;
-        this.itemDescription = itemDescription;
-        this.itemCategory = itemCategory;;
+    List<StoreItem> catalog = new ArrayList<>();
+
+    private StoreModel() {
+        // Add dummy data
+        catalog.add(new StoreItem(1, 5, "Test Item", "Some description", "Category A"));
+        catalog.add(new StoreItem(2, 10, "Toothbrush", "A brush for cleaning teeth", "Category B"));
+        catalog.add(new StoreItem(1, 4, "todofood", "Delicious food for pets", "FOOD"));  // FOOD
+        catalog.add(new StoreItem(2, 3, "NA","NA","POTION"));  // POTION
+        catalog.add(new StoreItem(3, 3, "NA","NA","MEDICINE"));  // MEDICINE
+
     }
 
     //Getters and Setters
-    //
 
-    public int getItemID() {
-        return itemID;
+    public List<StoreItem> getCatalog() {
+        return catalog;
     }
-
-    public void setItemID(int itemID) {
-        this.itemID = itemID;
-    }
-
-    public int getItemPrice() {
-        return itemPrice;
-    }
-
-    public void setItemPrice(int itemPrice) {
-        this.itemPrice = itemPrice;
-    }
-
-    public String getItemName() {
-        return itemName;
-    }
-
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
-    }
-
-    public String getItemDescription() {
-        return itemDescription;
-    }
-
-    public void setItemDescription(String itemDescription) {
-        this.itemDescription = itemDescription;
-    }
-
-    public String getItemCategory() {
-        return itemCategory;
-    }
-
-    public void setItemCategory(String itemCategory) {
-        this.itemCategory = itemCategory;
-    }
-
-
-    // store items
-
-
-    public enum StoreItem {
-        FOOD(1, 4, "todofood", "Delicious food for pets", "FOOD"),
-        POTION(2, 3, "NA","NA","POTION"),
-        MEDICINE(3, 3, "NA","NA","MEDICINE");
-
-        private final int itemID;
-        private final int itemprice;
-        private final String itemname;
-        private final String itemdescription;
-        private final String itemcategory;
-
-        StoreItem(int itemID, int itemprice, String itemname, String itemdescription, String itemcategory) {
-
-            this.itemID = itemID;
-            this.itemprice = itemprice;
-            this.itemname = itemname;
-            this.itemdescription = itemdescription;
-            this.itemcategory = itemcategory;
-        }
-    }
-
-
 }
 
 

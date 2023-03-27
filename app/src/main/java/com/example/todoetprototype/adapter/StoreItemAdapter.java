@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todoetprototype.R;
 import com.example.todoetprototype.store.StoreActivity;
+import com.example.todoetprototype.store.StoreItem;
 import com.example.todoetprototype.store.StoreModel;
 import com.example.todoetprototype.utils.DatabaseHandler;
 
@@ -17,7 +18,7 @@ import java.util.List;
 
 public class StoreItemAdapter extends RecyclerView.Adapter<StoreItemAdapter.ViewHolder> {
 
-    private List<StoreModel> storeItemList;
+    private List<StoreItem> storeItemList;
     private StoreActivity activity;
     private DatabaseHandler db;
     //private UserViewModel userViewModel;
@@ -27,7 +28,7 @@ public class StoreItemAdapter extends RecyclerView.Adapter<StoreItemAdapter.View
         this.activity = activity;
     }
 
-    public void setStoreItemList(List<StoreModel> storeItemList) {
+    public void setStoreItemList(List<StoreItem> storeItemList) {
         this.storeItemList = storeItemList;
         notifyDataSetChanged();
     }
@@ -42,7 +43,7 @@ public class StoreItemAdapter extends RecyclerView.Adapter<StoreItemAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        StoreModel item = storeItemList.get(position); // in the todolist you get the item
+        StoreItem item = storeItemList.get(position); // in the todolist you get the item
         holder.storeItemName.setText(item.getItemName()); // set the task from the item position
         holder.storeItemDescription.setText(item.getItemDescription()); // set the description
         holder.storeItemPrice.setText(String.valueOf(item.getItemPrice())); // set the price
