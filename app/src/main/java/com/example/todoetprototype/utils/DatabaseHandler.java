@@ -24,6 +24,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String HEALTH = "health";
     private static final String AFFECTION = "affection";
     private static final String SPECIES = "species";
+    //public static final String EVOLUTION_TABLE_NAME = "CREATURE_EVOLUTION";
     private static final String DEATH = "death";
     private static final String AGE = "age";
 

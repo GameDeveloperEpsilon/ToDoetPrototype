@@ -17,6 +17,7 @@ public class PetViewModel extends ViewModel {
     private int currentIndex = 0;
     private long delay = 20000L;
 
+
     public void init() {
 
         petData.setValue(TodopetModel.getInstance());
@@ -55,19 +56,21 @@ public class PetViewModel extends ViewModel {
             pet.setHygiene(false);
         }
 
-        if (pet.fed) {
-            pet.setHunger(10);
-            pet.fed = false;
-        } else {
-            pet.setHunger(pet.getHunger() - 1);
-        }
+//        if (pet.fed) {
+//            pet.setHunger(10);
+//            pet.fed = false;
+//        } else {
+//            pet.setHunger(pet.getHunger() - 1);
+//        }
 
-        if (pet.petted) {
-            pet.setHappiness(10);
-            pet.petted = false;
-        } else {
-            pet.setHappiness(pet.getHappiness() - 1);
-        }
+//        if (pet.petted) {
+//            pet.setHappiness(10);
+//            pet.petted = false;
+//        } else {
+//            pet.setHappiness(pet.getHappiness() - 1);
+//        }
+
+
 
         // Update pet appearance based on stage
         if (pet.getSpecies().currentStage == pet.getSpecies().egg) {
@@ -85,4 +88,6 @@ public class PetViewModel extends ViewModel {
 
         petData.setValue(pet);
     }
+
+
 }

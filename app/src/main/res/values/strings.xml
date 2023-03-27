@@ -21,5 +21,10 @@
     <string name="store">Store</string>
     <string name="forward">Forward</string>
     <string name="back">Back</string>
+    <string name="Hunger">Hunger</string>
+    <string name="Hygiene">Hygiene</string>
+    <string name="Level">Level</string>
+    <string name="Happiness">Happiness</string>
+
 
 </resources>

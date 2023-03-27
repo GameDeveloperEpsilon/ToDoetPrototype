@@ -5,6 +5,7 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
@@ -38,7 +39,7 @@ public class PetActivity extends AppCompatActivity implements Serializable {
         binding = ActivityPetBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        TextView txtname = findViewById(R.id.textView2);
+        //TextView txtname = findViewById(R.id.textView2);
 
         // randomized the petspecies
 
@@ -87,11 +88,11 @@ public class PetActivity extends AppCompatActivity implements Serializable {
                 Toast.makeText(this, "Hunger: " + pet.getHunger(), Toast.LENGTH_SHORT).show();
             }
 
-            if (pet.getHappiness() < 5) {
-                Toast.makeText(this, "Your pet is unhappy!", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Happiness: " + pet.getHappiness(), Toast.LENGTH_SHORT).show();
-            }
+//            if (pet.getHappiness() < 5) {
+//                Toast.makeText(this, "Your pet is unhappy!", Toast.LENGTH_SHORT).show();
+//            } else {
+//                Toast.makeText(this, "Happiness: " + pet.getHappiness(), Toast.LENGTH_SHORT).show();
+//            }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 binding.imageView.setImageDrawable(
@@ -107,4 +108,7 @@ public class PetActivity extends AppCompatActivity implements Serializable {
     private PetSpecies.PetStages[] generateRandomEgg(int i) {
         return PetSpecies.PetStages.values();
     }
+
+    SharedPreferences sharedPref = this.getSharedPreferences("petsavedstate", Context.MODE_PRIVATE);
 }
+
