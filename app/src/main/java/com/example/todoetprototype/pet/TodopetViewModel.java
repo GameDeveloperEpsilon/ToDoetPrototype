@@ -13,9 +13,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TodopetViewModel extends ViewModel implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private MutableLiveData<PetModel> petData = new MutableLiveData<>();
 
-    private int currentIndex = 0;
     private long delay = 5000L;
 
 
@@ -29,41 +31,15 @@ public class TodopetViewModel extends ViewModel implements Serializable {
         return petData;
     }
 
-
-    private static final long serialVersionUID = 1L;
-
-
-    // @return A basic creature object
-
-
-
-
     //feeding
 
     public void feed() {
-        updateAffection(petData.getValue().getAffection() + 1);
+        petData.getValue().setAffection(10);
         this.petData.getValue().lastFedTimestamp = new Date().getTime();
     }
 
     public void pet() {
         this.petData.getValue().lastPetTimestamp = new Date().getTime();
-    }
-
-
-
-    // affection updates
-
-    public void updateAffection(int newAffection) {
-        this.petData.getValue().affection = newAffection;
-
-        if (this.petData.getValue().affection > this.petData.getValue().maximum_stat) {
-            this.petData.getValue().affection = this.petData.getValue().maximum_stat;
-        }
-
-        if (this.petData.getValue().affection <= 0) {
-            this.petData.getValue().affection = 0;
-        }
-
     }
 
     // clock
@@ -88,7 +64,7 @@ public class TodopetViewModel extends ViewModel implements Serializable {
             return;
         }
 
-        // If pet was not cleaned, make un-hygienic.
+        // If pet was not cleaned, reduce hygiene.
         if (pet.cleaned) {
             pet.setHygiene(10);
             pet.cleaned = false;
@@ -97,11 +73,11 @@ public class TodopetViewModel extends ViewModel implements Serializable {
         }
 
         if (pet.fed) {
-            petData.getValue().setHunger(10);
+            pet.setHunger(10);
             pet.fed = false;
         }
         else
-            petData.getValue().setHunger(-5);
+            pet.setHunger(-5);
 
         if (pet.petted) {
             pet.setAffection(10);

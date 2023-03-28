@@ -6,7 +6,6 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Random;
 
 public class PetModel implements Serializable {
 
@@ -26,7 +25,6 @@ public class PetModel implements Serializable {
     public int hygiene;
     public boolean cleaned;
     public boolean death;
-    public int happiness;
     public boolean petted;
     public int hunger;
     public boolean fed;
@@ -39,7 +37,8 @@ public class PetModel implements Serializable {
     long lastPetTimestamp;
 
 
-    public int maximum_stat = 100;
+    private int maximum_stat = 100;
+    private int minimum_stat = 0;
     public int pet_death = -1;
 
     PetStages currentStage;
@@ -148,12 +147,20 @@ public class PetModel implements Serializable {
         this.petName = petName;
     }
 
-    public int isHygiene() {
+    public int getHygiene() {
         return hygiene;
     }
 
-    public void setHygiene(int hygiene) {
-        this.hygiene = hygiene;
+    public void setHygiene(int increase) {
+
+        int hygieneTest = this.hygiene + increase;
+
+        if (hygieneTest < minimum_stat)
+            this.hygiene = minimum_stat;
+        else if (hygieneTest > maximum_stat)
+            this.hygiene = maximum_stat;
+        else
+            this.hygiene = hygieneTest;
     }
 
     public boolean isDeath() {
@@ -172,15 +179,6 @@ public class PetModel implements Serializable {
         this.birthdate = birthdate;
     }
 
-
-//    public int getHappiness() {
-//        return happiness;
-//    }
-//
-//    public void setHappiness(int happiness) {
-//        this.happiness = happiness;
-//    }
-
     public int getHunger() {
         return hunger;
     }
@@ -191,10 +189,12 @@ public class PetModel implements Serializable {
         if (this.hunger + increase > maximum_stat) {
             response = "I'm full!";
             this.hunger = maximum_stat;
+        } else if (this.hunger + increase < minimum_stat) {
+            response = "I'm starving!";
+            this.hunger = minimum_stat;
         } else {
             response = "Yum";
             this.hunger += increase;
-
         }
 
         return response;
@@ -207,10 +207,15 @@ public class PetModel implements Serializable {
     }
 
     public void setAffection(int increase) {
-        if (this.affection + increase > maximum_stat)
+
+        int affectionTest = this.affection + increase;
+
+        if (affectionTest < minimum_stat)
+            this.affection = minimum_stat;
+        else if( affectionTest > maximum_stat)
             this.affection = maximum_stat;
         else
-            this.affection += increase;
+            this.affection = affectionTest;
     }
 
 
@@ -258,14 +263,6 @@ public class PetModel implements Serializable {
             return true;
         else
             return false;
-
-    }
-
-    public void affection() {
-        affection = 50;
-        if (hunger >= 10)
-            affection -= 5;
-
 
     }
 
