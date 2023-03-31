@@ -48,9 +48,17 @@ public class PetActivity extends AppCompatActivity implements Serializable {
 
         sp=this.getSharedPreferences("myPetPrefs",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-//
-//        editor.putInt("hunger", petModel.getHunger()); //crashes app
-//        editor.commit(); // crashes app
+
+        petViewModel = new ViewModelProvider(this).get(TodopetViewModel.class);
+        petModel = PetModel.getInstance();
+
+        if (petViewModel == null)
+            throw new RuntimeException("Error: Pet View Model null!");
+        if (petModel == null)
+            throw new RuntimeException("Error: Pet Model null!");
+
+        editor.putInt("hunger", petModel.getHunger()); //crashes app
+        editor.commit(); // crashes app
 
 
         //TextView txtname = findViewById(R.id.textView2);
@@ -84,8 +92,6 @@ public class PetActivity extends AppCompatActivity implements Serializable {
             Toast.makeText(c, "Petting Pet", Toast.LENGTH_SHORT).show();
             PetModel.getInstance().petted = true;
         });
-
-        petViewModel = new ViewModelProvider(this).get(TodopetViewModel.class);
 
         petViewModel.getPetData().observe(this, pet -> {
 
