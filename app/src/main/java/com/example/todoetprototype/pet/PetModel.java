@@ -1,5 +1,6 @@
 package com.example.todoetprototype.pet;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.todoetprototype.R;
@@ -15,7 +16,7 @@ public class PetModel implements Serializable {
 
     public static PetModel getInstance() {
         if (instance == null)
-            instance = new PetModel(0, "Tom", 5, false, 5, 6, 8, 7, 0, 0, 0, 0);
+            instance = new PetModel(0, "Tom", 0, false, 0, 0, 0, 0, 0, 0, 0);
         return instance;
     }
 
@@ -38,10 +39,6 @@ public class PetModel implements Serializable {
     long lastFedTimestamp;
     long lastPetTimestamp;
 
-
-    SharedPreferences sharedpreferences;;
-
-
     private int maximum_stat = 100;
     private int minimum_stat = 0;
     public int pet_death = -1;
@@ -53,7 +50,13 @@ public class PetModel implements Serializable {
     PetStages adult;
     PetStages ancient;
 
-    private PetModel(int ID, String petName, int hygiene, boolean death, int happiness, int hunger, int affection, int passedTime, int age, int birthdate, long lastFedTimestamp, long lastPetTimestamp) {
+    public void loadPetParameters(int hygiene, int hunger, int affection) {
+        setHygiene(hygiene);
+        setHunger(hunger);
+        setAffection(affection);
+    }
+
+    private PetModel(int ID, String petName, int hygiene, boolean death, int hunger, int affection, int passedTime, int age, int birthdate, long lastFedTimestamp, long lastPetTimestamp) {
         // out of 100
 
         this.ID = ID;
@@ -82,7 +85,9 @@ public class PetModel implements Serializable {
         currentStage = egg;
     }
 
+    public void loadParameters() {
 
+    }
 
     public enum PetStages {
 

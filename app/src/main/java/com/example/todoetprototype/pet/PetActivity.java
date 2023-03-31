@@ -26,7 +26,7 @@ public class PetActivity extends AppCompatActivity implements Serializable {
 
     private ActivityPetBinding binding;
     private TodopetViewModel petViewModel;
-   private static PetModel petModel;
+    private static PetModel petModel;
 
     // private ImageButton statusButton;
     // private ImageButton playButton;
@@ -45,10 +45,6 @@ public class PetActivity extends AppCompatActivity implements Serializable {
         binding = ActivityPetBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
-        sp=this.getSharedPreferences("myPetPrefs",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-
         petViewModel = new ViewModelProvider(this).get(TodopetViewModel.class);
         petModel = PetModel.getInstance();
 
@@ -57,9 +53,8 @@ public class PetActivity extends AppCompatActivity implements Serializable {
         if (petModel == null)
             throw new RuntimeException("Error: Pet Model null!");
 
-        editor.putInt("hunger", petModel.getHunger()); //crashes app
-        editor.commit(); // crashes app
 
+        sp=this.getSharedPreferences("myPetPrefs",Context.MODE_PRIVATE);
 
         //TextView txtname = findViewById(R.id.textView2);
 
@@ -119,11 +114,31 @@ public class PetActivity extends AppCompatActivity implements Serializable {
         petViewModel.init();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        petModel.loadPetParameters(
+                sp.getInt("hygiene", 0),
+                sp.getInt("hunger", 0),
+                sp.getInt("affection", 0));
+    }
+
 //    private PetModel.PetStages[] generateRandomEgg(int i) {
 //        return PetModel.PetStages.values();
 //    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
 
+        SharedPreferences.Editor editor = sp.edit();
+
+        editor.putInt("hygiene", petModel.getHygiene());
+        editor.putInt("hunger", petModel.getHunger());  //
+        editor.putInt("affection", petModel.getAffection());
+        editor.commit(); //
+    }
 }
 
 
