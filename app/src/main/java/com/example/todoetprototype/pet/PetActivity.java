@@ -22,8 +22,11 @@ public class PetActivity extends AppCompatActivity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+
+
     private ActivityPetBinding binding;
     private TodopetViewModel petViewModel;
+   private static PetModel petModel;
 
     // private ImageButton statusButton;
     // private ImageButton playButton;
@@ -33,20 +36,31 @@ public class PetActivity extends AppCompatActivity implements Serializable {
     // private ImageButton feedButton;
 
 
+    SharedPreferences sp;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityPetBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
+        sp=this.getSharedPreferences("myPetPrefs",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+//
+//        editor.putInt("hunger", petModel.getHunger()); //crashes app
+//        editor.commit(); // crashes app
+
+
         //TextView txtname = findViewById(R.id.textView2);
 
         // randomized the petspecies
 
-        PetModel.PetStages[] petStages = generateRandomEgg(3);
-        for (PetModel.PetStages petStage : petStages){
-            System.out.println(petStage);
-        }
+//        PetModel.PetStages[] petStages = generateRandomEgg(3);
+//        for (PetModel.PetStages petStage : petStages){
+//            System.out.println(petStage);
+//        }
 
         ImageView imageView = findViewById(R.id.imageView);
 
@@ -99,10 +113,15 @@ public class PetActivity extends AppCompatActivity implements Serializable {
         petViewModel.init();
     }
 
-    private PetModel.PetStages[] generateRandomEgg(int i) {
-        return PetModel.PetStages.values();
-    }
+//    private PetModel.PetStages[] generateRandomEgg(int i) {
+//        return PetModel.PetStages.values();
+//    }
 
-    // SharedPreferences sharedPref = this.getSharedPreferences("petsavedstate", Context.MODE_PRIVATE);
+
 }
+
+
+
+
+
 

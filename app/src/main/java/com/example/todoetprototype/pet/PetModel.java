@@ -1,5 +1,7 @@
 package com.example.todoetprototype.pet;
 
+import android.content.SharedPreferences;
+
 import com.example.todoetprototype.R;
 
 import java.io.Serializable;
@@ -35,6 +37,9 @@ public class PetModel implements Serializable {
     public int randomPet = 4;
     long lastFedTimestamp;
     long lastPetTimestamp;
+
+
+    SharedPreferences sharedpreferences;;
 
 
     private int maximum_stat = 100;
@@ -76,6 +81,8 @@ public class PetModel implements Serializable {
         ancient = PetStages.ANCIENT_SIORDON;
         currentStage = egg;
     }
+
+
 
     public enum PetStages {
 
@@ -324,5 +331,8 @@ public class PetModel implements Serializable {
     public boolean isEgg() {
         return (this.getDaysOld() == 0);
     }
+
+
+
 
 }
