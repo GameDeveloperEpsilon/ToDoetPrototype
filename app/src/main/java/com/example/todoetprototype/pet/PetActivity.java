@@ -118,10 +118,7 @@ public class PetActivity extends AppCompatActivity implements Serializable {
     protected void onResume() {
         super.onResume();
 
-        petModel.loadPetParameters(
-                sp.getInt("hygiene", 0),
-                sp.getInt("hunger", 0),
-                sp.getInt("affection", 0));
+        petModel.loadPetParameters(sp);
     }
 
 //    private PetModel.PetStages[] generateRandomEgg(int i) {
@@ -131,6 +128,18 @@ public class PetActivity extends AppCompatActivity implements Serializable {
     @Override
     protected void onPause() {
         super.onPause();
+
+        SharedPreferences.Editor editor = sp.edit();
+
+        editor.putInt("hygiene", petModel.getHygiene());
+        editor.putInt("hunger", petModel.getHunger());  //
+        editor.putInt("affection", petModel.getAffection());
+        editor.apply(); //
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
         SharedPreferences.Editor editor = sp.edit();
 

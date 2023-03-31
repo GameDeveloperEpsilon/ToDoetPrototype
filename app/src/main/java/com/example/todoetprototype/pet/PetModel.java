@@ -50,10 +50,10 @@ public class PetModel implements Serializable {
     PetStages adult;
     PetStages ancient;
 
-    public void loadPetParameters(int hygiene, int hunger, int affection) {
-        setHygiene(hygiene);
-        setHunger(hunger);
-        setAffection(affection);
+    public void loadPetParameters(SharedPreferences sp) {
+        hygiene = sp.getInt("hygiene", 0);
+        hunger = sp.getInt("hunger", 0);
+        affection = sp.getInt("affection", 0);
     }
 
     private PetModel(int ID, String petName, int hygiene, boolean death, int hunger, int affection, int passedTime, int age, int birthdate, long lastFedTimestamp, long lastPetTimestamp) {
@@ -65,8 +65,8 @@ public class PetModel implements Serializable {
         this.hygiene = hygiene;
         this.death = death;
         //this.happiness = happiness;
-        this.hunger = 50;
-        this.affection = 50;
+        this.hunger = hunger;
+        this.affection = affection;
         this.age = age;
         this.birthdate = birthdate;
 
