@@ -3,7 +3,9 @@ package com.example.todoetprototype.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,21 +13,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.todoetprototype.R;
 import com.example.todoetprototype.store.StoreActivity;
 import com.example.todoetprototype.store.StoreItem;
-import com.example.todoetprototype.store.StoreModel;
+import com.example.todoetprototype.store.StoreViewModel;
 import com.example.todoetprototype.utils.DatabaseHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StoreItemAdapter extends RecyclerView.Adapter<StoreItemAdapter.ViewHolder> {
 
+    private static StoreActivity activity;
+    private StoreViewModel storeViewModel;
     private List<StoreItem> storeItemList;
-    private StoreActivity activity;
     private DatabaseHandler db;
-    //private UserViewModel userViewModel;
 
     public StoreItemAdapter(DatabaseHandler db, StoreActivity activity) {
         this.db = db;
         this.activity = activity;
+        this.storeItemList = new ArrayList<>();
+        this.storeViewModel = activity.getStoreViewModel();
     }
 
     public void setStoreItemList(List<StoreItem> storeItemList) {
@@ -47,6 +52,14 @@ public class StoreItemAdapter extends RecyclerView.Adapter<StoreItemAdapter.View
         holder.storeItemName.setText(item.getItemName()); // set the task from the item position
         holder.storeItemDescription.setText(item.getItemDescription()); // set the description
         holder.storeItemPrice.setText(String.valueOf(item.getItemPrice())); // set the price
+
+        holder.buyItemBtn.setOnClickListener(v -> {
+            boolean purchaseSucceeded = storeViewModel.buyItem(position);
+            if (purchaseSucceeded)
+                Toast.makeText(activity, "Buying Item", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(activity, "Item too expensive", Toast.LENGTH_SHORT).show();
+        });
     }
 
     @Override
@@ -64,12 +77,15 @@ public class StoreItemAdapter extends RecyclerView.Adapter<StoreItemAdapter.View
         TextView storeItemName;
         TextView storeItemDescription;
         TextView storeItemPrice;
+        Button buyItemBtn;
+
 
         ViewHolder(View view){
             super(view);
             storeItemName = view.findViewById(R.id.storeItemName);
             storeItemDescription = view.findViewById(R.id.storeItemDescription);
             storeItemPrice = view.findViewById(R.id.storeItemPrice);
+            buyItemBtn = view.findViewById(R.id.buyItemBtn);
         }
     }
 }

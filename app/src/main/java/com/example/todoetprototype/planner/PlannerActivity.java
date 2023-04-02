@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todoetprototype.adapter.ToDoAdapter;
 import com.example.todoetprototype.DialogCloseListener;
-import com.example.todoetprototype.model.ToDoModel;
 import com.example.todoetprototype.R;
 import com.example.todoetprototype.utils.DatabaseHandler;
 

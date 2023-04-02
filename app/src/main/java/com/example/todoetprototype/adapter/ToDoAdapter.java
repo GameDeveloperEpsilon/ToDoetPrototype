@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todoetprototype.planner.AddNewTask;
 import com.example.todoetprototype.planner.PlannerActivity;
-import com.example.todoetprototype.model.ToDoModel;
+import com.example.todoetprototype.planner.ToDoModel;
 import com.example.todoetprototype.R;
 import com.example.todoetprototype.utils.DatabaseHandler;
 import com.example.todoetprototype.inventory.UserModel;

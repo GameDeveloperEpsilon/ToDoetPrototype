@@ -23,7 +23,6 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import com.example.todoetprototype.DialogCloseListener;
-import com.example.todoetprototype.model.ToDoModel;
 import com.example.todoetprototype.R;
 import com.example.todoetprototype.utils.DatabaseHandler;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;

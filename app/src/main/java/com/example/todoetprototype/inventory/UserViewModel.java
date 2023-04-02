@@ -13,14 +13,6 @@ public class UserViewModel extends ViewModel {
         System.out.println("User View Model Created");
     }
 
-    public void init() {
-
-        //userData.setValue(new UserModel());
-        //if (userData.getValue() == null)
-        //    throw new RuntimeException();
-        //System.out.println("User View Model Initialized!");
-    }
-
 
     public LiveData<UserModel> getUserData() {
         return userData;

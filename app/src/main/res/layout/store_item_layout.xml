@@ -36,6 +36,14 @@
             android:textSize="20sp"
             android:text="Default Name" />
 
+        <Button
+            android:id="@+id/buyItemBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="13dp"
+            android:layout_toStartOf="@+id/storeItemPrice"
+            android:text="Buy" />
+
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

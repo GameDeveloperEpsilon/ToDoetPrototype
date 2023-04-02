@@ -1,5 +1,10 @@
 package com.example.todoetprototype.inventory;
 
+import com.example.todoetprototype.store.StoreItem;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserModel {
 
     private static UserModel instance = null;
@@ -11,6 +16,7 @@ public class UserModel {
     }
 
     private int coins;
+    private final List<StoreItem> inventory = new ArrayList<>();
 
     private UserModel() {
         coins = 0;
@@ -20,9 +26,17 @@ public class UserModel {
     public int getCoins() {
         return coins;
     }
-
     public void setCoins(int coins) {
         this.coins = coins;
     }
 
+    public List<StoreItem> getInventory() {
+        return inventory;
+    }
+    public void addItemToInventory(StoreItem newItem) {
+        inventory.add(newItem);
+    }
+    public void removeItemFromInventory(StoreItem itemToRemove) {
+        inventory.remove(itemToRemove);
+    }
 }

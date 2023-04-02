@@ -10,30 +10,32 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todoetprototype.R;
 import com.example.todoetprototype.adapter.StoreItemAdapter;
-import com.example.todoetprototype.inventory.UserViewModel;
+import com.example.todoetprototype.databinding.ActivityStoreBinding;
+import com.example.todoetprototype.inventory.UserModel;
 import com.example.todoetprototype.utils.DatabaseHandler;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class StoreActivity extends AppCompatActivity {
 
+    private ActivityStoreBinding binding;
+    private StoreViewModel storeViewModel;
     private RecyclerView storeItemsView;
     private StoreItemAdapter storeItemAdapter;
-    private List<StoreItem> storeItemList;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_store);
+        binding = ActivityStoreBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        storeViewModel = new ViewModelProvider(this).get(StoreViewModel.class);
 
-        userViewModel.getUserData().observe(this, user -> {
+        storeViewModel.getStoreData().observe(this, storeModel -> {
 
+            storeItemAdapter.setStoreItemList(storeModel.getCatalog());
+
+            // Get user coins from UserModel
             TextView userCoin = findViewById(R.id.userCoin);
-            String coinDisplayFormatted = "Current coins: " + user.getCoins();
+            String coinDisplayFormatted = "Current coins: " + UserModel.getInstance().getCoins();
             userCoin.setText(coinDisplayFormatted);
         });
 
@@ -43,8 +45,11 @@ public class StoreActivity extends AppCompatActivity {
         storeItemsView.setAdapter(storeItemAdapter);
 
         // Test adding some items
-        storeItemList = new ArrayList<>();
         storeItemAdapter.setStoreItemList(StoreModel.getInstance().getCatalog());
 
+    }
+
+    public StoreViewModel getStoreViewModel() {
+        return storeViewModel;
     }
 }
