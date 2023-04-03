@@ -148,7 +148,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
                 db.updateDate(bundle.getInt("id"), date);
             }
             else {
-                ToDoModel task = new ToDoModel();
+                PlannerItem task = new PlannerItem();
                 task.setTask(text);
                 task.setStatus(0);
                 task.setDate(date);

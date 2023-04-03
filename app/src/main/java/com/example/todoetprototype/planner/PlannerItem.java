@@ -1,7 +1,9 @@
 package com.example.todoetprototype.planner;
 
-public class ToDoModel {
+public class PlannerItem {
+
     private int id, status; // Id name of the task to execute query
+    private boolean canGivenCoins = true;
     private String task; // Actual text of the task
     private String date;  // Date to complete task
 
@@ -35,6 +37,14 @@ public class ToDoModel {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public boolean canGivenCoins() {
+        return canGivenCoins;
+    }
+
+    public void setCanGivenCoins(boolean hasGivenCoins) {
+        this.canGivenCoins = hasGivenCoins;
     }
 }
 

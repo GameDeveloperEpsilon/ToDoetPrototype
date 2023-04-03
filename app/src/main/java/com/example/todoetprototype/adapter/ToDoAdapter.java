@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todoetprototype.planner.AddNewTask;
 import com.example.todoetprototype.planner.PlannerActivity;
-import com.example.todoetprototype.planner.ToDoModel;
+import com.example.todoetprototype.planner.PlannerItem;
 import com.example.todoetprototype.R;
 import com.example.todoetprototype.utils.DatabaseHandler;
 import com.example.todoetprototype.inventory.UserModel;
@@ -22,7 +22,7 @@ import java.util.List;
 
 public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
 
-    private List<ToDoModel> todoList;
+    private List<PlannerItem> todoList;
     private PlannerActivity activity;
     private DatabaseHandler db;
     private UserViewModel userViewModel;
@@ -44,16 +44,20 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         db.openDatabase(); // open database
-        ToDoModel item = todoList.get(position); // in the todolist you get the item
+        PlannerItem item = todoList.get(position); // in the todolist you get the item
         holder.task.setText(item.getTask()); // set the task from the item position
         holder.task.setChecked(toBoolean(item.getStatus())); // checks the status of the item if it is checked or not
         holder.task.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(isChecked){
                 db.updateStatus(item.getId(),1);
                 UserModel userModel = userViewModel.getUserData().getValue();
-                if (userModel != null)
-                    userViewModel.updateUser(userModel.getCoins() + 1);
-                else
+                if (userModel != null) {
+                    if (item.canGivenCoins()) {
+                        userViewModel.updateUser(userModel.getCoins() + 1);
+                        item.setCanGivenCoins(false);
+                    }
+                    // Delete item
+                } else
                     System.err.println("ToDoAdapter.onCheckedChanged : userModel is null!");
             }
             else{
@@ -76,7 +80,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
 
     // For dummy data
 
-    public void setTaskList(List<ToDoModel> todoList) {
+    public void setTaskList(List<PlannerItem> todoList) {
         this.todoList = todoList;
         notifyDataSetChanged(); // so recycler view is updated
     }
@@ -87,7 +91,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
 
     // Delete item from activity
     public void deleteItem(int position) {
-        ToDoModel item = todoList.get(position);
+        PlannerItem item = todoList.get(position);
         db.deleteTask(item.getId()); // id of item being deleted
         todoList.remove(position); //remove from the item
         notifyItemRemoved(position); // notifies that the item will be removed and will automatically update view
@@ -95,7 +99,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
 
     // Update edited items
     public void editItem(int position) {
-        ToDoModel item = todoList.get(position);
+        PlannerItem item = todoList.get(position);
         Bundle bundle = new Bundle();
         bundle.putInt("id",item.getId());
         bundle.putString("task", item.getTask());

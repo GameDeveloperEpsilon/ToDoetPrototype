@@ -20,6 +20,7 @@ public class UserViewModel extends ViewModel {
 
     public void updateUser(int coins) {
         UserModel updatedUserModel = userData.getValue();
+        assert updatedUserModel != null;
         updatedUserModel.setCoins(coins);
         userData.setValue(updatedUserModel);
     }

@@ -34,7 +34,7 @@ public class PlannerActivity extends AppCompatActivity implements DialogCloseLis
     private UserViewModel userViewModel;
     private RecyclerView taskRecyclerView;
     private ToDoAdapter tasksAdapter;
-    private List<ToDoModel> taskList;
+    private List<PlannerItem> taskList;
     private DatabaseHandler db;
     private FloatingActionButton fab;
 
@@ -81,11 +81,10 @@ public class PlannerActivity extends AppCompatActivity implements DialogCloseLis
         fab = findViewById(R.id.fab);
 
         // Updates task list
-        taskList = db.getAllTasks();
+        PlannerModel.getInstance().loadData(this);
+        taskList = PlannerModel.getInstance().getPlannerItems();
         Collections.reverse(taskList); // reverse elements in an array
         tasksAdapter.setTaskList(taskList); // add task to recycler view
-
-
 
         // This is a utility class to add swipe to dismiss and drag &drop support to RecyclerView.
         ItemTouchHelper itemTouchHelper = new
@@ -101,7 +100,7 @@ public class PlannerActivity extends AppCompatActivity implements DialogCloseLis
 
     @Override
     public void handleDialogClose(DialogInterface dialog){
-        taskList = db.getAllTasks();
+        taskList = PlannerModel.getInstance().getPlannerItems();
         Collections.reverse(taskList);
         tasksAdapter.setTaskList(taskList);
         tasksAdapter.notifyDataSetChanged();

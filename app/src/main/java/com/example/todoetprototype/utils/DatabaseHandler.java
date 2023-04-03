@@ -8,10 +8,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.todoetprototype.planner.ToDoModel;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.todoetprototype.planner.PlannerItem;
+import com.example.todoetprototype.planner.PlannerModel;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
@@ -133,7 +131,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db = this.getWritableDatabase();
     }
 
-    public void insertTask(ToDoModel task) {
+    public void insertTask(PlannerItem task) {
         ContentValues cv = new ContentValues();
         cv.put(TASK, task.getTask());
         cv.put(STATUS, 0);
@@ -142,8 +140,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     @SuppressLint("Range")
-    public List<ToDoModel> getAllTasks() {
-        List<ToDoModel> taskList = new ArrayList<>();
+    public void loadAllTasks() {
         Cursor cur = null;
         db.beginTransaction();
         try {
@@ -151,12 +148,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             if (cur != null) {
                 if (cur.moveToFirst()) {
                     do {
-                        ToDoModel task = new ToDoModel();
+                        PlannerItem task = new PlannerItem();
                         task.setId(cur.getInt(cur.getColumnIndex(ID)));
                         task.setTask(cur.getString(cur.getColumnIndex(TASK)));
                         task.setStatus(cur.getInt(cur.getColumnIndex(STATUS)));
                         task.setDate(cur.getString(cur.getColumnIndex(DATE)));
-                        taskList.add(task);
+                        PlannerModel.getInstance().addPlannerItemToList(task);
                     }
                     while (cur.moveToNext());
                 }
@@ -166,7 +163,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             assert cur != null;
             cur.close();
         }
-        return taskList;
     }
 
     public void updateStatus(int id, int status) {
