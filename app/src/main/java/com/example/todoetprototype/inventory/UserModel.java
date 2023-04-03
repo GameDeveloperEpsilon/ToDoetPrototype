@@ -19,7 +19,7 @@ public class UserModel {
     private final List<StoreItem> inventory = new ArrayList<>();
 
     private UserModel() {
-        coins = 0;
+        coins = 100;
         System.out.println("User Model Created!");
     }
 

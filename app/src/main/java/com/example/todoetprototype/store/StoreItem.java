@@ -1,5 +1,7 @@
 package com.example.todoetprototype.store;
 
+import com.example.todoetprototype.R;
+
 public class StoreItem {
 
     private int itemID;
@@ -7,6 +9,7 @@ public class StoreItem {
     private String itemName;
     private String itemDescription;
     private String itemCategory;
+    private int drawable;
 
 
     public StoreItem(int itemID, int itemPrice, String itemName, String itemDescription, String itemCategory) {
@@ -14,7 +17,8 @@ public class StoreItem {
         this.itemPrice = itemPrice;
         this.itemName = itemName;
         this.itemDescription = itemDescription;
-        this.itemCategory = itemCategory;;
+        this.itemCategory = itemCategory;
+        this.drawable = R.drawable.berryimage;
     }
 
     //Getters and Setters
@@ -60,4 +64,7 @@ public class StoreItem {
         this.itemCategory = itemCategory;
     }
 
+    public int getDrawable() {
+        return drawable;
+    }
 }

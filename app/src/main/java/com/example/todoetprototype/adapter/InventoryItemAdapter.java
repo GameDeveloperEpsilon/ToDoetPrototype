@@ -1,13 +1,15 @@
 package com.example.todoetprototype.adapter;
 
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todoetprototype.R;
@@ -52,7 +54,14 @@ public class InventoryItemAdapter extends RecyclerView.Adapter<InventoryItemAdap
         StoreItem item = inventoryItemList.get(position); // in the todolist you get the item
         holder.inventoryItemName.setText(item.getItemName()); // set the task from the item position
         holder.inventoryItemDescription.setText(item.getItemDescription()); // set the description
-        // holder.inventoryItemImage.setImageDrawable(?);
+
+        final int imageID = item.getDrawable();
+        final Resources resources = activity.getResources();
+        final Drawable imageDrawable = ResourcesCompat.getDrawable(resources, imageID, null);
+        if (imageDrawable == null)
+            throw new RuntimeException("Broken");
+
+        holder.inventoryItemImage.setImageDrawable(imageDrawable);
     }
 
     @Override
@@ -75,7 +84,7 @@ public class InventoryItemAdapter extends RecyclerView.Adapter<InventoryItemAdap
             super(view);
             inventoryItemName = view.findViewById(R.id.textView_ItemName);
             inventoryItemDescription = view.findViewById(R.id.textView_itemDescription);
-            inventoryItemImage = view.findViewById(R.id.imageView);
+            inventoryItemImage = view.findViewById(R.id.inventoryItemImageView);
         }
     }
 }
