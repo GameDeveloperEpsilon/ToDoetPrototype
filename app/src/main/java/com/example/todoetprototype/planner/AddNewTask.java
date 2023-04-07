@@ -39,7 +39,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private DatabaseHandler db;
 
-    public static AddNewTask newInstance(){
+    public static AddNewTask newInstance() {
         return new AddNewTask();
     }
     // if it's saved in the bundle or instance itself

@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.todoetprototype.planner.PlannerActivity;
 import com.example.todoetprototype.planner.PlannerItem;
 import com.example.todoetprototype.planner.PlannerModel;
 
@@ -101,9 +102,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
     private SQLiteDatabase db;
+    private Context context;
 
     public DatabaseHandler(Context context) {
         super(context, NAME, null, CURRENT_VERSION);
+        this.context = context;
     }
 
     // table creation
@@ -136,11 +139,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cv.put(TASK, task.getTask());
         cv.put(STATUS, 0);
         cv.put(DATE, task.getDate());
+        ((PlannerActivity) context).getPlannerViewModel().addPlannerItem(task);
         db.insert(TODO_TABLE, null, cv);
     }
 
     @SuppressLint("Range")
     public void loadAllTasks() {
+        db = this.getReadableDatabase();
         Cursor cur = null;
         db.beginTransaction();
         try {
@@ -153,7 +158,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         task.setTask(cur.getString(cur.getColumnIndex(TASK)));
                         task.setStatus(cur.getInt(cur.getColumnIndex(STATUS)));
                         task.setDate(cur.getString(cur.getColumnIndex(DATE)));
-                        PlannerModel.getInstance().addPlannerItemToList(task);
+                        ((PlannerActivity) context).getPlannerViewModel().addPlannerItem(task);
                     }
                     while (cur.moveToNext());
                 }

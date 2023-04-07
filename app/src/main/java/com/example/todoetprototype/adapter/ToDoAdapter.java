@@ -8,15 +8,16 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.todoetprototype.R;
+import com.example.todoetprototype.inventory.UserModel;
 import com.example.todoetprototype.planner.AddNewTask;
 import com.example.todoetprototype.planner.PlannerActivity;
 import com.example.todoetprototype.planner.PlannerItem;
-import com.example.todoetprototype.R;
+import com.example.todoetprototype.planner.PlannerViewModel;
 import com.example.todoetprototype.utils.DatabaseHandler;
-import com.example.todoetprototype.inventory.UserModel;
-import com.example.todoetprototype.inventory.UserViewModel;
 
 import java.util.List;
 
@@ -25,14 +26,15 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
     private List<PlannerItem> todoList;
     private PlannerActivity activity;
     private DatabaseHandler db;
-    private UserViewModel userViewModel;
+    //private PlannerViewModel plannerViewModel;
 
     public ToDoAdapter(DatabaseHandler db, PlannerActivity activity) {
         this.db = db;
         this.activity = activity;
-        this.userViewModel = activity.getUserViewModel();
+        //this.plannerViewModel = activity.getPlannerViewModel();
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
@@ -50,10 +52,10 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         holder.task.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(isChecked){
                 db.updateStatus(item.getId(),1);
-                UserModel userModel = userViewModel.getUserData().getValue();
+                UserModel userModel = UserModel.getInstance();
                 if (userModel != null) {
                     if (item.canGivenCoins()) {
-                        userViewModel.updateUser(userModel.getCoins() + 1);
+                        userModel.setCoins(userModel.getCoins() + 1);
                         item.setCanGivenCoins(false);
                     }
                     // Delete item

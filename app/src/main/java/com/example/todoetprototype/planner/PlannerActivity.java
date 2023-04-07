@@ -12,12 +12,18 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.todoetprototype.Nexus;
 import com.example.todoetprototype.adapter.ToDoAdapter;
 import com.example.todoetprototype.DialogCloseListener;
 import com.example.todoetprototype.R;
+import com.example.todoetprototype.inventory.InventoryActivity;
+import com.example.todoetprototype.pet.PetActivity;
+import com.example.todoetprototype.store.StoreActivity;
 import com.example.todoetprototype.utils.DatabaseHandler;
 
 import com.example.todoetprototype.inventory.UserViewModel;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DateFormat;
@@ -31,7 +37,7 @@ public class PlannerActivity extends AppCompatActivity implements DialogCloseLis
 
     // Extra note I needed to change the build from 32 to 33 in the build.gradle for the app to run
 
-    private UserViewModel userViewModel;
+    private PlannerViewModel plannerViewModel;
     private RecyclerView taskRecyclerView;
     private ToDoAdapter tasksAdapter;
     private List<PlannerItem> taskList;
@@ -46,7 +52,7 @@ public class PlannerActivity extends AppCompatActivity implements DialogCloseLis
         Objects.requireNonNull(getSupportActionBar()).hide(); // will not show top most navigation bar
 
         // Initialize userViewModel
-        userViewModel = new ViewModelProvider(this) .get(UserViewModel.class);
+        plannerViewModel = new ViewModelProvider(this).get(PlannerViewModel.class);
 
         // Navigate to the calendar activity
         ImageButton gotoCalendarBtn = findViewById(R.id.calendar_icon);
@@ -96,6 +102,40 @@ public class PlannerActivity extends AppCompatActivity implements DialogCloseLis
                 v -> AddNewTask.newInstance().show(getSupportFragmentManager(), AddNewTask.TAG)
         );
 
+        // Navigation bar
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.getMenu().findItem(R.id.todo_list_nav_item).setChecked(true);
+
+        BottomNavigationItemView todoListNavItem = bottomNavigationView.findViewById(R.id.todo_list_nav_item);
+        todoListNavItem.setOnClickListener(v -> {
+            Intent changeActivities = new Intent(this, PlannerActivity.class);
+            startActivity(changeActivities);
+        });
+
+        BottomNavigationItemView userNavItem = bottomNavigationView.findViewById(R.id.user_nav_item);
+        userNavItem.setOnClickListener(v -> {
+            Intent changeActivities = new Intent(this, InventoryActivity.class);
+            startActivity(changeActivities);
+        });
+
+        BottomNavigationItemView homeNavItem = bottomNavigationView.findViewById(R.id.home_nav_item);
+        homeNavItem.setOnClickListener(v -> {
+            Intent changeActivities = new Intent(this, Nexus.class);
+            startActivity(changeActivities);
+        });
+
+        BottomNavigationItemView petsNavItem = bottomNavigationView.findViewById(R.id.pets_nav_item);
+        petsNavItem.setOnClickListener(v -> {
+            Intent changeActivities = new Intent(this, PetActivity.class);
+            startActivity(changeActivities);
+        });
+
+        BottomNavigationItemView storeNavItem = bottomNavigationView.findViewById(R.id.store_nav_item);
+        storeNavItem.setOnClickListener(v -> {
+            Intent changeActivities = new Intent(this, StoreActivity.class);
+            startActivity(changeActivities);
+        });
     }
 
     @Override
@@ -106,7 +146,7 @@ public class PlannerActivity extends AppCompatActivity implements DialogCloseLis
         tasksAdapter.notifyDataSetChanged();
     }
 
-    public UserViewModel getUserViewModel() {
-        return userViewModel;
+    public PlannerViewModel getPlannerViewModel() {
+        return plannerViewModel;
     }
 }

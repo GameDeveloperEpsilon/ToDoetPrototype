@@ -1,6 +1,5 @@
 package com.example.todoetprototype.pet;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.todoetprototype.R;
@@ -15,8 +14,16 @@ public class PetModel implements Serializable {
     private static PetModel instance;
 
     public static PetModel getInstance() {
-        if (instance == null)
+        if (instance == null) {
+            throw new RuntimeException("Shared Preferences must be provided for pet creation.");
+        }
+        return instance;
+    }
+    public static PetModel getInstance(SharedPreferences sp) {
+        if (instance == null) {
             instance = new PetModel(0, "Tom", 0, false, 0, 0, 0, 0, 0, 0, 0);
+            instance.loadPetParameters(sp);
+        }
         return instance;
     }
 
@@ -83,10 +90,6 @@ public class PetModel implements Serializable {
         adult = PetStages.ADULT_SIORDON;
         ancient = PetStages.ANCIENT_SIORDON;
         currentStage = egg;
-    }
-
-    public void loadParameters() {
-
     }
 
     public enum PetStages {
@@ -336,8 +339,5 @@ public class PetModel implements Serializable {
     public boolean isEgg() {
         return (this.getDaysOld() == 0);
     }
-
-
-
 
 }

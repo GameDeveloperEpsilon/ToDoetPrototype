@@ -22,7 +22,11 @@ public class PlannerModel {
     }
 
     public void loadData(PlannerActivity context) {
-        new DatabaseHandler(context).loadAllTasks();
+        try (DatabaseHandler databaseHandler = new DatabaseHandler(context)) {
+            databaseHandler.loadAllTasks();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public List<PlannerItem> getPlannerItems() {

@@ -5,6 +5,7 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,8 +14,14 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.todoetprototype.Nexus;
 import com.example.todoetprototype.R;
 import com.example.todoetprototype.databinding.ActivityPetBinding;
+import com.example.todoetprototype.inventory.InventoryActivity;
+import com.example.todoetprototype.planner.PlannerActivity;
+import com.example.todoetprototype.store.StoreActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.Serializable;
 
@@ -45,16 +52,16 @@ public class PetActivity extends AppCompatActivity implements Serializable {
         binding = ActivityPetBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        petViewModel = new ViewModelProvider(this).get(TodopetViewModel.class);
-        petModel = PetModel.getInstance();
-
-        if (petViewModel == null)
-            throw new RuntimeException("Error: Pet View Model null!");
-        if (petModel == null)
-            throw new RuntimeException("Error: Pet Model null!");
-
-
         sp=this.getSharedPreferences("myPetPrefs",Context.MODE_PRIVATE);
+        petModel = PetModel.getInstance(sp);
+        petViewModel = new ViewModelProvider(this).get(TodopetViewModel.class);
+
+        if (petViewModel == null) {
+            throw new RuntimeException("Error: Pet View Model null!");
+        }
+        if (petModel == null) {
+            throw new RuntimeException("Error: Pet Model null!");
+        }
 
         //TextView txtname = findViewById(R.id.textView2);
 
@@ -98,20 +105,56 @@ public class PetActivity extends AppCompatActivity implements Serializable {
             }
 
             // Handle Data Progress Bars
-            ProgressBar hungerBar = findViewById(R.id.hungerbar);
-            hungerBar.setProgress(PetModel.getInstance().hunger);
-
             ProgressBar hygieneBar = findViewById(R.id.hygienebar);
             hygieneBar.setProgress(PetModel.getInstance().hygiene);
+
+            ProgressBar hungerBar = findViewById(R.id.hungerbar);
+            hungerBar.setProgress(PetModel.getInstance().hunger);
 
             ProgressBar affectionBar = findViewById(R.id.happinessbar);
             affectionBar.setProgress(PetModel.getInstance().affection);
 
-            //ProgressBar levelBar = findViewById(R.id.hungerbar);
-            //hungerBar.setProgress(PetModel.getInstance().level);
+            ProgressBar levelBar = findViewById(R.id.levelbar);
+//            levelBar.setProgress(PetModel.getInstance().level);
+
         });
 
         petViewModel.init();
+
+        // Navigation bar
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.getMenu().findItem(R.id.pets_nav_item).setChecked(true);
+
+        BottomNavigationItemView todoListNavItem = bottomNavigationView.findViewById(R.id.todo_list_nav_item);
+        todoListNavItem.setOnClickListener(v -> {
+            Intent changeActivities = new Intent(this, PlannerActivity.class);
+            startActivity(changeActivities);
+        });
+
+        BottomNavigationItemView userNavItem = bottomNavigationView.findViewById(R.id.user_nav_item);
+        userNavItem.setOnClickListener(v -> {
+            Intent changeActivities = new Intent(this, InventoryActivity.class);
+            startActivity(changeActivities);
+        });
+
+        BottomNavigationItemView homeNavItem = bottomNavigationView.findViewById(R.id.home_nav_item);
+        homeNavItem.setOnClickListener(v -> {
+            Intent changeActivities = new Intent(this, Nexus.class);
+            startActivity(changeActivities);
+        });
+
+        BottomNavigationItemView petsNavItem = bottomNavigationView.findViewById(R.id.pets_nav_item);
+        petsNavItem.setOnClickListener(v -> {
+            Intent changeActivities = new Intent(this, PetActivity.class);
+            startActivity(changeActivities);
+        });
+
+        BottomNavigationItemView storeNavItem = bottomNavigationView.findViewById(R.id.store_nav_item);
+        storeNavItem.setOnClickListener(v -> {
+            Intent changeActivities = new Intent(this, StoreActivity.class);
+            startActivity(changeActivities);
+        });
     }
 
     @Override

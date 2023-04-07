@@ -8,8 +8,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TodopetViewModel extends ViewModel implements Serializable {
@@ -18,7 +16,7 @@ public class TodopetViewModel extends ViewModel implements Serializable {
 
     private MutableLiveData<PetModel> petData = new MutableLiveData<>();
 
-    private long delay = 5000L;
+    private long tickRate = 1000L;
 
 
     public void init() {
@@ -43,6 +41,15 @@ public class TodopetViewModel extends ViewModel implements Serializable {
     }
 
     // clock
+    int lastHygieneTick = 0;
+    int lastHungerTick = 0;
+    int lastAffectionTick = 0;
+    int lastPetLevelTick = 0;
+
+    final int ticksPerHygieneUpdate = 10;
+    final int ticksPerHungerUpdate = 5;
+    final int ticksPerAffectionUpdate = 10;
+    final int ticksPerPetLevelUpdate = 10;
 
     private void updatePet() {
 
@@ -52,7 +59,7 @@ public class TodopetViewModel extends ViewModel implements Serializable {
             updatePet();
         };
 
-        new Handler(Looper.getMainLooper()).postDelayed(tickPetStats, delay);
+        new Handler(Looper.getMainLooper()).postDelayed(tickPetStats, tickRate);
     }
 
     private void tickPetStats() {
@@ -64,42 +71,52 @@ public class TodopetViewModel extends ViewModel implements Serializable {
             return;
         }
 
-        // If pet was not cleaned, reduce hygiene.
+        lastHygieneTick = (lastHygieneTick + 1) % ticksPerHygieneUpdate;
+        lastHungerTick = (lastHungerTick + 1) % ticksPerHungerUpdate;
+        lastAffectionTick = (lastAffectionTick + 1) % ticksPerAffectionUpdate;
+        lastPetLevelTick = (lastPetLevelTick + 1) % ticksPerPetLevelUpdate;
+
+        // If pet was cleaned, increase hygiene.
         if (pet.cleaned) {
             pet.setHygiene(10);
             pet.cleaned = false;
-        } else {
+        }
+        // If pet reaches tick threshold, reduce hygiene.
+        if (lastHygieneTick % ticksPerHygieneUpdate == 0) {
             pet.setHygiene(-5);
         }
 
+        // If pet was fed, increase hunger stat.
         if (pet.fed) {
             pet.setHunger(10);
             pet.fed = false;
         }
-        else
+        // If pet reaches tick threshold, reduce hunger stat.
+        if (lastHungerTick % ticksPerHungerUpdate == 0) {
             pet.setHunger(-5);
+        }
 
+        // If pet was petted, increase affection stat.
         if (pet.petted) {
             pet.setAffection(10);
             pet.petted = false;
-        } else {
+        }
+        // If pet reaches tick threshold, reduce affection stat.
+        if (lastAffectionTick % ticksPerAffectionUpdate == 0) {
             pet.setAffection(-5);
         }
 
-
-
-        // Update pet appearance based on stage
-        if (pet.currentStage == pet.egg) {
-            pet.currentStage = pet.baby;
-        }
-        else if (pet.currentStage == pet.baby) {
-            pet.currentStage = pet.adolescent;
-        }
-        else if (pet.currentStage == pet.adolescent) {
-            pet.currentStage = pet.adult;
-        }
-        else if (pet.currentStage == pet.adult) {
-            pet.currentStage = pet.ancient;
+        if (lastPetLevelTick % ticksPerPetLevelUpdate == 0) {
+            // Update pet appearance based on stage
+            if (pet.currentStage == pet.egg) {
+                pet.currentStage = pet.baby;
+            } else if (pet.currentStage == pet.baby) {
+                pet.currentStage = pet.adolescent;
+            } else if (pet.currentStage == pet.adolescent) {
+                pet.currentStage = pet.adult;
+            } else if (pet.currentStage == pet.adult) {
+                pet.currentStage = pet.ancient;
+            }
         }
 
         petData.setValue(pet);
