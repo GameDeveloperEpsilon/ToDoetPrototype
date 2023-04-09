@@ -16,14 +16,12 @@ public class TodopetViewModel extends ViewModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private MutableLiveData<PetModel> petData = new MutableLiveData<>();
+    private final MutableLiveData<PetModel> petData = new MutableLiveData<>(PetModel.getInstance());
 
     private long tickRate = 1000L;
 
 
     public void init() {
-
-        petData.setValue(PetModel.getInstance());
         updatePet();
     }
 

@@ -18,6 +18,11 @@ public class StoreViewModel extends ViewModel {
 
     public boolean buyItem(int position) {
 
+        // Check if user model is initialized
+        if (!UserModel.getInstance().getInitialized()) {
+            return false;
+        }
+
         // Check if user has enough coins
         final int userCoinTotal = UserModel.getInstance().getCoins();
         final int itemPrice = StoreModel.getInstance().getCatalog().get(position).getItemPrice();

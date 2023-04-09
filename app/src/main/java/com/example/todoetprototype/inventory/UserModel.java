@@ -1,6 +1,7 @@
 package com.example.todoetprototype.inventory;
 
 import com.example.todoetprototype.store.StoreItem;
+import com.example.todoetprototype.utils.DatabaseHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ public class UserModel {
         return instance;
     }
 
+    private boolean initialized = false;
     private int coins;
     private final List<StoreItem> inventory = new ArrayList<>();
 
@@ -32,6 +34,23 @@ public class UserModel {
 
     public List<StoreItem> getInventory() {
         return inventory;
+    }
+    public void clearInventory() {
+        inventory.clear();
+    }
+    public void loadInventory(InventoryActivity context) {
+
+        try (DatabaseHandler databaseHandler = new DatabaseHandler(context)) {
+            databaseHandler.loadAllInventoryItems();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        initialized = true;
+    }
+
+    public boolean getInitialized() {
+        return initialized;
     }
     public void addItemToInventory(StoreItem newItem) {
         inventory.add(newItem);

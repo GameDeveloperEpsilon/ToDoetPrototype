@@ -21,8 +21,8 @@ import java.util.List;
 
 public class StoreItemAdapter extends RecyclerView.Adapter<StoreItemAdapter.ViewHolder> {
 
-    private static StoreActivity activity;
-    private StoreViewModel storeViewModel;
+    private final StoreActivity activity;
+    private final StoreViewModel storeViewModel;
     private List<StoreItem> storeItemList;
     private DatabaseHandler db;
 
@@ -56,9 +56,9 @@ public class StoreItemAdapter extends RecyclerView.Adapter<StoreItemAdapter.View
         holder.buyItemBtn.setOnClickListener(v -> {
             boolean purchaseSucceeded = storeViewModel.buyItem(position);
             if (purchaseSucceeded)
-                Toast.makeText(activity, "Buying Item", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "Buying item", Toast.LENGTH_SHORT).show();
             else
-                Toast.makeText(activity, "Item too expensive", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "Unable to buy item", Toast.LENGTH_SHORT).show();
         });
     }
 

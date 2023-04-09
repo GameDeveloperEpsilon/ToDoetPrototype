@@ -16,24 +16,33 @@ import com.example.todoetprototype.databinding.ActivityInventoryBinding;
 import com.example.todoetprototype.pet.PetActivity;
 import com.example.todoetprototype.planner.PlannerActivity;
 import com.example.todoetprototype.store.StoreActivity;
+import com.example.todoetprototype.store.StoreItem;
 import com.example.todoetprototype.utils.DatabaseHandler;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class InventoryActivity extends AppCompatActivity {
 
-    private ActivityInventoryBinding binding;
     private UserViewModel userViewModel;
-    private RecyclerView inventoryItemsView;
     private InventoryItemAdapter inventoryItemAdapter;
+    private DatabaseHandler db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityInventoryBinding.inflate(getLayoutInflater());
+        com.example.todoetprototype.databinding.ActivityInventoryBinding binding = ActivityInventoryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        db = new DatabaseHandler(this);
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+
+
+        if (UserModel.getInstance().getInitialized()) {
+            refreshInventoryTable();
+        } else {
+            UserModel.getInstance().loadInventory(this);
+        }
+
 
         userViewModel.getUserData().observe(this, user -> {
 
@@ -44,10 +53,11 @@ public class InventoryActivity extends AppCompatActivity {
 
         });
 
-        inventoryItemsView = findViewById(R.id.inventoryItemsRecyclerView);
+        RecyclerView inventoryItemsView = findViewById(R.id.inventoryItemsRecyclerView);
         inventoryItemsView.setLayoutManager(new LinearLayoutManager(this));
         inventoryItemAdapter = new InventoryItemAdapter(new DatabaseHandler(this), this);
         inventoryItemsView.setAdapter(inventoryItemAdapter);
+
 
         // Navigation bar
 
@@ -83,6 +93,21 @@ public class InventoryActivity extends AppCompatActivity {
             Intent changeActivities = new Intent(this, StoreActivity.class);
             startActivity(changeActivities);
         });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        refreshInventoryTable();
+    }
+
+    public void refreshInventoryTable() {
+        db.openDatabase();
+        db.deleteAllInventoryItems();
+        for (StoreItem inventoryItemToStore : UserModel.getInstance().getInventory()) {
+            db.insertInventoryItem(inventoryItemToStore);
+        }
+        db.close();
     }
 
     public UserViewModel getUserViewModel() {

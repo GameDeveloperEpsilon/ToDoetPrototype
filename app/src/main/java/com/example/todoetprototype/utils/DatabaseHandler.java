@@ -8,14 +8,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.todoetprototype.inventory.InventoryActivity;
+import com.example.todoetprototype.inventory.UserModel;
 import com.example.todoetprototype.planner.PlannerActivity;
 import com.example.todoetprototype.planner.PlannerItem;
-import com.example.todoetprototype.planner.PlannerModel;
+import com.example.todoetprototype.store.StoreItem;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
     // table pet
-    private static final String TBL_PET = "Pet_table_database";
     private static final String PET_TABLE = "petdata";
     private static final String PET_ID = "petid";
     private static final String PET_NAME = "petname";
@@ -39,7 +40,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             AGE + "INTEGER)";
 
     // table user
-    private static final String TBL_USER = "user_table_database";
     private static final String USER_TABLE = "user_data";
     private static final String USER_ID = "userid";
     private static final String USER_NAME = "user_name";
@@ -55,7 +55,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             USER_LAST_LOGON + "INTEGER)";
 
     // table store
-    private static final String TBL_STORE = "store_table_database";
     private static final String STORE_TABLE = "store_data";
     private static final String ITEM_ID = "item_id";
     private static final String ITEM_NAME = "item_name";
@@ -71,25 +70,24 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             ITEM_DESCRIPTION + " TEXT, " +
             ITEM_CATEGORY + "TEXT)";
 
-//    // table inventory
-//    private static final String ITEM_QUANTITY = "item_quantity";
-//
-//
-//    // table inventory
-//    private static final String CREATE_PET_TABLE ="CREATE TABLE " + PET_TABLE + "("+
-//            PET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-//            PET_NAME + " TEXT, " +
-//            HUNGER + " INTEGER, " +
-//            HEALTH + " INTEGER, " +
-//            AFFECTION + "INTEGER," +
-//            SPECIES + "TEXT," +
-//            DEATH + "INTEGER," +
-//            AGE + "INTEGER)";
+
+    // table inventory
+    private static final String INVENTORY_TABLE = "table_inventory";
+
+    private static final String ITEM_IMAGE_ID = "item_image_id";
+
+    // table inventory
+    private static final String CREATE_INVENTORY_TABLE = "CREATE TABLE " + INVENTORY_TABLE + "(" +
+            ITEM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            ITEM_NAME + " TEXT, " +
+            ITEM_DESCRIPTION + " TEXT, " +
+            ITEM_CATEGORY + " TEXT, " +
+            ITEM_IMAGE_ID + " INTEGER)";
 
 
     // todolist table
-    private static final int CURRENT_VERSION = 2;
-    private static final String NAME = "toDoListDatabase";
+    private static final int CURRENT_VERSION = 3;
+    private static final String NAME = "todoet_database";
     private static final String TODO_TABLE = "todo";
     private static final String ID = "id";
     private static final String TASK = "task";
@@ -98,7 +96,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // to do table
     private static final String CREATE_TODO_TABLE =
-            "CREATE TABLE " + TODO_TABLE + "(" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + TASK + " TEXT, " + STATUS + " INTEGER, " + DATE + " TEXT)";
+            "CREATE TABLE " + TODO_TABLE + "(" +
+                    ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    TASK + " TEXT, " +
+                    STATUS + " INTEGER, " +
+                    DATE + " TEXT)";
 
 
     private SQLiteDatabase db;
@@ -113,19 +115,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TODO_TABLE);
-        db.execSQL(CREATE_PET_TABLE);
+        //db.execSQL(CREATE_PET_TABLE);
         db.execSQL(CREATE_USER_TABLE);
         db.execSQL(CREATE_STORE_TABLE);
-        //db.execSQL(CREATE_INVENTORY_TABLE);
+        db.execSQL(CREATE_INVENTORY_TABLE);
 
-        System.err.println("DB version : " + db.getVersion());
+        System.out.println("DB version : " + db.getVersion());
         //db.execSQL("ALTER TABLE " + TODO_TABLE + " ADD " + DATE + " datatype; ");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Drop older table if existed
+        // Drop older tables if they exist
         db.execSQL("DROP TABLE IF EXISTS " + TODO_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + PET_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + STORE_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + INVENTORY_TABLE);
         // Create tables again
         onCreate(db);
     }
@@ -193,8 +198,53 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.delete(TODO_TABLE, ID + "= ?", new String[]{String.valueOf(id)});
     }
 
+    // ---------------------- Inventory ---------------------------
 
+    @SuppressLint("Range")
+    public void loadAllInventoryItems() {
+        db = this.getReadableDatabase();
+        Cursor cur = null;
+        db.beginTransaction();
+        try {
+            cur = db.query(INVENTORY_TABLE, null, null, null, null, null, null, null);
+            if (cur != null) {
+                if (cur.moveToFirst()) {
+                    UserModel.getInstance().clearInventory();
+                    do {
+                        StoreItem item = new StoreItem(
+                                cur.getInt(cur.getColumnIndex(ITEM_ID)),
+                                0,
+                                cur.getString(cur.getColumnIndex(ITEM_NAME)),
+                                cur.getString(cur.getColumnIndex(ITEM_DESCRIPTION)),
+                                cur.getString(cur.getColumnIndex(ITEM_CATEGORY))
+                        );
+                        ((InventoryActivity) context).getUserViewModel().addItemToInventory(item);
+                    }
+                    while (cur.moveToNext());
+                }
+            }
+        } finally {
+            db.endTransaction();
+            assert cur != null;
+            cur.close();
+        }
     }
 
+    public void deleteAllInventoryItems() {
+        db.delete(INVENTORY_TABLE, null, null);
+    }
 
+    public void insertInventoryItem(StoreItem inventoryItem) {
+        ContentValues cv = new ContentValues();
+        //cv.put(ITEM_ID, inventoryItem.getItemID());
+        cv.put(ITEM_NAME, inventoryItem.getItemName());
+        cv.put(ITEM_DESCRIPTION, inventoryItem.getItemDescription());
+        cv.put(ITEM_CATEGORY, inventoryItem.getItemCategory());
+        cv.put(ITEM_IMAGE_ID, inventoryItem.getDrawable());
+        db.insert(INVENTORY_TABLE, null, cv);
+    }
 
+    public void deleteInventoryItem(int id) {
+        db.delete(INVENTORY_TABLE, ITEM_ID + "= ?", new String[]{String.valueOf(id)});
+    }
+}
