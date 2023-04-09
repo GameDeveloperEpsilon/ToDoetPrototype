@@ -19,11 +19,12 @@ public class StoreModel extends AppCompatActivity {
 
     private StoreModel() {
         // Add dummy data
-        catalog.add(new StoreItem(1, 5, "Test Item", "Some description", "Category A"));
-        catalog.add(new StoreItem(2, 10, "Toothbrush", "A brush for cleaning teeth", "Category B"));
+        catalog.add(new StoreItem(1, 5, "Soap", "Cleans pet", "CLEANER"));
+        catalog.add(new StoreItem(2, 10, "Toothbrush", "A brush for cleaning teeth", "CLEANER"));
         catalog.add(new StoreItem(3, 4, "todofood", "Delicious food for pets", "FOOD"));  // FOOD
-        catalog.add(new StoreItem(4, 3, "NA","NA","POTION"));  // POTION
-        catalog.add(new StoreItem(5, 3, "NA","NA","MEDICINE"));  // MEDICINE
+        //catalog.add(new StoreItem(4, 4, "todofood", "Delicious food for pets", "FOOD"));  // FOOD
+        catalog.add(new StoreItem(4, 3, "Color Potion","Changes color of pet","POTION"));  // POTION
+        catalog.add(new StoreItem(5, 3, "Healing Salve","Cures sickness","MEDICINE"));  // MEDICINE
 
     }
 

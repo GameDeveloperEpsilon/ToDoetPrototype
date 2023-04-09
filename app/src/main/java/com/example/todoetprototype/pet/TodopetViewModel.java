@@ -7,8 +7,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.todoetprototype.inventory.UserModel;
+import com.example.todoetprototype.store.StoreItem;
+
 import java.io.Serializable;
-import java.util.Date;
 
 public class TodopetViewModel extends ViewModel implements Serializable {
 
@@ -29,15 +31,39 @@ public class TodopetViewModel extends ViewModel implements Serializable {
         return petData;
     }
 
-    //feeding
+    public boolean useItem(String itemCategory) {
+        for (StoreItem item: UserModel.getInstance().getInventory()) {
+            if (item.getItemCategory().equals(itemCategory)) {
+                UserModel.getInstance().removeItemFromInventory(item);
+                return true;  // item found
+            }
+        }
+        return false;  // no items of type category
+    }
+
+    public void clean() {
+        if (useItem("CLEANER")) {
+            PetModel pet = PetModel.getInstance();
+            pet.setHygiene(10);
+            petData.setValue(pet);
+        }
+    }
 
     public void feed() {
-        petData.getValue().setAffection(10);
-        this.petData.getValue().lastFedTimestamp = new Date().getTime();
+        if (useItem("FOOD")) {
+            PetModel pet = PetModel.getInstance();
+            pet.setHunger(10);
+            //petData.getValue().setAffection(10);
+            //this.petData.getValue().lastFedTimestamp = new Date().getTime();
+            petData.setValue(pet);
+        }
     }
 
     public void pet() {
-        this.petData.getValue().lastPetTimestamp = new Date().getTime();
+        PetModel pet = PetModel.getInstance();
+        pet.setAffection(10);
+        //this.petData.getValue().lastPetTimestamp = new Date().getTime();
+        petData.setValue(pet);
     }
 
     // clock
@@ -76,31 +102,16 @@ public class TodopetViewModel extends ViewModel implements Serializable {
         lastAffectionTick = (lastAffectionTick + 1) % ticksPerAffectionUpdate;
         lastPetLevelTick = (lastPetLevelTick + 1) % ticksPerPetLevelUpdate;
 
-        // If pet was cleaned, increase hygiene.
-        if (pet.cleaned) {
-            pet.setHygiene(10);
-            pet.cleaned = false;
-        }
         // If pet reaches tick threshold, reduce hygiene.
         if (lastHygieneTick % ticksPerHygieneUpdate == 0) {
             pet.setHygiene(-5);
         }
 
-        // If pet was fed, increase hunger stat.
-        if (pet.fed) {
-            pet.setHunger(10);
-            pet.fed = false;
-        }
         // If pet reaches tick threshold, reduce hunger stat.
         if (lastHungerTick % ticksPerHungerUpdate == 0) {
             pet.setHunger(-5);
         }
 
-        // If pet was petted, increase affection stat.
-        if (pet.petted) {
-            pet.setAffection(10);
-            pet.petted = false;
-        }
         // If pet reaches tick threshold, reduce affection stat.
         if (lastAffectionTick % ticksPerAffectionUpdate == 0) {
             pet.setAffection(-5);

@@ -33,11 +33,8 @@ public class PetModel implements Serializable {
     //public PetModel species;
     public String petName;
     public int hygiene;
-    public boolean cleaned;
     public boolean death;
-    public boolean petted;
     public int hunger;
-    public boolean fed;
     public int affection;
     public int passedTime;
     public int age; // set to birthdate

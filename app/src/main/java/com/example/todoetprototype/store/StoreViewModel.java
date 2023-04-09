@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class StoreViewModel extends ViewModel {
 
-    private MutableLiveData<StoreModel> storeData = new MutableLiveData<>(StoreModel.getInstance());
+    private final MutableLiveData<StoreModel> storeData = new MutableLiveData<>(StoreModel.getInstance());
 
     public StoreViewModel() {
 
@@ -26,7 +26,7 @@ public class StoreViewModel extends ViewModel {
         }
 
         // Remove item from store
-        StoreItem itemToMove = removeItemFromCatalog(position);
+        StoreItem itemToMove = getItemFromCatalog(position);
         // Add item to inventory
         UserModel.getInstance().addItemToInventory(itemToMove);
         // Set user coin balance
@@ -36,6 +36,10 @@ public class StoreViewModel extends ViewModel {
         storeData.setValue(StoreModel.getInstance());
 
         return true;
+    }
+
+    private StoreItem getItemFromCatalog(int position) {
+        return Objects.requireNonNull(storeData.getValue()).getCatalog().get(position);
     }
 
     private StoreItem removeItemFromCatalog(int position) {

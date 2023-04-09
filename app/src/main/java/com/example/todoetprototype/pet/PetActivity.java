@@ -82,17 +82,17 @@ public class PetActivity extends AppCompatActivity implements Serializable {
         feedBtn.setOnClickListener((l) -> {
             Context c = getApplicationContext();
             Toast.makeText(c, "Feeding Pet", Toast.LENGTH_SHORT).show();
-            PetModel.getInstance().fed = true;
+            petViewModel.feed();
         });
         cleanBtn.setOnClickListener((l) -> {
             Context c = getApplicationContext();
             Toast.makeText(c, "Cleaning Pet", Toast.LENGTH_SHORT).show();
-            PetModel.getInstance().cleaned = true;
+            petViewModel.clean();
         });
         petBtn.setOnClickListener((l) -> {
             Context c = getApplicationContext();
             Toast.makeText(c, "Petting Pet", Toast.LENGTH_SHORT).show();
-            PetModel.getInstance().petted = true;
+            petViewModel.pet();
         });
 
         petViewModel.getPetData().observe(this, pet -> {
@@ -101,7 +101,6 @@ public class PetActivity extends AppCompatActivity implements Serializable {
                 binding.imageView.setImageDrawable(
                         ResourcesCompat.getDrawable(getResources(), pet.currentStage.getDrawable(), null)
                 );
-                //binding.textView2.setText("Updated");
             }
 
             // Handle Data Progress Bars
