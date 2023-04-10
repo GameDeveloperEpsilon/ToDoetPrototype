@@ -16,6 +16,7 @@ import com.example.todoetprototype.inventory.UserModel;
 import com.example.todoetprototype.planner.AddNewTask;
 import com.example.todoetprototype.planner.PlannerActivity;
 import com.example.todoetprototype.planner.PlannerItem;
+import com.example.todoetprototype.planner.PlannerModel;
 import com.example.todoetprototype.planner.PlannerViewModel;
 import com.example.todoetprototype.utils.DatabaseHandler;
 
@@ -53,18 +54,20 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
             if(isChecked){
                 db.updateStatus(item.getId(),1);
                 UserModel userModel = UserModel.getInstance();
-                if (userModel != null) {
-                    if (item.canGivenCoins()) {
-                        userModel.setCoins(userModel.getCoins() + 1);
-                        item.setCanGivenCoins(false);
-                    }
-                    // Delete item
-                } else
-                    System.err.println("ToDoAdapter.onCheckedChanged : userModel is null!");
+                userModel.setCoins(userModel.getCoins() + 1);
+                PlannerModel.getInstance().removePlannerItemFromList(item);
+//                if (userModel != null) {
+//                    if (item.canGivenCoins()) {
+//                        userModel.setCoins(userModel.getCoins() + 1);
+//                        item.setCanGivenCoins(false);
+//                    }
+//                    // Delete item
+//                } else
+//                    System.err.println("ToDoAdapter.onCheckedChanged : userModel is null!");
             }
-            else{
-                db.updateStatus(item.getId(),0);
-            }
+//            else {
+//                db.updateStatus(item.getId(),0);
+//            }
         });
         holder.dueDate.setText(item.getDate());  // Set the due date of the task.
     }
