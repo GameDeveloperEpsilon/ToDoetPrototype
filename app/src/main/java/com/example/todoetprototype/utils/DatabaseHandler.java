@@ -8,11 +8,17 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.todoetprototype.planner.PlannerModel;
+
+
 import com.example.todoetprototype.inventory.InventoryActivity;
 import com.example.todoetprototype.inventory.UserModel;
 import com.example.todoetprototype.planner.PlannerActivity;
-import com.example.todoetprototype.planner.PlannerItem;
+import com.example.todoetprototype.planner.PlannerModel;
 import com.example.todoetprototype.store.StoreItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
@@ -139,17 +145,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db = this.getWritableDatabase();
     }
 
-    public void insertTask(PlannerItem task) {
+    public void insertTask(PlannerModel task) {
         ContentValues cv = new ContentValues();
         cv.put(TASK, task.getTask());
         cv.put(STATUS, 0);
         cv.put(DATE, task.getDate());
-        ((PlannerActivity) context).getPlannerViewModel().addPlannerItem(task);
+       // ((PlannerActivity) context).getPlannerViewModel().addPlannerItem(task);
         db.insert(TODO_TABLE, null, cv);
     }
 
     @SuppressLint("Range")
-    public void loadAllTasks() {
+    public List<PlannerModel> getAllTasks() {
+        List<PlannerModel> taskList = new ArrayList<>();
         db = this.getReadableDatabase();
         Cursor cur = null;
         db.beginTransaction();
@@ -158,12 +165,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             if (cur != null) {
                 if (cur.moveToFirst()) {
                     do {
-                        PlannerItem task = new PlannerItem();
+                        PlannerModel task = new PlannerModel();
                         task.setId(cur.getInt(cur.getColumnIndex(ID)));
                         task.setTask(cur.getString(cur.getColumnIndex(TASK)));
                         task.setStatus(cur.getInt(cur.getColumnIndex(STATUS)));
                         task.setDate(cur.getString(cur.getColumnIndex(DATE)));
-                        ((PlannerActivity) context).getPlannerViewModel().addPlannerItem(task);
+                        taskList.add(task);
                     }
                     while (cur.moveToNext());
                 }
@@ -173,6 +180,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             assert cur != null;
             cur.close();
         }
+        return taskList;
     }
 
     public void updateStatus(int id, int status) {

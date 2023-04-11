@@ -34,9 +34,10 @@ public class PlannerActivity extends AppCompatActivity implements DialogCloseLis
 
     // Extra note I needed to change the build from 32 to 33 in the build.gradle for the app to run
 
-    private PlannerViewModel plannerViewModel;
+    //private PlannerViewModel plannerViewModel;
     private ToDoAdapter tasksAdapter;
     private DatabaseHandler db;
+    private List<PlannerModel> taskList;
 
     // Method for disabling the navigation bar
     @Override
@@ -45,8 +46,8 @@ public class PlannerActivity extends AppCompatActivity implements DialogCloseLis
         setContentView(R.layout.activity_planner);
         Objects.requireNonNull(getSupportActionBar()).hide(); // will not show top most navigation bar
 
-        // Initialize userViewModel
-        plannerViewModel = new ViewModelProvider(this).get(PlannerViewModel.class);
+//        // Initialize userViewModel
+//        plannerViewModel = new ViewModelProvider(this).get(PlannerViewModel.class);
 
 //        // Navigate to the calendar activity
 //        ImageButton gotoCalendarBtn = findViewById(R.id.calendar_icon);
@@ -76,9 +77,8 @@ public class PlannerActivity extends AppCompatActivity implements DialogCloseLis
         // Floating action button. For the button in the corner of the screen to create a new task
         FloatingActionButton fab = findViewById(R.id.fab);
 
-        // Initializes task list
-        PlannerModel.getInstance().loadData(this);
-        List<PlannerItem> taskList = PlannerModel.getInstance().getPlannerItems();
+        // Updates task list
+        taskList = db.getAllTasks();
         Collections.reverse(taskList); // reverse elements in an array
         tasksAdapter.setTaskList(taskList); // add task to recycler view
 
@@ -95,16 +95,16 @@ public class PlannerActivity extends AppCompatActivity implements DialogCloseLis
 
         @Override
         public void handleDialogClose(DialogInterface dialog){
-            List<PlannerItem> taskList = PlannerModel.getInstance().getPlannerItems();
+            taskList = db.getAllTasks();
             Collections.reverse(taskList);
             tasksAdapter.setTaskList(taskList);
             tasksAdapter.notifyDataSetChanged();
-        }
-
-        public PlannerViewModel getPlannerViewModel() {
-            return plannerViewModel;
-        }
     }
+//
+//        public PlannerViewModel getPlannerViewModel() {
+//            return plannerViewModel;
+//        }
+   }
 
 
 //        // Navigation bar
