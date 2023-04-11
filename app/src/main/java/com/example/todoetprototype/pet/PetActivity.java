@@ -191,9 +191,3 @@ public class PetActivity extends AppCompatActivity implements Serializable {
         editor.commit(); //
     }
 }
-
-
-
-
-
-

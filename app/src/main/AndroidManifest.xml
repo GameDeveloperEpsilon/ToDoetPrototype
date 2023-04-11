@@ -29,7 +29,6 @@
         <activity android:name=".pet.PetActivity" />
         <activity android:name=".inventory.InventoryActivity" />
         <activity android:name=".planner.PlannerActivity" />
-        <activity android:name=".planner.CalendarActivity" />
         <activity android:name=".store.StoreActivity" />
         <activity android:name=".Nexus" />
         <activity android:name=".planner.AddNewTask"

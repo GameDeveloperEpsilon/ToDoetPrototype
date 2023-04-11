@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -51,11 +52,17 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         holder.task.setText(item.getTask()); // set the task from the item position
         holder.task.setChecked(toBoolean(item.getStatus())); // checks the status of the item if it is checked or not
         holder.task.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if(isChecked){
-                db.updateStatus(item.getId(),1);
+
+            if(isChecked) {
+                db.updateStatus(item.getId(), 1);
+            } else {
+                db.updateStatus(item.getId(),0);
+            }
                 UserModel userModel = UserModel.getInstance();
                 userModel.setCoins(userModel.getCoins() + 1);
                 PlannerModel.getInstance().removePlannerItemFromList(item);
+
+
 //                if (userModel != null) {
 //                    if (item.canGivenCoins()) {
 //                        userModel.setCoins(userModel.getCoins() + 1);
@@ -64,7 +71,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
 //                    // Delete item
 //                } else
 //                    System.err.println("ToDoAdapter.onCheckedChanged : userModel is null!");
-            }
+    //        }
 //            else {
 //                db.updateStatus(item.getId(),0);
 //            }
