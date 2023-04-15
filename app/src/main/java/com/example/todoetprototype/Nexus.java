@@ -8,9 +8,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.todoetprototype.inventory.InventoryActivity;
+import com.example.todoetprototype.inventory.UserModel;
 import com.example.todoetprototype.pet.PetActivity;
+import com.example.todoetprototype.pet.PetModel;
 import com.example.todoetprototype.planner.PlannerActivity;
+import com.example.todoetprototype.planner.PlannerModel;
 import com.example.todoetprototype.store.StoreActivity;
+import com.example.todoetprototype.store.StoreModel;
 import com.example.todoetprototype.utils.DatabaseHandler;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -22,7 +26,10 @@ public class Nexus extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nexus);
 
-        DatabaseHandler.getInstance(this.getApplicationContext());  // Prime Database handler
+        // Prime database handler
+        DatabaseHandler.getInstance(this.getApplicationContext());
+        // Initialize user model
+        UserModel.getInstance().loadInventory();
 
         setUpNavigationButtons();
 

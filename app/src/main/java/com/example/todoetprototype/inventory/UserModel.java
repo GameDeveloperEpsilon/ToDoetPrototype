@@ -38,7 +38,7 @@ public class UserModel {
     public void clearInventory() {
         inventory.clear();
     }
-    public void loadInventory(InventoryActivity context) {
+    public void loadInventory() {
 
         try (DatabaseHandler databaseHandler = DatabaseHandler.getInstance()) {
             databaseHandler.loadAllInventoryItems();

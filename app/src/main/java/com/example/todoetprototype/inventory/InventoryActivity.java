@@ -40,7 +40,7 @@ public class InventoryActivity extends AppCompatActivity {
         if (UserModel.getInstance().getInitialized()) {
             refreshInventoryTable();
         } else {
-            UserModel.getInstance().loadInventory(this);
+            UserModel.getInstance().loadInventory();
         }
 
 

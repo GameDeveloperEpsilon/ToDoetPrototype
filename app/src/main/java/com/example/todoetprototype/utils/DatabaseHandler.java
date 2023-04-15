@@ -273,7 +273,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                                 cur.getString(cur.getColumnIndex(ITEM_DESCRIPTION)),
                                 cur.getString(cur.getColumnIndex(ITEM_CATEGORY))
                         );
-                        ((InventoryActivity) context).getUserViewModel().addItemToInventory(item);
+                        UserModel.getInstance().addItemToInventory(item);
                     }
                     while (cur.moveToNext());
                 }
