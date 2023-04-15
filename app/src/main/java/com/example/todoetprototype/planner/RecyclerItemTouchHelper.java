@@ -36,28 +36,19 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
         return false;
     }
 
-    // delete task by swipping left
+    // Delete task by swiping left
     @Override
     public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
         final int position = viewHolder.getAdapterPosition();
         if (direction == ItemTouchHelper.LEFT) {
-            // alert dialog displayed
+            // Prompt user with dialog to task
             AlertDialog.Builder builder = new AlertDialog.Builder(adapter.getContext());
             builder.setTitle("Delete Task");
             builder.setMessage("Are you sure you want to delete this Task?");
             builder.setPositiveButton("Confirm",
-                    new DialogInterface.OnClickListener(){ // new dialog for the confirm
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            adapter.deleteItem(position);
-                        }
-                    });
-            builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    adapter.notifyItemChanged(viewHolder.getAdapterPosition());
-                }
-            });
+                    (dialog, which) -> adapter.deleteItem(position));
+            builder.setNegativeButton(android.R.string.cancel,
+                    (dialog, which) -> adapter.notifyItemChanged(viewHolder.getAdapterPosition()));
             AlertDialog dialog = builder.create();
             dialog.show();
         } else {

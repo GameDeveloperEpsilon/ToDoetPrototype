@@ -1,17 +1,17 @@
 package com.example.todoetprototype;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.todoetprototype.inventory.InventoryActivity;
 import com.example.todoetprototype.pet.PetActivity;
 import com.example.todoetprototype.planner.PlannerActivity;
 import com.example.todoetprototype.store.StoreActivity;
+import com.example.todoetprototype.utils.DatabaseHandler;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -21,6 +21,15 @@ public class Nexus extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nexus);
+
+        DatabaseHandler.getInstance(this.getApplicationContext());  // Prime Database handler
+
+        setUpNavigationButtons();
+
+        setUpNavigationBar();
+    }
+
+    private void setUpNavigationButtons() {
 
         // Navigate to the pet page
         ImageButton petPageBtn = findViewById(R.id.petPageBtn);
@@ -53,8 +62,9 @@ public class Nexus extends AppCompatActivity {
             Intent changeActivities = new Intent(this, StoreActivity.class);
             startActivity(changeActivities);
         });
+    }
 
-        // Navigation bar
+    private void setUpNavigationBar() {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.getMenu().findItem(R.id.home_nav_item).setChecked(true);

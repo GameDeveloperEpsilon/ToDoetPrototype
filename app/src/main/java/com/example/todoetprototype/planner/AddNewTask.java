@@ -113,7 +113,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
         }
 
         // Initialize the database
-        db = new DatabaseHandler(getActivity());
+        db = DatabaseHandler.getInstance();
         db.openDatabase();
 
         newTaskText.addTextChangedListener(new TextWatcher() {
@@ -148,9 +148,10 @@ public class AddNewTask extends BottomSheetDialogFragment {
                 db.updateDate(bundle.getInt("id"), date);
             }
             else {
-                PlannerModel task = new PlannerModel();
+                PlannerItem task = new PlannerItem();
                 task.setTask(text);
                 task.setStatus(0);
+                task.setCanGivenCoins(true);
                 task.setDate(date);
                 db.insertTask(task);
             }

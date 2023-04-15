@@ -33,7 +33,7 @@ public class InventoryActivity extends AppCompatActivity {
         com.example.todoetprototype.databinding.ActivityInventoryBinding binding = ActivityInventoryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        db = new DatabaseHandler(this);
+        db = DatabaseHandler.getInstance();
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
 
@@ -55,11 +55,28 @@ public class InventoryActivity extends AppCompatActivity {
 
         RecyclerView inventoryItemsView = findViewById(R.id.inventoryItemsRecyclerView);
         inventoryItemsView.setLayoutManager(new LinearLayoutManager(this));
-        inventoryItemAdapter = new InventoryItemAdapter(new DatabaseHandler(this), this);
+        inventoryItemAdapter = new InventoryItemAdapter(DatabaseHandler.getInstance(), this);
         inventoryItemsView.setAdapter(inventoryItemAdapter);
 
+        setUpNavigationBar();
+    }
 
-        // Navigation bar
+    @Override
+    public void onPause() {
+        super.onPause();
+        refreshInventoryTable();
+    }
+
+    public void refreshInventoryTable() {
+        db.openDatabase();
+        db.deleteAllInventoryItems();
+        for (StoreItem inventoryItemToStore : UserModel.getInstance().getInventory()) {
+            db.insertInventoryItem(inventoryItemToStore);
+        }
+        db.close();
+    }
+
+    private void setUpNavigationBar() {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.getMenu().findItem(R.id.user_nav_item).setChecked(true);
@@ -93,21 +110,6 @@ public class InventoryActivity extends AppCompatActivity {
             Intent changeActivities = new Intent(this, StoreActivity.class);
             startActivity(changeActivities);
         });
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        refreshInventoryTable();
-    }
-
-    public void refreshInventoryTable() {
-        db.openDatabase();
-        db.deleteAllInventoryItems();
-        for (StoreItem inventoryItemToStore : UserModel.getInstance().getInventory()) {
-            db.insertInventoryItem(inventoryItemToStore);
-        }
-        db.close();
     }
 
     public UserViewModel getUserViewModel() {

@@ -120,40 +120,7 @@ public class PetActivity extends AppCompatActivity implements Serializable {
 
         petViewModel.init();
 
-        // Navigation bar
-
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.getMenu().findItem(R.id.pets_nav_item).setChecked(true);
-
-        BottomNavigationItemView todoListNavItem = bottomNavigationView.findViewById(R.id.todo_list_nav_item);
-        todoListNavItem.setOnClickListener(v -> {
-            Intent changeActivities = new Intent(this, PlannerActivity.class);
-            startActivity(changeActivities);
-        });
-
-        BottomNavigationItemView userNavItem = bottomNavigationView.findViewById(R.id.user_nav_item);
-        userNavItem.setOnClickListener(v -> {
-            Intent changeActivities = new Intent(this, InventoryActivity.class);
-            startActivity(changeActivities);
-        });
-
-        BottomNavigationItemView homeNavItem = bottomNavigationView.findViewById(R.id.home_nav_item);
-        homeNavItem.setOnClickListener(v -> {
-            Intent changeActivities = new Intent(this, Nexus.class);
-            startActivity(changeActivities);
-        });
-
-        BottomNavigationItemView petsNavItem = bottomNavigationView.findViewById(R.id.pets_nav_item);
-        petsNavItem.setOnClickListener(v -> {
-            Intent changeActivities = new Intent(this, PetActivity.class);
-            startActivity(changeActivities);
-        });
-
-        BottomNavigationItemView storeNavItem = bottomNavigationView.findViewById(R.id.store_nav_item);
-        storeNavItem.setOnClickListener(v -> {
-            Intent changeActivities = new Intent(this, StoreActivity.class);
-            startActivity(changeActivities);
-        });
+        setUpNavigationBar();
     }
 
     @Override
@@ -189,5 +156,41 @@ public class PetActivity extends AppCompatActivity implements Serializable {
         editor.putInt("hunger", petModel.getHunger());  //
         editor.putInt("affection", petModel.getAffection());
         editor.commit(); //
+    }
+
+    private void setUpNavigationBar() {
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.getMenu().findItem(R.id.pets_nav_item).setChecked(true);
+
+        BottomNavigationItemView todoListNavItem = bottomNavigationView.findViewById(R.id.todo_list_nav_item);
+        todoListNavItem.setOnClickListener(v -> {
+            Intent changeActivities = new Intent(this, PlannerActivity.class);
+            startActivity(changeActivities);
+        });
+
+        BottomNavigationItemView userNavItem = bottomNavigationView.findViewById(R.id.user_nav_item);
+        userNavItem.setOnClickListener(v -> {
+            Intent changeActivities = new Intent(this, InventoryActivity.class);
+            startActivity(changeActivities);
+        });
+
+        BottomNavigationItemView homeNavItem = bottomNavigationView.findViewById(R.id.home_nav_item);
+        homeNavItem.setOnClickListener(v -> {
+            Intent changeActivities = new Intent(this, Nexus.class);
+            startActivity(changeActivities);
+        });
+
+        BottomNavigationItemView petsNavItem = bottomNavigationView.findViewById(R.id.pets_nav_item);
+        petsNavItem.setOnClickListener(v -> {
+            Intent changeActivities = new Intent(this, PetActivity.class);
+            startActivity(changeActivities);
+        });
+
+        BottomNavigationItemView storeNavItem = bottomNavigationView.findViewById(R.id.store_nav_item);
+        storeNavItem.setOnClickListener(v -> {
+            Intent changeActivities = new Intent(this, StoreActivity.class);
+            startActivity(changeActivities);
+        });
     }
 }

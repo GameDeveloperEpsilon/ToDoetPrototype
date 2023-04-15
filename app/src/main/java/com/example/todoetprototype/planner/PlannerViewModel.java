@@ -1,10 +1,10 @@
-//package com.example.todoetprototype.planner;
+package com.example.todoetprototype.planner;
 //
 //import androidx.lifecycle.LiveData;
 //import androidx.lifecycle.MutableLiveData;
-//import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModel;
 //
-//public class PlannerViewModel extends ViewModel {
+public class PlannerViewModel extends ViewModel {
 //
 //    private final MutableLiveData<PlannerModel> plannerData = new MutableLiveData<>(PlannerModel.getInstance());
 //
@@ -22,5 +22,4 @@
 //        return plannerData;
 //    }
 //
-//}
-
+}

@@ -48,13 +48,16 @@ public class StoreActivity extends AppCompatActivity {
 
         storeItemsView = findViewById(R.id.storeItemsRecyclerView);
         storeItemsView.setLayoutManager(new LinearLayoutManager(this));
-        storeItemAdapter = new StoreItemAdapter(new DatabaseHandler(this), this);
+        storeItemAdapter = new StoreItemAdapter(DatabaseHandler.getInstance(), this);
         storeItemsView.setAdapter(storeItemAdapter);
 
         // Test adding some items
         storeItemAdapter.setStoreItemList(StoreModel.getInstance().getCatalog());
 
-        // Navigation bar
+        setUpNavigationBar();
+    }
+
+    private void setUpNavigationBar() {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.getMenu().findItem(R.id.store_nav_item).setChecked(true);

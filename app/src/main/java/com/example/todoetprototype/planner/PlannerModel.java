@@ -1,50 +1,46 @@
 package com.example.todoetprototype.planner;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class PlannerModel {
 
-    private int id, status; // Id name of the task to execute query
-    private boolean canGivenCoins = true;
-    private String task; // Actual text of the task
-    private String date;  // Date to complete task
+    private static PlannerModel instance = null;
 
-    public int getId() {
-        return id;
+    public static PlannerModel getInstance() {
+        if (instance == null)
+            instance = new PlannerModel();
+        return instance;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    private List<PlannerItem> plannerItems;
+
+    private PlannerModel() {
+        this.plannerItems = new LinkedList<>();
     }
 
-    public int getStatus() {
-        return status;
+    public void loadData(PlannerActivity context) {
+        throw new UnsupportedOperationException("PlannerModel.loadData is unsupported");
+//        try (DatabaseHandler databaseHandler = new DatabaseHandler(context)) {
+//            databaseHandler.loadAllTasks();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public List<PlannerItem> getPlannerItems() {
+        return plannerItems;
     }
 
-    public String getTask() {
-        return task;
+    public void setPlannerItems(List<PlannerItem> plannerItems) {
+        this.plannerItems = plannerItems;
     }
 
-    public void setTask(String task) {
-        this.task = task;
+    public void addPlannerItemToList(PlannerItem item) {
+        plannerItems.add(item);
     }
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public boolean canGivenCoins() {
-        return canGivenCoins;
-    }
-
-    public void setCanGivenCoins(boolean hasGivenCoins) {
-        this.canGivenCoins = hasGivenCoins;
+    public void removePlannerItemFromList(PlannerItem item) {
+        plannerItems.remove(item);
     }
 }
-

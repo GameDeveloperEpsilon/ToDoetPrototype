@@ -18,7 +18,7 @@ public class TodopetViewModel extends ViewModel implements Serializable {
 
     private final MutableLiveData<PetModel> petData = new MutableLiveData<>(PetModel.getInstance());
 
-    private long tickRate = 1000L;
+    private final long tickRate = 1000L;  // Milliseconds
 
 
     public void init() {
@@ -95,35 +95,37 @@ public class TodopetViewModel extends ViewModel implements Serializable {
             return;
         }
 
-        lastHygieneTick = (lastHygieneTick + 1) % ticksPerHygieneUpdate;
-        lastHungerTick = (lastHungerTick + 1) % ticksPerHungerUpdate;
-        lastAffectionTick = (lastAffectionTick + 1) % ticksPerAffectionUpdate;
+        if (pet.currentStage != pet.egg) {
+            lastHygieneTick = (lastHygieneTick + 1) % ticksPerHygieneUpdate;
+            lastHungerTick = (lastHungerTick + 1) % ticksPerHungerUpdate;
+            lastAffectionTick = (lastAffectionTick + 1) % ticksPerAffectionUpdate;
+        }
         lastPetLevelTick = (lastPetLevelTick + 1) % ticksPerPetLevelUpdate;
 
-        // If pet reaches tick threshold, reduce hygiene.
-        if (lastHygieneTick % ticksPerHygieneUpdate == 0) {
-            pet.setHygiene(-5);
-        }
-
-        // If pet reaches tick threshold, reduce hunger stat.
-        if (lastHungerTick % ticksPerHungerUpdate == 0) {
-            pet.setHunger(-5);
-        }
-
-        // If pet reaches tick threshold, reduce affection stat.
-        if (lastAffectionTick % ticksPerAffectionUpdate == 0) {
-            pet.setAffection(-5);
+        if (pet.currentStage != pet.egg) {
+            // If pet reaches tick threshold, reduce hygiene.
+            if (lastHygieneTick % ticksPerHygieneUpdate == 0) {
+                pet.setHygiene(-5);
+            }
+            // If pet reaches tick threshold, reduce hunger stat.
+            if (lastHungerTick % ticksPerHungerUpdate == 0) {
+                pet.setHunger(-5);
+            }
+            // If pet reaches tick threshold, reduce affection stat.
+            if (lastAffectionTick % ticksPerAffectionUpdate == 0) {
+                pet.setAffection(-5);
+            }
         }
 
         if (lastPetLevelTick % ticksPerPetLevelUpdate == 0) {
             // Update pet appearance based on stage
-            if (pet.currentStage == pet.egg) {
+            if (pet.currentStage == pet.egg && pet.affection >= 50) {
                 pet.currentStage = pet.baby;
-            } else if (pet.currentStage == pet.baby) {
+            } else if (pet.currentStage == pet.baby && pet.affection >= 50) {
                 pet.currentStage = pet.adolescent;
-            } else if (pet.currentStage == pet.adolescent) {
+            } else if (pet.currentStage == pet.adolescent && pet.affection >= 50) {
                 pet.currentStage = pet.adult;
-            } else if (pet.currentStage == pet.adult) {
+            } else if (pet.currentStage == pet.adult && pet.affection >= 50) {
                 pet.currentStage = pet.ancient;
             }
         }

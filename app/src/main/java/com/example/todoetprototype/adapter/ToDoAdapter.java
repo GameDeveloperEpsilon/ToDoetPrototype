@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,6 +16,7 @@ import com.example.todoetprototype.inventory.UserModel;
 import com.example.todoetprototype.inventory.UserViewModel;
 import com.example.todoetprototype.planner.AddNewTask;
 import com.example.todoetprototype.planner.PlannerActivity;
+import com.example.todoetprototype.planner.PlannerItem;
 import com.example.todoetprototype.planner.PlannerModel;
 import com.example.todoetprototype.utils.DatabaseHandler;
 
@@ -24,7 +24,7 @@ import java.util.List;
 
 public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
 
-    private List<PlannerModel> todoList;
+    private List<PlannerItem> todoList;
     private PlannerActivity activity;
     private DatabaseHandler db;
     private UserViewModel userViewModel;
@@ -47,21 +47,30 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
     // standard implementation of recycler view adaptor
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
         db.openDatabase(); // open database
-        PlannerModel item = todoList.get(position); // in the todolist you get the item
+        PlannerItem item = todoList.get(position); // in the todolist you get the item
         holder.task.setText(item.getTask()); // set the task from the item position
         holder.task.setChecked(toBoolean(item.getStatus())); // checks the status of the item if it is checked or not
+        if (toBoolean(item.getStatus()))
+            holder.task.setEnabled(false);
         holder.task.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
-            if(isChecked) {
+            if (isChecked) {
+                UserModel userModel = UserModel.getInstance();
+                System.out.println("Planner item before: " + item);
                 db.updateStatus(item.getId(), 1);
+                db.updateCanGiveCoins(item.getId(), false);
+                buttonView.setEnabled(false);
+                if (item.canGivenCoins()) {
+                    userModel.setCoins(userModel.getCoins() + 1);
+                    item.setCanGivenCoins(false);
+                }
+                System.out.println("Planner item after: " + item);
             } else {
                 db.updateStatus(item.getId(),0);
             }
-                UserModel userModel = UserModel.getInstance();
-                userModel.setCoins(userModel.getCoins() + 1);
               //  PlannerModel.getInstance().removePlannerItemFromList(item);
-
 
 //                if (userModel != null) {
 //                    if (item.canGivenCoins()) {
@@ -79,20 +88,24 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         holder.dueDate.setText(item.getDate());  // Set the due date of the task.
     }
 
-    // Sets the getItem count, this will let it know how many items it needs to print
+    /**
+     * Sets the getItem count, this will let it know how many items it needs to print
+     */
     @Override
     public int getItemCount() {
-        return todoList.size();
+        return PlannerModel.getInstance().getPlannerItems().size();
     }
 
-    // Since the checkmark is boolean type, need to convert to boolean
+    /**
+     * Since the checkmark is boolean type, need to convert to boolean
+     */
     private boolean toBoolean(int n) {
         return n!=0;
     }
 
     // For dummy data
 
-    public void setTaskList(List<PlannerModel> todoList) {
+    public void setTaskList(List<PlannerItem> todoList) {
         this.todoList = todoList;
         notifyDataSetChanged(); // so recycler view is updated
     }
@@ -101,17 +114,21 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         return activity;
     }
 
-    // Delete item from activity
-    public void deleteItem(int position) {
-        PlannerModel item = todoList.get(position);
-        db.deleteTask(item.getId()); // id of item being deleted
-        todoList.remove(position); //remove from the item
-        notifyItemRemoved(position); // notifies that the item will be removed and will automatically update view
+    /**
+     * Delete item from activity
+     */
+     public void deleteItem(int position) {
+         PlannerItem item = todoList.remove(position); // Remove from the item
+         db.deleteTask(item.getId()); // Id of item being deleted
+
+         notifyItemRemoved(position); // Notifies that the item will be removed and will automatically update view
     }
 
-    // Update edited items
+    /**
+     * Update edited items
+     */
     public void editItem(int position) {
-        PlannerModel item = todoList.get(position);
+        PlannerItem item = todoList.get(position);
         Bundle bundle = new Bundle();
         bundle.putInt("id",item.getId());
         bundle.putString("task", item.getTask());

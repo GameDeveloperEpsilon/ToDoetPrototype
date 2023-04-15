@@ -40,7 +40,7 @@ public class UserModel {
     }
     public void loadInventory(InventoryActivity context) {
 
-        try (DatabaseHandler databaseHandler = new DatabaseHandler(context)) {
+        try (DatabaseHandler databaseHandler = DatabaseHandler.getInstance()) {
             databaseHandler.loadAllInventoryItems();
         } catch (Exception e) {
             e.printStackTrace();

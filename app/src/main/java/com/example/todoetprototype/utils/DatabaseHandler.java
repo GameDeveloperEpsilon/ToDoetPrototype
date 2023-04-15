@@ -8,19 +8,33 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.todoetprototype.planner.PlannerModel;
+import com.example.todoetprototype.planner.PlannerItem;
 
 
 import com.example.todoetprototype.inventory.InventoryActivity;
 import com.example.todoetprototype.inventory.UserModel;
-import com.example.todoetprototype.planner.PlannerActivity;
-import com.example.todoetprototype.planner.PlannerModel;
 import com.example.todoetprototype.store.StoreItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
+
+    private static DatabaseHandler databaseHandlerInstance = null;
+
+    public static DatabaseHandler getInstance() {
+        if (databaseHandlerInstance == null)
+            throw new RuntimeException("Database not primed with context");
+        return databaseHandlerInstance;
+    }
+
+    public static DatabaseHandler getInstance(Context context) {
+        if (databaseHandlerInstance == null)
+            databaseHandlerInstance = new DatabaseHandler(context);
+        return databaseHandlerInstance;
+    }
+
+    private static final int CURRENT_VERSION = 4;
 
     // table pet
     private static final String PET_TABLE = "petdata";
@@ -92,12 +106,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
     // todolist table
-    private static final int CURRENT_VERSION = 3;
-    private static final String NAME = "todoet_database";
+    private static final String SCHEMA_NAME = "todoet_database";
     private static final String TODO_TABLE = "todo";
     private static final String ID = "id";
     private static final String TASK = "task";
     private static final String STATUS = "status";
+    private static final String CAN_GIVE_COINS = "can_give_coins";
     private static final String DATE = "date";
 
     // to do table
@@ -106,14 +120,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     TASK + " TEXT, " +
                     STATUS + " INTEGER, " +
+                    CAN_GIVE_COINS + " INTEGER, " +
                     DATE + " TEXT)";
 
 
     private SQLiteDatabase db;
     private Context context;
 
-    public DatabaseHandler(Context context) {
-        super(context, NAME, null, CURRENT_VERSION);
+    private DatabaseHandler(Context context) {
+        super(context, SCHEMA_NAME, null, CURRENT_VERSION);
         this.context = context;
     }
 
@@ -145,48 +160,80 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db = this.getWritableDatabase();
     }
 
-    public void insertTask(PlannerModel task) {
+    public void insertTask(PlannerItem task) {
         ContentValues cv = new ContentValues();
         cv.put(TASK, task.getTask());
-        cv.put(STATUS, 0);
+        cv.put(STATUS, task.getStatus());
+        cv.put(CAN_GIVE_COINS, task.canGivenCoins() ? 1 : 0);
         cv.put(DATE, task.getDate());
        // ((PlannerActivity) context).getPlannerViewModel().addPlannerItem(task);
         db.insert(TODO_TABLE, null, cv);
     }
 
     @SuppressLint("Range")
-    public List<PlannerModel> getAllTasks() {
-        List<PlannerModel> taskList = new ArrayList<>();
+    public List<PlannerItem> getAllTasks() {
+        List<PlannerItem> taskList = new ArrayList<>();
         db = this.getReadableDatabase();
-        Cursor cur = null;
+
         db.beginTransaction();
-        try {
-            cur = db.query(TODO_TABLE, null, null, null, null, null, null, null);
-            if (cur != null) {
-                if (cur.moveToFirst()) {
-                    do {
-                        PlannerModel task = new PlannerModel();
-                        task.setId(cur.getInt(cur.getColumnIndex(ID)));
-                        task.setTask(cur.getString(cur.getColumnIndex(TASK)));
-                        task.setStatus(cur.getInt(cur.getColumnIndex(STATUS)));
-                        task.setDate(cur.getString(cur.getColumnIndex(DATE)));
-                        taskList.add(task);
-                    }
-                    while (cur.moveToNext());
+        try (Cursor cur = db.query(TODO_TABLE, null, null, null, null, null, null, null)) {
+
+            assert cur != null;
+            if (cur.moveToFirst()) {
+                do {
+                    PlannerItem task = new PlannerItem();
+                    task.setId(cur.getInt(cur.getColumnIndex(ID)));
+                    task.setTask(cur.getString(cur.getColumnIndex(TASK)));
+                    task.setStatus(cur.getInt(cur.getColumnIndex(STATUS)));
+                    task.setCanGivenCoins(cur.getColumnIndex(CAN_GIVE_COINS) != 0);
+                    task.setDate(cur.getString(cur.getColumnIndex(DATE)));
+                    taskList.add(task);
+                    System.out.println("From getAllTasks: " + task);
                 }
+                while (cur.moveToNext());
             }
         } finally {
             db.endTransaction();
-            assert cur != null;
-            cur.close();
         }
         return taskList;
+    }
+
+    public void deleteAllTasks() {
+        db.delete(TODO_TABLE, null, null);
     }
 
     public void updateStatus(int id, int status) {
         ContentValues cv = new ContentValues();
         cv.put(STATUS, status);
         db.update(TODO_TABLE, cv, ID + "= ?", new String[]{String.valueOf(id)});
+    }
+
+    @SuppressLint("Range")
+    public void updateCanGiveCoins(int id, boolean canGiveCoins) {
+        System.out.println("id = " + id + ", canGiveCoins = " + canGiveCoins);
+        ContentValues cv = new ContentValues();
+        System.out.println(CAN_GIVE_COINS + " = " + (canGiveCoins ? 1 : 0));
+        cv.put(CAN_GIVE_COINS, 0);
+        db = this.getWritableDatabase();
+        db.update(TODO_TABLE, cv, ID + "= ?", new String[]{String.valueOf(id)});
+
+        db = this.getReadableDatabase();
+
+        PlannerItem task = new PlannerItem();
+        db.beginTransaction();
+        try (Cursor cur = db.query(TODO_TABLE, null, ID + " = ?", new String[]{String.valueOf(id)}, null, null, null, null)) {
+
+            if (cur.moveToFirst()) {
+                task.setId(cur.getInt(cur.getColumnIndex(ID)));
+                task.setTask(cur.getString(cur.getColumnIndex(TASK)));
+                task.setStatus(cur.getInt(cur.getColumnIndex(STATUS)));
+                task.setCanGivenCoins(cur.getInt(cur.getColumnIndex(CAN_GIVE_COINS)) != 0);
+                task.setDate(cur.getString(cur.getColumnIndex(DATE)));
+            }
+        } finally {
+            db.endTransaction();
+            System.out.println("After DB update: " + task);
+        }
     }
 
     public void updateTask(int id, String task) {
@@ -201,7 +248,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.update(TODO_TABLE, cv, ID + "= ?", new String[]{String.valueOf(id)});
     }
 
-
     public void deleteTask(int id) {
         db.delete(TODO_TABLE, ID + "= ?", new String[]{String.valueOf(id)});
     }
@@ -210,6 +256,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     @SuppressLint("Range")
     public void loadAllInventoryItems() {
+
         db = this.getReadableDatabase();
         Cursor cur = null;
         db.beginTransaction();

@@ -21,7 +21,8 @@ public class PetModel implements Serializable {
     }
     public static PetModel getInstance(SharedPreferences sp) {
         if (instance == null) {
-            instance = new PetModel(0, "Tom", 0, false, 0, 0, 0, 0, 0, 0, 0);
+            instance = new PetModel(0, "Tom", 0, false, 0,
+                    0, 0, 0, 0, 0, 0);
             instance.loadPetParameters(sp);
         }
         return instance;
