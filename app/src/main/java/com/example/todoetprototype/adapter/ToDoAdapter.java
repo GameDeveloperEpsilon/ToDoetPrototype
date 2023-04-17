@@ -70,7 +70,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
             } else {
                 db.updateStatus(item.getId(),0);
             }
-              //  PlannerModel.getInstance().removePlannerItemFromList(item);
+            //  PlannerModel.getInstance().removePlannerItemFromList(item);
 
 //                if (userModel != null) {
 //                    if (item.canGivenCoins()) {
@@ -80,7 +80,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
 //                    // Delete item
 //                } else
 //                    System.err.println("ToDoAdapter.onCheckedChanged : userModel is null!");
-    //        }
+            //        }
 //            else {
 //                db.updateStatus(item.getId(),0);
 //            }
@@ -117,11 +117,11 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
     /**
      * Delete item from activity
      */
-     public void deleteItem(int position) {
-         PlannerItem item = todoList.remove(position); // Remove from the item
-         db.deleteTask(item.getId()); // Id of item being deleted
+    public void deleteItem(int position) {
+        PlannerItem item = todoList.remove(position); // Remove from the item
+        db.deleteTask(item.getId()); // Id of item being deleted
 
-         notifyItemRemoved(position); // Notifies that the item will be removed and will automatically update view
+        notifyItemRemoved(position); // Notifies that the item will be removed and will automatically update view
     }
 
     /**
@@ -149,4 +149,3 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         }
     }
 }
-
