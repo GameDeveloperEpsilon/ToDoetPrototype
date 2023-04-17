@@ -37,7 +37,6 @@ public class PlannerActivity extends AppCompatActivity implements DialogCloseLis
     private DatabaseHandler db;
     private List<PlannerItem> taskList;
 
-    // Method for disabling the navigation bar
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
