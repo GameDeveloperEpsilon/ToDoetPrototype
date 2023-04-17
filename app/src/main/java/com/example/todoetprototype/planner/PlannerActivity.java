@@ -3,9 +3,11 @@ package com.example.todoetprototype.planner;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,7 +37,7 @@ public class PlannerActivity extends AppCompatActivity implements DialogCloseLis
     //private PlannerViewModel plannerViewModel;
     private ToDoAdapter tasksAdapter;
     private DatabaseHandler db;
-    private List<PlannerItem> taskList;
+    private List<PlannerModel> taskList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +45,15 @@ public class PlannerActivity extends AppCompatActivity implements DialogCloseLis
         setContentView(R.layout.activity_planner);
         Objects.requireNonNull(getSupportActionBar()).hide(); // will not show top most navigation bar
 
-        // Initialize userViewModel
+//        // Initialize userViewModel
 //        plannerViewModel = new ViewModelProvider(this).get(PlannerViewModel.class);
+
+//        // Navigate to the calendar activity
+//        ImageButton gotoCalendarBtn = findViewById(R.id.calendar_icon);
+//        gotoCalendarBtn.setOnClickListener(calendarView -> {
+//            Intent gotoCalendar = new Intent(getApplicationContext(), CalendarActivity.class);
+//            startActivity(gotoCalendar);
+//        });
 
         // set current date
         Calendar calendar = Calendar.getInstance();
@@ -53,7 +62,7 @@ public class PlannerActivity extends AppCompatActivity implements DialogCloseLis
         textViewDate.setText(currentDate);
 
         // Initialize the database
-        db = DatabaseHandler.getInstance();
+        db = new DatabaseHandler(this);
         db.openDatabase();
 
         // for the recycler view: RecyclerView makes it easy to efficiently display large sets of data. You supply the data and define how each item looks, and the RecyclerView library dynamically creates the elements when they're needed.
@@ -69,7 +78,6 @@ public class PlannerActivity extends AppCompatActivity implements DialogCloseLis
 
         // Updates task list
         taskList = db.getAllTasks();
-        PlannerModel.getInstance().setPlannerItems(taskList);
         Collections.reverse(taskList); // reverse elements in an array
         tasksAdapter.setTaskList(taskList); // add task to recycler view
 
@@ -82,56 +90,55 @@ public class PlannerActivity extends AppCompatActivity implements DialogCloseLis
         fab.setOnClickListener(
                 v -> AddNewTask.newInstance().show(getSupportFragmentManager(), AddNewTask.TAG)
         );
+        }
 
-        setUpNavigationBar();
-    }
-
-    @Override
-    public void handleDialogClose(DialogInterface dialog) {
-        taskList = db.getAllTasks();
-        PlannerModel.getInstance().setPlannerItems(taskList);
-        Collections.reverse(taskList);
-        tasksAdapter.setTaskList(taskList);
-        tasksAdapter.notifyDataSetChanged();
+        @Override
+        public void handleDialogClose(DialogInterface dialog){
+            taskList = db.getAllTasks();
+            Collections.reverse(taskList);
+            tasksAdapter.setTaskList(taskList);
+            tasksAdapter.notifyDataSetChanged();
     }
 //
 //        public PlannerViewModel getPlannerViewModel() {
 //            return plannerViewModel;
 //        }
+   }
 
-    private void setUpNavigationBar() {
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.getMenu().findItem(R.id.todo_list_nav_item).setChecked(true);
+//        // Navigation bar
+//
+//        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+//        bottomNavigationView.getMenu().findItem(R.id.todo_list_nav_item).setChecked(true);
+//
+//        BottomNavigationItemView todoListNavItem = bottomNavigationView.findViewById(R.id.todo_list_nav_item);
+//        todoListNavItem.setOnClickListener(v -> {
+//            Intent changeActivities = new Intent(this, PlannerActivity.class);
+//            startActivity(changeActivities);
+//        });
+//
+//        BottomNavigationItemView userNavItem = bottomNavigationView.findViewById(R.id.user_nav_item);
+//        userNavItem.setOnClickListener(v -> {
+//            Intent changeActivities = new Intent(this, InventoryActivity.class);
+//            startActivity(changeActivities);
+//        });
+//
+//        BottomNavigationItemView homeNavItem = bottomNavigationView.findViewById(R.id.home_nav_item);
+//        homeNavItem.setOnClickListener(v -> {
+//            Intent changeActivities = new Intent(this, Nexus.class);
+//            startActivity(changeActivities);
+//        });
+//
+//        BottomNavigationItemView petsNavItem = bottomNavigationView.findViewById(R.id.pets_nav_item);
+//        petsNavItem.setOnClickListener(v -> {
+//            Intent changeActivities = new Intent(this, PetActivity.class);
+//            startActivity(changeActivities);
+//        });
+//
+//        BottomNavigationItemView storeNavItem = bottomNavigationView.findViewById(R.id.store_nav_item);
+//        storeNavItem.setOnClickListener(v -> {
+//            Intent changeActivities = new Intent(this, StoreActivity.class);
+//            startActivity(changeActivities);
+//        });
+//    }
 
-        BottomNavigationItemView todoListNavItem = bottomNavigationView.findViewById(R.id.todo_list_nav_item);
-        todoListNavItem.setOnClickListener(v -> {
-            Intent changeActivities = new Intent(this, PlannerActivity.class);
-            startActivity(changeActivities);
-        });
-
-        BottomNavigationItemView userNavItem = bottomNavigationView.findViewById(R.id.user_nav_item);
-        userNavItem.setOnClickListener(v -> {
-            Intent changeActivities = new Intent(this, InventoryActivity.class);
-            startActivity(changeActivities);
-        });
-
-        BottomNavigationItemView homeNavItem = bottomNavigationView.findViewById(R.id.home_nav_item);
-        homeNavItem.setOnClickListener(v -> {
-            Intent changeActivities = new Intent(this, Nexus.class);
-            startActivity(changeActivities);
-        });
-
-        BottomNavigationItemView petsNavItem = bottomNavigationView.findViewById(R.id.pets_nav_item);
-        petsNavItem.setOnClickListener(v -> {
-            Intent changeActivities = new Intent(this, PetActivity.class);
-            startActivity(changeActivities);
-        });
-
-        BottomNavigationItemView storeNavItem = bottomNavigationView.findViewById(R.id.store_nav_item);
-        storeNavItem.setOnClickListener(v -> {
-            Intent changeActivities = new Intent(this, StoreActivity.class);
-            startActivity(changeActivities);
-        });
-    }
-}
