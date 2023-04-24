@@ -11,14 +11,17 @@ public class StoreItem {
     private String itemCategory;
     private int drawable;
 
+    private int effectMultiplier;
 
-    public StoreItem(int itemID, int itemPrice, String itemName, String itemDescription, String itemCategory) {
+
+    public StoreItem(int itemID, int itemPrice, String itemName, String itemDescription, String itemCategory, int effectMultiplier) {
         this.itemID = itemID;
         this.itemPrice = itemPrice;
         this.itemName = itemName;
         this.itemDescription = itemDescription;
         this.itemCategory = itemCategory;
         this.drawable = R.drawable.berryimage;
+        this.effectMultiplier = effectMultiplier;
     }
 
     //Getters and Setters
@@ -66,5 +69,9 @@ public class StoreItem {
 
     public int getDrawable() {
         return drawable;
+    }
+
+    public int getEffectMultiplier() {
+        return effectMultiplier;
     }
 }
