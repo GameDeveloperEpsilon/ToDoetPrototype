@@ -23,8 +23,8 @@ public class StoreModel extends AppCompatActivity {
         catalog.add(new StoreItem(2, 10, "Toothbrush", "A brush for cleaning teeth", "CLEANER"));
         catalog.add(new StoreItem(3, 4, "todofood", "Delicious food for pets", "FOOD"));  // FOOD
         //catalog.add(new StoreItem(4, 4, "todofood", "Delicious food for pets", "FOOD"));  // FOOD
-        catalog.add(new StoreItem(4, 3, "Color Potion","Changes color of pet","POTION"));  // POTION
-        catalog.add(new StoreItem(5, 3, "Healing Salve","Cures sickness","MEDICINE"));  // MEDICINE
+       // catalog.add(new StoreItem(4, 3, "Color Potion","Changes color of pet","POTION"));  // POTION
+       // catalog.add(new StoreItem(5, 3, "Healing Salve","Cures sickness","MEDICINE"));  // MEDICINE
 
     }
 
