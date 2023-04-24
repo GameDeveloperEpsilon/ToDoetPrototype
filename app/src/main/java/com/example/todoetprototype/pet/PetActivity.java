@@ -113,7 +113,7 @@ public class PetActivity extends AppCompatActivity implements Serializable {
             ProgressBar affectionBar = findViewById(R.id.happinessbar);
             affectionBar.setProgress(PetModel.getInstance().affection);
 
-            ProgressBar levelBar = findViewById(R.id.levelbar);
+            //ProgressBar levelBar = findViewById(R.id.levelbar);
 //            levelBar.setProgress(PetModel.getInstance().level);
 
         });

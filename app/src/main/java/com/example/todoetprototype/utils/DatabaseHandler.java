@@ -59,20 +59,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             DEATH + "INTEGER," +
             AGE + "INTEGER)";
 
-    // table user
-    private static final String USER_TABLE = "user_data";
-    private static final String USER_ID = "userid";
-    private static final String USER_NAME = "user_name";
-    private static final String USER_COIN = "user_coin";
-    //private static final String USER_PET = "user_pet";
-    private static final String USER_LAST_LOGON = "user_last_logon";
+//    // table user
+//    private static final String USER_TABLE = "user_data";
+//    private static final String USER_ID = "userid";
+//    private static final String USER_NAME = "user_name";
+//    private static final String USER_COIN = "user_coin";
+//    //private static final String USER_PET = "user_pet";
+//    private static final String USER_LAST_LOGON = "user_last_logon";
 
-    // table user
-    private static final String CREATE_USER_TABLE ="CREATE TABLE " + USER_TABLE + "("+
-            USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            USER_NAME + " TEXT, " +
-            USER_COIN + " INTEGER, " +
-            USER_LAST_LOGON + "INTEGER)";
+//    // table user
+//    private static final String CREATE_USER_TABLE ="CREATE TABLE " + USER_TABLE + "("+
+//            USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+//            USER_NAME + " TEXT, " +
+//            USER_COIN + " INTEGER, " +
+//            USER_LAST_LOGON + "INTEGER)";
 
     // table store
     private static final String STORE_TABLE = "store_data";
@@ -137,7 +137,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TODO_TABLE);
         //db.execSQL(CREATE_PET_TABLE);
-        db.execSQL(CREATE_USER_TABLE);
+       // db.execSQL(CREATE_USER_TABLE);
         db.execSQL(CREATE_STORE_TABLE);
         db.execSQL(CREATE_INVENTORY_TABLE);
 
