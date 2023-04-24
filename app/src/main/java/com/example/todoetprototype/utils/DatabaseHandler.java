@@ -36,44 +36,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     private static final int CURRENT_VERSION = 4;
 
-    // table pet
-    private static final String PET_TABLE = "petdata";
-    private static final String PET_ID = "petid";
-    private static final String PET_NAME = "petname";
-    private static final String HUNGER = "hunger";
-    private static final String HEALTH = "health";
-    private static final String AFFECTION = "affection";
-    private static final String SPECIES = "species";
-    //public static final String EVOLUTION_TABLE_NAME = "CREATURE_EVOLUTION";
-    private static final String DEATH = "death";
-    private static final String AGE = "age";
-
-    // table pet
-    private static final String CREATE_PET_TABLE ="CREATE TABLE " + PET_TABLE + "("+
-            PET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            PET_NAME + " TEXT, " +
-            HUNGER + " INTEGER, " +
-            HEALTH + " INTEGER, " +
-            AFFECTION + "INTEGER," +
-            SPECIES + "TEXT," +
-            DEATH + "INTEGER," +
-            AGE + "INTEGER)";
-
-//    // table user
-//    private static final String USER_TABLE = "user_data";
-//    private static final String USER_ID = "userid";
-//    private static final String USER_NAME = "user_name";
-//    private static final String USER_COIN = "user_coin";
-//    //private static final String USER_PET = "user_pet";
-//    private static final String USER_LAST_LOGON = "user_last_logon";
-
-//    // table user
-//    private static final String CREATE_USER_TABLE ="CREATE TABLE " + USER_TABLE + "("+
-//            USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-//            USER_NAME + " TEXT, " +
-//            USER_COIN + " INTEGER, " +
-//            USER_LAST_LOGON + "INTEGER)";
-
     // table store
     private static final String STORE_TABLE = "store_data";
     private static final String ITEM_ID = "item_id";
@@ -81,6 +43,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String ITEM_PRICE = "item_price";
     private static final String ITEM_DESCRIPTION = "item_description";
     private static final String ITEM_CATEGORY = "item_category";
+    private static final String ITEM_MULTIPLIER = "multiplier";
 
     // table store
     private static final String CREATE_STORE_TABLE ="CREATE TABLE " + STORE_TABLE + "("+
@@ -88,7 +51,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             ITEM_NAME + " TEXT, " +
             ITEM_PRICE + " INTEGER, " +
             ITEM_DESCRIPTION + " TEXT, " +
-            ITEM_CATEGORY + "TEXT)";
+            ITEM_CATEGORY + "TEXT, " +
+            ITEM_MULTIPLIER + "INTEGER)";
 
 
     // table inventory
@@ -136,8 +100,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TODO_TABLE);
-        //db.execSQL(CREATE_PET_TABLE);
-       // db.execSQL(CREATE_USER_TABLE);
         db.execSQL(CREATE_STORE_TABLE);
         db.execSQL(CREATE_INVENTORY_TABLE);
 
@@ -149,7 +111,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older tables if they exist
         db.execSQL("DROP TABLE IF EXISTS " + TODO_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + PET_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + STORE_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + INVENTORY_TABLE);
         // Create tables again
@@ -271,7 +232,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                                 0,
                                 cur.getString(cur.getColumnIndex(ITEM_NAME)),
                                 cur.getString(cur.getColumnIndex(ITEM_DESCRIPTION)),
-                                cur.getString(cur.getColumnIndex(ITEM_CATEGORY))
+                                cur.getString(cur.getColumnIndex(ITEM_CATEGORY)),
+                                cur.getInt(cur.getColumnIndex(ITEM_MULTIPLIER))
                         );
                         UserModel.getInstance().addItemToInventory(item);
                     }
@@ -296,6 +258,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cv.put(ITEM_DESCRIPTION, inventoryItem.getItemDescription());
         cv.put(ITEM_CATEGORY, inventoryItem.getItemCategory());
         cv.put(ITEM_IMAGE_ID, inventoryItem.getDrawable());
+        cv.put(ITEM_MULTIPLIER, inventoryItem.getEffectMultiplier());
         db.insert(INVENTORY_TABLE, null, cv);
     }
 

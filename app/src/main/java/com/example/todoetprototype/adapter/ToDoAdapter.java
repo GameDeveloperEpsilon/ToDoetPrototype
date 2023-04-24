@@ -52,38 +52,13 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         PlannerItem item = todoList.get(position); // in the todolist you get the item
         holder.task.setText(item.getTask()); // set the task from the item position
         holder.task.setChecked(toBoolean(item.getStatus())); // checks the status of the item if it is checked or not
-        if (toBoolean(item.getStatus()))
-            holder.task.setEnabled(false);
         holder.task.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
             if (isChecked) {
-                UserModel userModel = UserModel.getInstance();
-                System.out.println("Planner item before: " + item);
                 db.updateStatus(item.getId(), 1);
-                db.updateCanGiveCoins(item.getId(), false);
-                buttonView.setEnabled(false);
-                if (item.canGivenCoins()) {
-                    userModel.setCoins(userModel.getCoins() + 1);
-                    item.setCanGivenCoins(false);
-                }
-                System.out.println("Planner item after: " + item);
             } else {
                 db.updateStatus(item.getId(),0);
             }
-            //  PlannerModel.getInstance().removePlannerItemFromList(item);
-
-//                if (userModel != null) {
-//                    if (item.canGivenCoins()) {
-//                        userModel.setCoins(userModel.getCoins() + 1);
-//                        item.setCanGivenCoins(false);
-//                    }
-//                    // Delete item
-//                } else
-//                    System.err.println("ToDoAdapter.onCheckedChanged : userModel is null!");
-            //        }
-//            else {
-//                db.updateStatus(item.getId(),0);
-//            }
         });
         holder.dueDate.setText(item.getDate());  // Set the due date of the task.
     }
@@ -120,6 +95,9 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
     public void deleteItem(int position) {
         PlannerItem item = todoList.remove(position); // Remove from the item
         db.deleteTask(item.getId()); // Id of item being deleted
+
+        UserModel userModel = UserModel.getInstance();
+        userModel.setCoins(userModel.getCoins() + 1);
 
         notifyItemRemoved(position); // Notifies that the item will be removed and will automatically update view
     }

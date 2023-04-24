@@ -29,28 +29,30 @@ public class TodopetViewModel extends ViewModel implements Serializable {
         return petData;
     }
 
-    public boolean useItem(String itemCategory) {
+    public StoreItem useItem(String itemCategory) {
         for (StoreItem item: UserModel.getInstance().getInventory()) {
             if (item.getItemCategory().equals(itemCategory)) {
                 UserModel.getInstance().removeItemFromInventory(item);
-                return true;  // item found
+                return item;  // item found
             }
         }
-        return false;  // no items of type category
+        return null;  // no items of type category
     }
 
     public void clean() {
-        if (useItem("CLEANER")) {
+        StoreItem item = useItem("CLEANER");
+        if (item != null) {
             PetModel pet = PetModel.getInstance();
-            pet.setHygiene(10);
+            pet.setHygiene(item.getEffectMultiplier() * 5);
             petData.setValue(pet);
         }
     }
 
     public void feed() {
-        if (useItem("FOOD")) {
+        StoreItem item = useItem("FOOD");
+        if (item != null) {
             PetModel pet = PetModel.getInstance();
-            pet.setHunger(10);
+            pet.setHunger(item.getEffectMultiplier() * 5);
             //petData.getValue().setAffection(10);
             //this.petData.getValue().lastFedTimestamp = new Date().getTime();
             petData.setValue(pet);
