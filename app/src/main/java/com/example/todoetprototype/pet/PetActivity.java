@@ -140,6 +140,7 @@ public class PetActivity extends AppCompatActivity implements Serializable {
 
         SharedPreferences.Editor editor = sp.edit();
 
+        editor.putInt("currentStage", petModel.currentStage.getUniqueID());
         editor.putInt("hygiene", petModel.getHygiene());
         editor.putInt("hunger", petModel.getHunger());  //
         editor.putInt("affection", petModel.getAffection());
@@ -152,6 +153,7 @@ public class PetActivity extends AppCompatActivity implements Serializable {
 
         SharedPreferences.Editor editor = sp.edit();
 
+        editor.putInt("currentStage", petModel.currentStage.getUniqueID());
         editor.putInt("hygiene", petModel.getHygiene());
         editor.putInt("hunger", petModel.getHunger());  //
         editor.putInt("affection", petModel.getAffection());
