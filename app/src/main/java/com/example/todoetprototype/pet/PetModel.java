@@ -56,6 +56,32 @@ public class PetModel implements Serializable {
     PetStages ancient;
 
     public void loadPetParameters(SharedPreferences sp) {
+        int stageID = sp.getInt("currentStage", 1);
+        switch (stageID) {
+            case 1: {
+                currentStage = egg;
+                break;
+            }
+            case 2: {
+                currentStage = baby;
+                break;
+            }
+            case 3: {
+                currentStage = adolescent;
+                break;
+            }
+            case 4: {
+                currentStage = adult;
+                break;
+            }
+            case 5: {
+                currentStage = ancient;
+                break;
+            }
+            default: {
+                currentStage = egg;
+            }
+        }
         hygiene = sp.getInt("hygiene", 0);
         hunger = sp.getInt("hunger", 0);
         affection = sp.getInt("affection", 0);
