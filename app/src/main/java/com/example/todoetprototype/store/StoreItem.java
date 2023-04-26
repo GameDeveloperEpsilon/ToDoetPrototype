@@ -21,6 +21,8 @@ public class StoreItem {
         this.itemDescription = itemDescription;
         this.itemCategory = itemCategory;
         this.drawable = R.drawable.berryimage;
+       // this.drawable = R.drawable.soap;
+        //this.drawable = R.drawable.brush;
         this.effectMultiplier = effectMultiplier;
     }
 

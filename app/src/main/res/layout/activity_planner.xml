@@ -30,16 +30,6 @@
         android:text="@string/tasks" />
 
 
-    <ImageButton
-        android:id="@+id/calendar_icon"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="350dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_gravity="right|center"
-        android:background="@drawable/ic_baseline_calendar" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tasksRecyclerView"
         android:layout_width="match_parent"
