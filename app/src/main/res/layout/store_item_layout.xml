@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="13dp"
-            android:background="#4885ed"
+            android:background="#3d52d5"
             app:backgroundTint="@null"
             android:layout_toStartOf="@+id/storeItemPrice"
             android:text="Buy" />

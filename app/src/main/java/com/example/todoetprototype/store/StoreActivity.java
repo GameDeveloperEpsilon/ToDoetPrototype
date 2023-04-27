@@ -21,6 +21,8 @@ import com.example.todoetprototype.utils.DatabaseHandler;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Objects;
+
 public class StoreActivity extends AppCompatActivity {
 
     private ActivityStoreBinding binding;
@@ -33,6 +35,7 @@ public class StoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityStoreBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        Objects.requireNonNull(getSupportActionBar()).hide(); // will not show top most navigation bar
 
         storeViewModel = new ViewModelProvider(this).get(StoreViewModel.class);
 

@@ -21,6 +21,8 @@ import com.example.todoetprototype.utils.DatabaseHandler;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Objects;
+
 public class InventoryActivity extends AppCompatActivity {
 
     private UserViewModel userViewModel;
@@ -32,6 +34,7 @@ public class InventoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         com.example.todoetprototype.databinding.ActivityInventoryBinding binding = ActivityInventoryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        Objects.requireNonNull(getSupportActionBar()).hide(); // will not show top most navigation bar
 
         db = DatabaseHandler.getInstance();
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);

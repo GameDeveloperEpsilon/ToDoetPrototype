@@ -22,6 +22,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class PetActivity extends AppCompatActivity implements Serializable {
 
@@ -47,6 +48,7 @@ public class PetActivity extends AppCompatActivity implements Serializable {
         super.onCreate(savedInstanceState);
         binding = ActivityPetBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        Objects.requireNonNull(getSupportActionBar()).hide(); // will not show top most navigation bar
 
         sp=this.getSharedPreferences("myPetPrefs",Context.MODE_PRIVATE);
         petModel = PetModel.getInstance(sp);

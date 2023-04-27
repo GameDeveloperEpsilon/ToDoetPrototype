@@ -32,20 +32,20 @@
         app:layout_constraintHorizontal_bias="0.321"
         app:layout_constraintStart_toStartOf="parent" />
 
+
     <ImageButton
         android:id="@+id/plannerPageBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="236dp"
-        android:layout_marginEnd="68dp"
+        android:layout_marginEnd="56dp"
         android:background="@null"
         android:src="@drawable/todoet_button_todo"
         android:text="Planner Page"
         app:layout_constraintBottom_toTopOf="@+id/textViewplanner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.533" />
-
+        app:layout_constraintVertical_bias="0.777" />
 
     <ImageButton
         android:id="@+id/inventoryPageBtn"
@@ -91,8 +91,8 @@
         android:id="@+id/textViewplanner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="68dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="76dp"
         android:text="Todo List"
         android:textColor="#FFFFFF"
         android:textSize="32dp"
@@ -105,7 +105,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginBottom="144dp"
+        android:layout_marginBottom="136dp"
         android:text="Inventory"
         android:textColor="#FFFFFF"
         android:textSize="32dp"

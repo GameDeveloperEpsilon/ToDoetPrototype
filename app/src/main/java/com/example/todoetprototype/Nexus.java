@@ -19,12 +19,15 @@ import com.example.todoetprototype.utils.DatabaseHandler;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Objects;
+
 public class Nexus extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nexus);
+        Objects.requireNonNull(getSupportActionBar()).hide(); // will not show top most navigation bar
 
         // Prime database handler
         DatabaseHandler.getInstance(this.getApplicationContext());

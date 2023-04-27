@@ -9,7 +9,7 @@
 
     <item
         android:id="@+id/user_nav_item"
-        android:title="User"
+        android:title="Inventory"
         android:checked="false"
         android:icon="@drawable/ic_baseline_user"/>
 
