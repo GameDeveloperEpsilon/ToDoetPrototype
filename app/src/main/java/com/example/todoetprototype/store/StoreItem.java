@@ -23,12 +23,11 @@ public class StoreItem {
         this.itemCategory = itemCategory;
         this.effectMultiplier = effectMultiplier;
 
-        this.drawable = switch (itemID) {
-            case 1 -> R.drawable.soap;
-            case 2 -> R.drawable.brush;
-            case 3 -> R.drawable.berryimage;
-            case 4 -> R.drawable.brush;
-            default -> throw new IllegalStateException("Unexpected value: " + itemID);
+        this.drawable = switch (itemCategory) {
+            case "CLEANER" -> R.drawable.soap;
+            case "BRUSH" -> R.drawable.brush;
+            case "FOOD" -> R.drawable.berryimage;
+            default -> throw new IllegalStateException("Unexpected value: " + itemCategory);
         };
     }
 
@@ -81,5 +80,18 @@ public class StoreItem {
 
     public int getEffectMultiplier() {
         return effectMultiplier;
+    }
+
+    @Override
+    public String toString() {
+        return "StoreItem{" +
+                "itemID=" + itemID +
+                ", itemPrice=" + itemPrice +
+                ", itemName='" + itemName + '\'' +
+                ", itemDescription='" + itemDescription + '\'' +
+                ", itemCategory='" + itemCategory + '\'' +
+                ", drawable=" + drawable +
+                ", effectMultiplier=" + effectMultiplier +
+                '}';
     }
 }

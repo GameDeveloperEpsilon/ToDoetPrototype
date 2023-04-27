@@ -59,11 +59,14 @@ public class TodopetViewModel extends ViewModel implements Serializable {
         }
     }
 
-    public void pet() {
-        PetModel pet = PetModel.getInstance();
-        pet.setAffection(10);
-        //this.petData.getValue().lastPetTimestamp = new Date().getTime();
-        petData.setValue(pet);
+    public void brush() {
+        StoreItem item = useItem("BRUSH");
+        if (item != null) {
+            PetModel pet = PetModel.getInstance();
+            pet.setAffection(10);
+            //this.petData.getValue().lastPetTimestamp = new Date().getTime();
+            petData.setValue(pet);
+        }
     }
 
     // clock
@@ -72,10 +75,10 @@ public class TodopetViewModel extends ViewModel implements Serializable {
     int lastAffectionTick = 0;
     int lastPetLevelTick = 0;
 
-    final int ticksPerHygieneUpdate = 10;
-    final int ticksPerHungerUpdate = 5;
-    final int ticksPerAffectionUpdate = 10;
-    final int ticksPerPetLevelUpdate = 10;
+    final int ticksPerHygieneUpdate = 20;
+    final int ticksPerHungerUpdate = 10;
+    final int ticksPerAffectionUpdate = 20;
+    final int ticksPerPetLevelUpdate = 20;
 
     private void updatePet() {
 

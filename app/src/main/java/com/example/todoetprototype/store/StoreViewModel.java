@@ -13,7 +13,7 @@ public class StoreViewModel extends ViewModel {
 
     public StoreViewModel() {
 
-        System.out.println("User View Model Created");
+        System.out.println("Store View Model Created");
     }
 
     public boolean buyItem(int position) {

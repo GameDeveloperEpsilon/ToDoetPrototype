@@ -46,8 +46,8 @@ public class InventoryActivity extends AppCompatActivity {
 
         userViewModel.getUserData().observe(this, user -> {
 
-            TextView coinsDisplay = findViewById(R.id.coinsDisplay);
-            coinsDisplay.setText(String.valueOf(user.getCoins()));
+            TextView coinsDisplay = findViewById(R.id.userCoinDisplay);
+            coinsDisplay.setText("Current Coins: " + user.getCoins());
 
             inventoryItemAdapter.setInventoryItemList(user.getInventory());
 

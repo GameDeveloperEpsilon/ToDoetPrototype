@@ -91,11 +91,9 @@ public class PetModel implements Serializable {
         // out of 100
 
         this.ID = ID;
-        //this.species = new PetModel();
         this.petName = petName;
         this.hygiene = hygiene;
         this.death = death;
-        //this.happiness = happiness;
         this.hunger = hunger;
         this.affection = affection;
         this.age = age;
