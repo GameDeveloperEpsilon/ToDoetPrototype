@@ -10,10 +10,8 @@ public class StoreItem {
     private String itemName;
     private String itemDescription;
     private String itemCategory;
-    private final int drawable;
-
     private final int effectMultiplier;
-
+    private final int drawable;
 
     public StoreItem(int itemID, int itemPrice, String itemName, String itemDescription, String itemCategory, int effectMultiplier) {
         this.itemID = itemID;
@@ -23,12 +21,19 @@ public class StoreItem {
         this.itemCategory = itemCategory;
         this.effectMultiplier = effectMultiplier;
 
-        this.drawable = switch (itemCategory) {
-            case "CLEANER" -> R.drawable.soap;
-            case "BRUSH" -> R.drawable.brush;
-            case "FOOD" -> R.drawable.berryimage;
-            default -> throw new IllegalStateException("Unexpected value: " + itemCategory);
-        };
+        switch (itemCategory) {
+            case "CLEANER":
+                this.drawable = R.drawable.soap;
+                break;
+            case "BRUSH":
+                this.drawable = R.drawable.brush;
+                break;
+            case "FOOD":
+                this.drawable = R.drawable.berryimage;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + itemCategory);
+        }
     }
 
     //Getters and Setters
