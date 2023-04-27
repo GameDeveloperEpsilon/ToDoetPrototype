@@ -41,7 +41,7 @@ public class StoreActivity extends AppCompatActivity {
             storeItemAdapter.setStoreItemList(storeModel.getCatalog());
 
             // Get user coins from UserModel
-            TextView userCoin = findViewById(R.id.userCoin);
+            TextView userCoin = findViewById(R.id.userCoinDisplay);
             String coinDisplayFormatted = "Current coins: " + UserModel.getInstance().getCoins();
             userCoin.setText(coinDisplayFormatted);
         });

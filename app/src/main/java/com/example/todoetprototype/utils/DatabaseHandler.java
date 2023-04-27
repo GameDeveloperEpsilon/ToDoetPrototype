@@ -10,8 +10,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.todoetprototype.planner.PlannerItem;
 
-
-import com.example.todoetprototype.inventory.InventoryActivity;
 import com.example.todoetprototype.inventory.UserModel;
 import com.example.todoetprototype.store.StoreItem;
 
@@ -34,39 +32,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return databaseHandlerInstance;
     }
 
-    private static final int CURRENT_VERSION = 4;
-
-    // table store
-    private static final String STORE_TABLE = "store_data";
-    private static final String ITEM_ID = "item_id";
-    private static final String ITEM_NAME = "item_name";
-    private static final String ITEM_PRICE = "item_price";
-    private static final String ITEM_DESCRIPTION = "item_description";
-    private static final String ITEM_CATEGORY = "item_category";
-    private static final String ITEM_MULTIPLIER = "multiplier";
-
-    // table store
-    private static final String CREATE_STORE_TABLE ="CREATE TABLE " + STORE_TABLE + "("+
-            ITEM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            ITEM_NAME + " TEXT, " +
-            ITEM_PRICE + " INTEGER, " +
-            ITEM_DESCRIPTION + " TEXT, " +
-            ITEM_CATEGORY + "TEXT, " +
-            ITEM_MULTIPLIER + "INTEGER)";
-
+    private static final int CURRENT_VERSION = 5;
 
     // table inventory
     private static final String INVENTORY_TABLE = "table_inventory";
-
-    private static final String ITEM_IMAGE_ID = "item_image_id";
+    private static final String ITEM_ID = "item_id";
+    private static final String ITEM_NAME = "item_name";
+    private static final String ITEM_DESCRIPTION = "item_description";
+    private static final String ITEM_CATEGORY = "item_category";
+    private static final String ITEM_MULTIPLIER = "item_multiplier";
 
     // table inventory
     private static final String CREATE_INVENTORY_TABLE = "CREATE TABLE " + INVENTORY_TABLE + "(" +
-            ITEM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            ITEM_NAME + " TEXT, " +
-            ITEM_DESCRIPTION + " TEXT, " +
-            ITEM_CATEGORY + " TEXT, " +
-            ITEM_IMAGE_ID + " INTEGER)";
+            ITEM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+            ITEM_NAME + " TEXT," +
+            ITEM_DESCRIPTION + " TEXT," +
+            ITEM_CATEGORY + " TEXT," +
+            ITEM_MULTIPLIER + " INTEGER)";
 
 
     // todolist table
@@ -89,18 +71,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
     private SQLiteDatabase db;
-    private Context context;
 
     private DatabaseHandler(Context context) {
         super(context, SCHEMA_NAME, null, CURRENT_VERSION);
-        this.context = context;
     }
 
     // table creation
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TODO_TABLE);
-        db.execSQL(CREATE_STORE_TABLE);
+        //db.execSQL(CREATE_STORE_TABLE);
         db.execSQL(CREATE_INVENTORY_TABLE);
 
         System.out.println("DB version : " + db.getVersion());
@@ -111,7 +91,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older tables if they exist
         db.execSQL("DROP TABLE IF EXISTS " + TODO_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + STORE_TABLE);
+        //db.execSQL("DROP TABLE IF EXISTS " + STORE_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + INVENTORY_TABLE);
         // Create tables again
         onCreate(db);
@@ -236,6 +216,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                                 cur.getInt(cur.getColumnIndex(ITEM_MULTIPLIER))
                         );
                         UserModel.getInstance().addItemToInventory(item);
+                        System.out.println(item);
                     }
                     while (cur.moveToNext());
                 }
@@ -257,7 +238,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cv.put(ITEM_NAME, inventoryItem.getItemName());
         cv.put(ITEM_DESCRIPTION, inventoryItem.getItemDescription());
         cv.put(ITEM_CATEGORY, inventoryItem.getItemCategory());
-        cv.put(ITEM_IMAGE_ID, inventoryItem.getDrawable());
         cv.put(ITEM_MULTIPLIER, inventoryItem.getEffectMultiplier());
         db.insert(INVENTORY_TABLE, null, cv);
     }

@@ -10,9 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.example.todoetprototype.Nexus;
 import com.example.todoetprototype.R;
@@ -28,8 +26,6 @@ import java.io.Serializable;
 public class PetActivity extends AppCompatActivity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-
 
     private ActivityPetBinding binding;
     private TodopetViewModel petViewModel;
@@ -56,9 +52,6 @@ public class PetActivity extends AppCompatActivity implements Serializable {
         petModel = PetModel.getInstance(sp);
         petViewModel = new ViewModelProvider(this).get(TodopetViewModel.class);
 
-        if (petViewModel == null) {
-            throw new RuntimeException("Error: Pet View Model null!");
-        }
         if (petModel == null) {
             throw new RuntimeException("Error: Pet Model null!");
         }
@@ -72,28 +65,14 @@ public class PetActivity extends AppCompatActivity implements Serializable {
 //            System.out.println(petStage);
 //        }
 
-        ImageView imageView = findViewById(R.id.imageView);
-
         // Set On Click Listeners
         Button feedBtn = findViewById(R.id.feedBtn);
         Button cleanBtn = findViewById(R.id.cleanBtn);
-        Button petBtn = findViewById(R.id.petBtn);
+        Button petBtn = findViewById(R.id.brushBtn);
 
-        feedBtn.setOnClickListener((l) -> {
-            Context c = getApplicationContext();
-            Toast.makeText(c, "Feeding Pet", Toast.LENGTH_SHORT).show();
-            petViewModel.feed();
-        });
-        cleanBtn.setOnClickListener((l) -> {
-            Context c = getApplicationContext();
-            Toast.makeText(c, "Cleaning Pet", Toast.LENGTH_SHORT).show();
-            petViewModel.clean();
-        });
-        petBtn.setOnClickListener((l) -> {
-            Context c = getApplicationContext();
-            Toast.makeText(c, "Petting Pet", Toast.LENGTH_SHORT).show();
-            petViewModel.pet();
-        });
+        feedBtn.setOnClickListener((l) -> petViewModel.feed());
+        cleanBtn.setOnClickListener((l) -> petViewModel.clean());
+        petBtn.setOnClickListener((l) -> petViewModel.brush());
 
         petViewModel.getPetData().observe(this, pet -> {
 
@@ -129,10 +108,6 @@ public class PetActivity extends AppCompatActivity implements Serializable {
 
         petModel.loadPetParameters(sp);
     }
-
-//    private PetModel.PetStages[] generateRandomEgg(int i) {
-//        return PetModel.PetStages.values();
-//    }
 
     @Override
     protected void onPause() {

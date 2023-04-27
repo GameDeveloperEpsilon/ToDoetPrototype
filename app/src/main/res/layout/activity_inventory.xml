@@ -8,7 +8,7 @@
     tools:context=".inventory.InventoryActivity">
 
     <TextView
-        android:id="@+id/userCoin"
+        android:id="@+id/userCoinDisplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
@@ -33,19 +33,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.057"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userCoin" />
-
-    <TextView
-        android:id="@+id/coinsDisplay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-
-        app:layout_constraintVertical_bias="0.073" />
+        app:layout_constraintTop_toBottomOf="@+id/userCoinDisplay" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/inventoryItemsRecyclerView"
