@@ -131,6 +131,7 @@ public class TodopetViewModel extends ViewModel implements Serializable {
                 pet.currentStage = pet.baby;
                 pet.hunger = 20;
                 pet.hygiene = 20;
+                pet.affection = 20;
             } else if (pet.currentStage == pet.baby &&
                     pet.hunger >= 50 &&
                     pet.hygiene >= 50 &&
