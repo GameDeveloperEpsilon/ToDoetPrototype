@@ -122,6 +122,9 @@ public class TodopetViewModel extends ViewModel implements Serializable {
             }
         }
 
+        if (pet.getAffection() <= 0 || pet.getHunger() <= 0 || pet.getHygiene() <= 0)
+            pet.currentStage = pet.egg;
+
         if (lastPetLevelTick % ticksPerPetLevelUpdate == 0) {
             // Update pet appearance based on stage
             if (pet.currentStage == pet.egg && pet.affection >= 50) {
